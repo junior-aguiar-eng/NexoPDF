@@ -12,7 +12,7 @@
   </developer>
   <description>
     <p>
-      NexoPDF is an open-source PDF workbench. Read, comment on, fill in and sign PDFs;
+      NexoPDF is a native PDF workbench. Read, comment on, fill in and sign PDFs;
       organize, combine and split pages; edit, redact, protect and export documents.
     </p>
   </description>
@@ -20,9 +20,7 @@
   <icon type="stock">io.nexohub.nexopdf</icon>
   <!-- Only url types known to appstream 0.15 (Ubuntu 22.04, where CI validates): no vcs-browser. -->
   <url type="homepage">https://github.com/junior-aguiar-eng/NexoPDF</url>
-  <url type="bugtracker">https://github.com/junior-aguiar-eng/NexoPDF/issues</url>
   <url type="help">https://github.com/junior-aguiar-eng/NexoPDF</url>
-  <url type="contact">https://github.com/junior-aguiar-eng/NexoPDF/issues</url>
   <categories>
     <category>Office</category>
     <category>Viewer</category>

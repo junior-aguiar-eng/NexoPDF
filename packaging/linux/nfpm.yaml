@@ -17,7 +17,7 @@ vendor: NexoPDF
 homepage: https://github.com/junior-aguiar-eng/NexoPDF
 license: MIT OR Apache-2.0
 description: |-
-  Open-source, native PDF workbench: read, comment, fill and sign forms,
+  Native PDF workbench: read, comment, fill and sign forms,
   organize, combine, split, edit, redact, protect and export PDFs.
   Includes nexopdf-cli, a headless command runner and opt-in MCP server.
 

@@ -64,7 +64,7 @@ nexopdf-cli run    --script steps.json [--root DIR]      [{\"tool\": \"doc_open\
     "\
 nexopdf-cli ui     --control FILE <method> [key=value …] [--out shot.png]
                                                            drive a running app started with --control FILE
-help and feedback: https://github.com/junior-aguiar-eng/NexoPDF/issues"
+NexoPDF: https://github.com/junior-aguiar-eng/NexoPDF"
 );
 
 fn main() -> ExitCode {
@@ -142,7 +142,7 @@ fn stdout_line(line: std::fmt::Arguments<'_>) -> Result<(), CliError> {
 
 fn version() -> Result<(), CliError> {
     stdout_line(format_args!("nexopdf-cli {}", env!("CARGO_PKG_VERSION")))?;
-    stdout_line(format_args!("Help and feedback: {}/issues", nexopdf_engine::links::GITHUB))?;
+    stdout_line(format_args!("NexoPDF: {}", nexopdf_engine::links::GITHUB))?;
     stdout_line(format_args!("Web:     {}", nexopdf_engine::links::APP_PAGE))?;
     stdout_line(format_args!("Source:  {}", nexopdf_engine::links::GITHUB))?;
     Ok(())
