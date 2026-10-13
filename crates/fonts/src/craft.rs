@@ -1,10 +1,7 @@
-//! Fonts from the optional craft-fonts build input (<https://github.com/storytold/craft-fonts>).
-//!
-//! `build.rs` embeds every font in craft-fonts' manifest when NexoPDF is built with
-//! `CRAFT_FONTS_DIR=<checkout>`; otherwise [`CRAFT_FONTS`] is empty and everything here returns
-//! nothing. Callers must work either way.
+//! Attributed fonts stored in `assets/fonts/international`.
+//! `build.rs` embeds the local manifest without an external checkout.
 
-/// A font from the optional craft-fonts build input (empty unless built with `CRAFT_FONTS_DIR`).
+/// A font from the NexoPDF local font manifest.
 pub struct CraftFont {
     pub family: &'static str,
     pub style: &'static str,
@@ -27,8 +24,8 @@ impl CraftFont {
     }
 }
 
-/// The `Jpan` craft-fonts faces in the order the interface prefers them: BIZ UDPGothic (a UI
-/// face) first, then the rest in manifest order. Empty without craft-fonts.
+/// The `Jpan` local fonts faces in the order the interface prefers them: BIZ UDPGothic (a UI
+/// face) first, then the rest in manifest order. Empty without local fonts.
 pub fn ui_japanese_fonts() -> Vec<&'static CraftFont> {
     let mut fonts: Vec<&CraftFont> = CRAFT_FONTS.iter().filter(|f| f.covers("Jpan")).collect();
     // Stable: manifest order within each group.
@@ -36,21 +33,21 @@ pub fn ui_japanese_fonts() -> Vec<&'static CraftFont> {
     fonts
 }
 
-/// The `Hans` craft-fonts faces for Simplified Chinese interface text, in manifest order.
-/// Empty when built without craft-fonts (Chinese text then shows the font system's
-/// replacement glyph, the same degraded mode as Japanese without craft-fonts).
+/// The `Hans` local fonts faces for Simplified Chinese interface text, in manifest order.
+/// Empty when built without local fonts (Chinese text then shows the font system's
+/// replacement glyph, the same degraded mode as Japanese without local fonts).
 pub fn ui_chinese_fonts() -> Vec<&'static CraftFont> {
     CRAFT_FONTS.iter().filter(|f| f.covers("Hans")).collect()
 }
 
-/// The `Arab` craft-fonts faces for Arabic-script interface text (file names, document titles),
-/// in manifest order. Empty when built without craft-fonts or when it has no Arabic face.
+/// The `Arab` local fonts faces for Arabic-script interface text (file names, document titles),
+/// in manifest order. Empty when built without local fonts or when it has no Arabic face.
 pub fn ui_arabic_fonts() -> Vec<&'static CraftFont> {
     arabic(CRAFT_FONTS.iter())
 }
 
 /// The face for Arabic text written into PDFs: the first `Arab` face. `None` when built without
-/// craft-fonts or when its revision has no Arabic face.
+/// local fonts or when its revision has no Arabic face.
 pub fn document_arabic_font() -> Option<&'static CraftFont> {
     ui_arabic_fonts().into_iter().next()
 }
@@ -59,8 +56,8 @@ fn arabic<'a>(faces: impl IntoIterator<Item = &'a CraftFont>) -> Vec<&'a CraftFo
     faces.into_iter().filter(|f| f.covers("Arab")).collect()
 }
 
-/// The `Telu` craft-fonts faces for Telugu interface text (the Telugu catalog, file names,
-/// document titles), in manifest order. Empty when built without craft-fonts or when it has no
+/// The `Telu` local fonts faces for Telugu interface text (the Telugu catalog, file names,
+/// document titles), in manifest order. Empty when built without local fonts or when it has no
 /// Telugu face.
 pub fn ui_telugu_fonts() -> Vec<&'static CraftFont> {
     CRAFT_FONTS.iter().filter(|f| f.covers("Telu")).collect()
@@ -75,15 +72,15 @@ pub fn document_thai_font() -> Option<&'static CraftFont> {
     ui_thai_fonts().into_iter().next()
 }
 
-/// The `Hebr` craft-fonts faces for Hebrew interface text (file names, document titles, text
-/// being edited), in manifest order. Empty when built without craft-fonts or when it has no
+/// The `Hebr` local fonts faces for Hebrew interface text (file names, document titles, text
+/// being edited), in manifest order. Empty when built without local fonts or when it has no
 /// Hebrew face.
 pub fn ui_hebrew_fonts() -> Vec<&'static CraftFont> {
     CRAFT_FONTS.iter().filter(|f| f.covers("Hebr")).collect()
 }
 
 /// The face for Hebrew text written into PDFs: the `Hebr` face of the asked weight, else its
-/// Regular, else any `Hebr` face. `None` without craft-fonts or without a Hebrew face.
+/// Regular, else any `Hebr` face. `None` without local fonts or without a Hebrew face.
 pub fn document_hebrew_font(bold: bool) -> Option<&'static CraftFont> {
     hebrew_face(CRAFT_FONTS, bold)
 }
@@ -117,7 +114,7 @@ fn order_cjk<'a>(faces: impl IntoIterator<Item = &'a CraftFont>, prefer_hans: bo
 }
 
 /// The face for Japanese text written into PDFs (serif document text): Shippori Mincho, then
-/// BIZ UDMincho, then any other regular `Jpan` face. `None` without craft-fonts.
+/// BIZ UDMincho, then any other regular `Jpan` face. `None` without local fonts.
 pub fn document_japanese_font() -> Option<&'static CraftFont> {
     document_face(CRAFT_FONTS, true, false)
 }
@@ -125,7 +122,7 @@ pub fn document_japanese_font() -> Option<&'static CraftFont> {
 /// A real Japanese document face matching serif/sans and weight where available.
 /// Sans text prefers BIZ UDPGothic Bold or Regular. Missing weights fall back to Regular;
 /// serif text keeps the document Mincho preference. No synthetic weight or slant is applied.
-/// `None` without craft-fonts. The small web input currently has only Gothic Regular.
+/// `None` without local fonts. The small web input currently has only Gothic Regular.
 pub fn document_japanese_font_for_style(serif: bool, bold: bool) -> Option<&'static CraftFont> {
     document_face(CRAFT_FONTS, serif, bold)
 }
@@ -133,7 +130,7 @@ pub fn document_japanese_font_for_style(serif: bool, bold: bool) -> Option<&'sta
 /// Every `Jpan` face that can stand in for the document text, the best match for the style first
 /// (the face [`document_japanese_font_for_style`] returns), then the others. Not every face has
 /// every glyph (their coverage of e.g. Cyrillic differs), so a caller can move on to the next one.
-/// Empty without craft-fonts.
+/// Empty without local fonts.
 pub fn document_japanese_fonts_for_style(serif: bool, bold: bool) -> Vec<&'static CraftFont> {
     document_faces(CRAFT_FONTS, serif, bold)
 }
@@ -189,8 +186,8 @@ const fn find(family: &str, style: &str) -> Option<&'static [u8]> {
     None
 }
 
-/// Shippori Mincho Regular from craft-fonts, the preferred face for Japanese document text.
-/// `None` when NexoPDF was built without craft-fonts.
+/// Shippori Mincho Regular from local fonts, the preferred face for Japanese document text.
+/// `None` when NexoPDF was built without local fonts.
 pub static SHIPPORI_MINCHO: Option<&[u8]> = find("Shippori Mincho", "Regular");
 
 #[cfg(test)]
@@ -269,7 +266,7 @@ mod tests {
     /// designs, which includes Noto CJK (Source Han under another name).
     const BARRED_FAMILIES: [&str; 5] = ["Source Han", "Source Serif", "Source Sans", "Noto Sans CJK", "Noto Serif CJK"];
 
-    /// Whatever the craft-fonts checkout holds, no Adobe type design is embedded (AGENTS.md §1.1).
+    /// Whatever the local fonts checkout holds, no Adobe type design is embedded (AGENTS.md §1.1).
     #[test]
     fn barred_families_are_never_embedded() {
         for face in CRAFT_FONTS {
@@ -297,19 +294,17 @@ mod tests {
     }
 
     #[test]
-    fn craft_fonts_are_optional_and_consistent() {
-        // Holds with or without CRAFT_FONTS_DIR.
+    fn local_fonts_are_embedded_and_consistent() {
+        assert!(!CRAFT_FONTS.is_empty());
+        assert!(ui_japanese_fonts().iter().any(|f| f.family == "BIZ UDPGothic"));
+        assert!(ui_arabic_fonts().iter().any(|f| f.family == "Noto Sans Arabic"));
+        assert!(ui_thai_fonts().iter().any(|f| f.family == "Noto Sans Thai"));
         assert_eq!(SHIPPORI_MINCHO.is_some(), CRAFT_FONTS.iter().any(|f| f.family == "Shippori Mincho" && f.style == "Regular"));
         assert_eq!(document_japanese_font().is_some(), CRAFT_FONTS.iter().any(|f| f.covers("Jpan")));
         let ui = ui_japanese_fonts();
         assert_eq!(ui.len(), CRAFT_FONTS.iter().filter(|f| f.covers("Jpan")).count());
         let ui_zh = ui_chinese_fonts();
         assert_eq!(ui_zh.len(), CRAFT_FONTS.iter().filter(|f| f.covers("Hans")).count());
-        if CRAFT_FONTS.is_empty() {
-            eprintln!("built without craft-fonts (CRAFT_FONTS_DIR unset): no Japanese faces, as expected");
-            assert!(SHIPPORI_MINCHO.is_none() && ui.is_empty() && ui_zh.is_empty());
-            return;
-        }
         assert!(CRAFT_FONTS.iter().all(|f| !f.bytes.is_empty()));
         if CRAFT_FONTS.iter().any(|f| f.family == "BIZ UDPGothic") {
             assert_eq!(ui.first().map(|f| f.family), Some("BIZ UDPGothic"));

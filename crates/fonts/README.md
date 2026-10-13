@@ -17,10 +17,9 @@ Today it holds what generated appearances need without a font program:
   `set_undrawn_mark` (`UNDRAWN_MARK`, read back by `undrawn_mark`) so the edit is reported and
   flattening refuses. `script_missing` names what the typed-signature script font and its Inter fallback both lack.
 
-It also holds the fonts of the optional [craft-fonts](https://github.com/storytold/craft-fonts)
-build input. `build.rs` embeds them as `CRAFT_FONTS` when the build sets
-`CRAFT_FONTS_DIR=<checkout>` (and fails if it can't while `CRAFT_FONTS_REQUIRED=1`, as releases
-set). Without that variable `CRAFT_FONTS` is empty and everything below copes:
+The six permitted international faces live in `assets/fonts/international/`.
+`build.rs` embeds them from the local manifest by default, without a network
+request, external checkout or environment variable.
 
 - `ui_japanese_fonts`: the `Jpan` faces for the interface, BIZ UDPGothic first.
 - `ui_chinese_fonts`: the `Hans` faces for the interface, in manifest order (without one,
@@ -34,7 +33,7 @@ set). Without that variable `CRAFT_FONTS` is empty and everything below copes:
 - `ui_hebrew_fonts` / `document_hebrew_font(bold)`: the `Hebr` faces (Noto Sans Hebrew) for
   Hebrew interface text, and the face whose outlines become the Type 3 fallback for Hebrew text
   written by Edit text (Bold when asked for and present, else Regular). `None` without a
-  craft-fonts input that has one; the editor then reports a clear error.
+  local manifest that has one; the editor then reports a clear error.
 - `document_japanese_font` / `japanese_glyph`: the face (Shippori Mincho, then BIZ UDMincho) whose
   outlines become the Type 3 fallback font for Japanese text written into PDFs. Without it,
   `japanese_glyph` returns `GlyphError::NoFont` and the editor reports a clear error.

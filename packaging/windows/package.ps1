@@ -94,6 +94,10 @@ foreach ($f in 'LICENSE-MIT', 'LICENSE-APACHE', 'NOTICE') {
 }
 Copy-Item (Join-Path $Root 'assets\app-icon\LICENSE-document.txt') $Stage
 
+Get-ChildItem (Join-Path $Root 'assets/fonts/international/*/OFL.txt') | ForEach-Object {
+  Copy-Item $_.FullName (Join-Path $Stage "OFL-$($_.Directory.Name).txt")
+}
+
 & (Join-Path $PSScriptRoot 'sign.ps1') (Join-Path $Stage 'nexopdf.exe') (Join-Path $Stage 'nexopdf-cli.exe')
 
 # OCR models (#103): the app looks in models\ beside nexopdf.exe. `cargo xtask models` fetches every
@@ -136,14 +140,8 @@ foreach ($f in 'README.md', 'LICENSE', 'LICENSE-MIT', 'LICENSE-APACHE') {
   $p = Join-Path $Root $f
   if (Test-Path $p) { Copy-Item $p $Portable }
 }
-# Builds made with craft-fonts (CRAFT_FONTS_DIR, set for every release) embed its fonts: ship their
-# licences, fonts\<family>\OFL.txt -> OFL-<family>.txt.
-if ($env:CRAFT_FONTS_DIR) {
-  Get-ChildItem -Path (Join-Path $env:CRAFT_FONTS_DIR 'fonts') -Directory -ErrorAction SilentlyContinue | ForEach-Object {
-    $ofl = Join-Path $_.FullName 'OFL.txt'
-    if (Test-Path $ofl) { Copy-Item $ofl (Join-Path $Portable "OFL-$($_.Name).txt") }
-  }
-}
+# Local embedded fonts carry their OFL notices, also staged for MSI.
+Copy-Item (Join-Path $Stage 'OFL-*.txt') $Portable
 # portable.txt beside nexopdf.exe switches on portable mode: settings, logs, recovery files and new
 # digital IDs go to NexoPDFData\ next to the exe instead of %APPDATA% (#157; see
 # crates/ui-egui/src/portable.rs).

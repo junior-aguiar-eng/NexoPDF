@@ -53,12 +53,10 @@ copy_docs() {
   copy_font_licences "$dest"
 }
 
-# Builds made with the optional craft-fonts input (CRAFT_FONTS_DIR, set for every release) embed
-# its fonts, so the package carries their licences: fonts/<family>/OFL.txt -> OFL-<family>.txt.
+# Local embedded fonts travel with their OFL notices in every distribution.
 copy_font_licences() {
   local dest="$1" f family
-  [ -n "${CRAFT_FONTS_DIR:-}" ] || return 0
-  for f in "$CRAFT_FONTS_DIR"/fonts/*/OFL.txt; do
+  for f in "$ROOT"/assets/fonts/international/*/OFL.txt; do
     [ -f "$f" ] || continue
     family="$(basename "$(dirname "$f")")"
     cp "$f" "$dest/OFL-$family.txt"

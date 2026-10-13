@@ -64,15 +64,15 @@ Anything else is forbidden, including assets whose licence you cannot prove from
   - an image, icon or font names Adobe as author or source.
 - **`cargo xtask demo-pdf`** downloads its fonts only from `ATTRIBUTION.toml` entries, pinned by SHA-256. Afterwards it **fails if the PDF embeds any font not in its allowlist**, which catches the browser silently falling back to a system font.
 
-### 1.4 Fonts live in craft-fonts
+### 1.4 Fonts live inside NexoPDF
 
-- Font assets shared by the Crafting Apps, including every Japanese font, live in [`storytold/craft-fonts`](https://github.com/storytold/craft-fonts), not here. **Never commit a font file to this repository**; adding a font means adding it to craft-fonts. (The Latin UI fonts already in `assets/fonts/` — Inter, JetBrains Mono, Dancing Script — stay.) Team members: the shared rules are in [craftrules `standards/fonts.md`](https://github.com/storytold/craftrules/blob/main/standards/fonts.md) (internal).
-- craft-fonts is an **optional build input**, never a Cargo dependency: `CRAFT_FONTS_DIR=<checkout> cargo build` makes `crates/fonts/build.rs` embed its fonts as `nexopdf_fonts::CRAFT_FONTS`. Without it NexoPDF builds, tests and runs, but has no Japanese face (Japanese UI text shows replacement boxes, and writing Japanese into a PDF returns a clear error). Release builds always set it (`.github/workflows/release.yml`), and `ATTRIBUTION.toml` lists it as a `[[build_input]]`.
+- Fonts are committed in `assets/fonts/`, including the six allowed international faces in `assets/fonts/international/`. Every file must be unmodified, pinned to its original source, openly licensed and attributed in `ATTRIBUTION.toml`.
+- `crates/fonts/build.rs` reads the local manifest by default, without a network request or external checkout. WASM embeds only the existing small UI selection. Packages must include the local OFL notices.
 - The desktop app may read one font **already installed on the user's machine** at runtime, as the last interface fallback for characters no embedded face has (`crates/ui-egui/src/system_fonts.rs`). That font is never embedded, shipped, committed or copied, and never appears in published screenshots (`NEXOPDF_SYSTEM_FONTS=0`, which `cargo xtask screenshots` sets). It is not a way around §1.2: nothing from it may enter a PDF, a package or the repository.
 
 ### 1.5 Procedure for adding or changing an asset
 
-Fonts go to craft-fonts instead (§1.4).
+Fonts follow the local asset policy in §1.4.
 
 1. Find an asset under an allowed licence from its **original source**: the author's repository or a release, not a random mirror. Record the exact version or commit.
 2. Confirm the authorship. It must not be Adobe (§1.1). Keep the licence text.

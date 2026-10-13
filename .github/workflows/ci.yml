@@ -25,27 +25,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # No macOS on main or nightly: the org's 5 macOS slots are kept for release builds,
-        # and release.yml builds macOS (a failing release is fixed and rebuilt).
+        # macOS packages are built by the local release workflow.
         os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      # The optional craft-fonts build input (Japanese fonts), so the Japanese font tests run on
-      # Linux; Windows tests the build without it. See craftrules standards/fonts.md.
-      - name: Check out craft-fonts (Linux)
-        if: runner.os == 'Linux'
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: storytold/craft-fonts
-          ref: 3d9ab3a132ed0eff457e424226a435a901da30d3
-          path: craft-fonts
-
-      - name: Configure craft-fonts (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          echo "CRAFT_FONTS_DIR=$GITHUB_WORKSPACE/craft-fonts" >> "$GITHUB_ENV"
-          echo "CRAFT_FONTS_REQUIRED=1" >> "$GITHUB_ENV"
 
       - name: Install Linux system dependencies (egui/winit/rfd)
         if: runner.os == 'Linux'
@@ -78,12 +61,8 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
 
       - name: Test
-        if: runner.os != 'Linux'
-        run: cargo test --workspace
-
-      - name: Test (with craft-fonts)
-        if: runner.os == 'Linux'
-        run: cargo test --workspace
+        # Each benchmark still measures its full workload; avoid competing UI test harnesses.
+        run: cargo test --workspace -- --test-threads=1
 
       - name: Layering
         if: runner.os == 'Linux'

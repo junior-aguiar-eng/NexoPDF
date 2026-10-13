@@ -168,6 +168,7 @@
       <Component Id="NexoPDFApacheLicense">
         <File Id="NexoPDFApacheLicenseFile" Source="$(var.BinDir)\LICENSE-APACHE" KeyPath="yes" />
       </Component>
+      <Files Include="$(var.BinDir)\OFL-*.txt" />
       <Component Id="NexoPDFNotice">
         <File Id="NexoPDFNoticeFile" Source="$(var.BinDir)\NOTICE" KeyPath="yes" />
       </Component>

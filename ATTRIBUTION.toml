@@ -15,7 +15,7 @@ sha256 = "b2856776f9983d1713cf9c4bd6cac917f47d78296444d85749937dcbe063f96e"
 # [[asset]]    a file in this repository (committed or vendored); `sha256` must match the file.
 # [[bundled]]  a file compiled into NexoPDF by a Cargo dependency (its crate version must match Cargo.lock).
 # [[fetched]]  downloaded at build time by xtask (never committed), pinned by `sha256`.
-# [[build_input]] an optional build input outside this repository (e.g. craft-fonts via CRAFT_FONTS_DIR);
+# [[build_input]] an optional build input outside this repository (reserved for explicitly documented future inputs);
 #              never committed or downloaded here, its own repository attributes each file.
 #
 # licence: SPDX expression from the allowlist in AGENTS.md §1.2. adobe_data = true marks the closed list of
@@ -3077,16 +3077,6 @@ kind = "model"
 usage = "Scan & OCR: reads the words it finds (cargo xtask models)"
 sha256 = "e484866d4cce403175bd8d00b128feb08ab42e208de30e42cd9889d8f1735a6e"
 
-[[build_input]]
-name = "craft-fonts"
-option = "CRAFT_FONTS_DIR"
-title = "Japanese fonts: BIZ UDPGothic (Regular, Bold), Shippori Mincho, BIZ UDMincho; Arabic font: Noto Sans Arabic"
-author = "The BIZ UDGothic and BIZ UDMincho Project Authors (Morisawa Inc.), The Shippori Mincho Project Authors (FONTDASU), The Noto Project Authors (Noto Sans Arabic)"
-source = "https://github.com/storytold/craft-fonts (pinned by commit in .github/workflows/release.yml)"
-licence = "OFL-1.1"
-attribution = "https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md"
-kind = "font"
-usage = "Japanese fallback in the interface (BIZ UDPGothic first) and Japanese glyphs in edited PDF text (Shippori Mincho); Arabic interface text, file names and document titles (Noto Sans Arabic); the web build embeds only BIZ UDPGothic Regular and Noto Sans Arabic. The checkout also holds Noto Sans CJK SC, which crates/fonts/build.rs never embeds (AGENTS.md §1.1)"
 
 [[asset]]
 path = "crates/sign/tests/data/x509-rsa-sha1.pdf"
@@ -3131,3 +3121,69 @@ licence_file = "LICENSE-MIT"
 kind = "logo"
 usage = "NexoPDF title bar, Home and About"
 sha256 = "b1632bbababbb7a86940bfbaef6dbc6e13c557fca4141b421b250ae187458415"
+
+[[asset]]
+path = "assets/fonts/international/shippori-mincho/ShipporiMincho-Regular.ttf"
+title = "Shippori Mincho Regular"
+author = "The Shippori Mincho Project Authors (FONTDASU)"
+source = "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/shipporimincho/ShipporiMincho-Regular.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/shippori-mincho/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "769b5269f0f9bc6534b352c0e6bd856a566e03ff788f107191c2d835863570b2"
+
+[[asset]]
+path = "assets/fonts/international/biz-ud-pgothic/BIZUDPGothic-Regular.ttf"
+title = "BIZ UDPGothic Regular"
+author = "The BIZ UDGothic Project Authors (Morisawa Inc.)"
+source = "https://raw.githubusercontent.com/googlefonts/morisawa-biz-ud-gothic/18934af56b9c003ca58c54bffbf226848cb11032/fonts/ttf/BIZUDPGothic-Regular.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/biz-ud-pgothic/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "258d7156c165f2ff774b6efee637c22c3b950de0d8a10e501137061bc8085d01"
+
+[[asset]]
+path = "assets/fonts/international/biz-ud-pgothic/BIZUDPGothic-Bold.ttf"
+title = "BIZ UDPGothic Bold"
+author = "The BIZ UDGothic Project Authors (Morisawa Inc.)"
+source = "https://raw.githubusercontent.com/googlefonts/morisawa-biz-ud-gothic/18934af56b9c003ca58c54bffbf226848cb11032/fonts/ttf/BIZUDPGothic-Bold.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/biz-ud-pgothic/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "30eba52fc837e8b62c97d4b82e6706583149fb7294e3712dd71a655eaea80a90"
+
+[[asset]]
+path = "assets/fonts/international/biz-ud-mincho/BIZUDMincho-Regular.ttf"
+title = "BIZ UDMincho Regular"
+author = "The BIZ UDMincho Project Authors (Morisawa Inc.; design TypeBank Co., Ltd.)"
+source = "https://raw.githubusercontent.com/google/fonts/63833b7d10bb1f86a8f0b91cba2d3ae1f68d1aa3/ofl/bizudmincho/BIZUDMincho-Regular.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/biz-ud-mincho/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "468ee6d9b149ca144809e03841bf18740ecf014e055a00da6ecaf1aaf4165af2"
+
+[[asset]]
+path = "assets/fonts/international/noto-sans-arabic/NotoSansArabic.ttf"
+title = "Noto Sans Arabic Regular"
+author = "The Noto Project Authors"
+source = "https://raw.githubusercontent.com/google/fonts/7085eb89a950e85db5b166b7a58d414544b4140c/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/noto-sans-arabic/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e"
+
+[[asset]]
+path = "assets/fonts/international/noto-sans-thai/NotoSansThai.ttf"
+title = "Noto Sans Thai Regular"
+author = "The Noto Project Authors"
+source = "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notosansthai/NotoSansThai%5Bwdth%2Cwght%5D.ttf"
+licence = "OFL-1.1"
+licence_file = "assets/fonts/international/noto-sans-thai/OFL.txt"
+kind = "font"
+usage = "Embedded NexoPDF interface fallback and document font; selected small faces on WASM"
+sha256 = "5a1c559bb539583c8a1fd99d1c5b9491e5e14478c9cd2bd0970d5c3096cc9ef8"

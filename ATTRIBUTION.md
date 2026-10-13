@@ -4,7 +4,7 @@
 
 Every asset NexoPDF includes, bundles or uses to build its published material, with its author, source and licence. The policy is in [AGENTS.md](AGENTS.md) §1. The machine-readable list, with SHA-256 hashes, is [ATTRIBUTION.toml](ATTRIBUTION.toml). Licence texts are kept beside the assets and summarised in [NOTICE](NOTICE).
 
-## In this repository (250)
+## In this repository (256)
 
 | Asset | Title | Author | Licence | Source | Used for |
 |---|---|---|---|---|---|
@@ -258,6 +258,12 @@ Every asset NexoPDF includes, bundles or uses to build its published material, w
 | `assets/icons/monitor.svg` | Lucide icon "monitor" | Lucide Contributors (portions Cole Bemis, Feather) | ISC | https://github.com/lucide-icons/lucide (npm lucide-static 1.49.0, icons/monitor.svg) | UI icon, embedded via crates/ui-egui/src/icon_data.rs |
 | `crates/ui-egui/src/i18n/sl.tsv` | Slovene interface translation catalog | NexoPDF contributors | MIT OR Apache-2.0 | Contributor-original: clean-room translations of NexoPDF's English UI labels, no proprietary localisation resources | Slovene UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs |
 | `docs/brand/nexopdf-mark.svg` | NexoPDF golden pen mark | NexoPDF contributors | MIT OR Apache-2.0 | Original NexoPDF artwork already included in this repository | NexoPDF title bar, Home and About |
+| `assets/fonts/international/shippori-mincho/ShipporiMincho-Regular.ttf` | Shippori Mincho Regular | The Shippori Mincho Project Authors (FONTDASU) | OFL-1.1 | https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/shipporimincho/ShipporiMincho-Regular.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
+| `assets/fonts/international/biz-ud-pgothic/BIZUDPGothic-Regular.ttf` | BIZ UDPGothic Regular | The BIZ UDGothic Project Authors (Morisawa Inc.) | OFL-1.1 | https://raw.githubusercontent.com/googlefonts/morisawa-biz-ud-gothic/18934af56b9c003ca58c54bffbf226848cb11032/fonts/ttf/BIZUDPGothic-Regular.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
+| `assets/fonts/international/biz-ud-pgothic/BIZUDPGothic-Bold.ttf` | BIZ UDPGothic Bold | The BIZ UDGothic Project Authors (Morisawa Inc.) | OFL-1.1 | https://raw.githubusercontent.com/googlefonts/morisawa-biz-ud-gothic/18934af56b9c003ca58c54bffbf226848cb11032/fonts/ttf/BIZUDPGothic-Bold.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
+| `assets/fonts/international/biz-ud-mincho/BIZUDMincho-Regular.ttf` | BIZ UDMincho Regular | The BIZ UDMincho Project Authors (Morisawa Inc.; design TypeBank Co., Ltd.) | OFL-1.1 | https://raw.githubusercontent.com/google/fonts/63833b7d10bb1f86a8f0b91cba2d3ae1f68d1aa3/ofl/bizudmincho/BIZUDMincho-Regular.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
+| `assets/fonts/international/noto-sans-arabic/NotoSansArabic.ttf` | Noto Sans Arabic Regular | The Noto Project Authors | OFL-1.1 | https://raw.githubusercontent.com/google/fonts/7085eb89a950e85db5b166b7a58d414544b4140c/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
+| `assets/fonts/international/noto-sans-thai/NotoSansThai.ttf` | Noto Sans Thai Regular | The Noto Project Authors | OFL-1.1 | https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notosansthai/NotoSansThai%5Bwdth%2Cwght%5D.ttf | Embedded NexoPDF interface fallback and document font; selected small faces on WASM |
 
 ## Compiled in through dependencies (6)
 
@@ -299,10 +305,9 @@ Fonts are fetched by `cargo xtask demo-pdf` into `target/demo-fonts/`, OCR model
 | `text-detection.rten` | Ocrs text detection model | Robert Knight (ocrs-models; trained on HierText, CC-BY-SA-4.0) | CC-BY-SA-4.0 | https://github.com/robertknight/ocrs-models (the models ocrs downloads; model card: https://huggingface.co/robertknight/ocrs, cc-by-sa-4.0) | Scan & OCR: finds words on page images (cargo xtask models) |
 | `text-recognition.rten` | Ocrs text recognition model | Robert Knight (ocrs-models; trained on HierText, CC-BY-SA-4.0) | CC-BY-SA-4.0 | https://github.com/robertknight/ocrs-models (the models ocrs downloads; model card: https://huggingface.co/robertknight/ocrs, cc-by-sa-4.0) | Scan & OCR: reads the words it finds (cargo xtask models) |
 
-## Optional build inputs (1)
+## Optional build inputs (0)
 
 Not in this repository and never downloaded by it: compiled in only when the build sets the option (official releases do). Each input attributes its own files.
 
 | Input | Option | Title | Author | Licence | Source | Attribution | Used for |
 |---|---|---|---|---|---|---|---|
-| `craft-fonts` | `CRAFT_FONTS_DIR` | Japanese fonts: BIZ UDPGothic (Regular, Bold), Shippori Mincho, BIZ UDMincho; Arabic font: Noto Sans Arabic | The BIZ UDGothic and BIZ UDMincho Project Authors (Morisawa Inc.), The Shippori Mincho Project Authors (FONTDASU), The Noto Project Authors (Noto Sans Arabic) | OFL-1.1 | https://github.com/storytold/craft-fonts (pinned by commit in .github/workflows/release.yml) | https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md | Japanese fallback in the interface (BIZ UDPGothic first) and Japanese glyphs in edited PDF text (Shippori Mincho); Arabic interface text, file names and document titles (Noto Sans Arabic); the web build embeds only BIZ UDPGothic Regular and Noto Sans Arabic. The checkout also holds Noto Sans CJK SC, which crates/fonts/build.rs never embeds (AGENTS.md §1.1) |

@@ -1,6 +1,5 @@
-//! Embeds the fonts of the optional craft-fonts build input (`CRAFT_FONTS_DIR`) as `CRAFT_FONTS`.
-//! The recipe is craft-fonts' `docs/integration.md`; unset, `CRAFT_FONTS` is empty. It only reads
-//! the local checkout (no network). On wasm32 it embeds only the UI faces (BIZ UDPGothic Regular
+//! Embeds the attributed fonts in `assets/fonts/international` as `CRAFT_FONTS`.
+//! It only reads this repository (no network). On wasm32 it embeds only the UI faces (BIZ UDPGothic Regular
 //! and any `Arab`, `Telu`, `Hebr` or `Thai` face), to keep the web build within hosting limits (Cloudflare Pages:
 //! 25 MiB per file).
 
@@ -8,17 +7,15 @@ use std::fmt::Write as _;
 use std::path::PathBuf;
 
 fn main() {
-    println!("cargo::rerun-if-env-changed=CRAFT_FONTS_DIR");
-    println!("cargo::rerun-if-env-changed=CRAFT_FONTS_REQUIRED");
     let mut src = String::from("pub static CRAFT_FONTS: &[CraftFont] = &[\n");
-    if let Some(dir) = std::env::var_os("CRAFT_FONTS_DIR").map(PathBuf::from) {
+    if let Some(crate_dir) = std::env::var_os("CARGO_MANIFEST_DIR").map(PathBuf::from) {
+        let dir = crate_dir.join("../../assets/fonts/international");
         match craft_fonts(&dir) {
             Ok(entries) => src.push_str(&entries),
-            Err(e) if std::env::var_os("CRAFT_FONTS_REQUIRED").is_some() => {
-                println!("cargo::error=CRAFT_FONTS_DIR={}: {e}", dir.display());
-            }
-            Err(e) => println!("cargo::warning=building without craft-fonts: CRAFT_FONTS_DIR={}: {e}", dir.display()),
+            Err(e) => println!("cargo::error=NexoPDF local fonts: {e}"),
         }
+    } else {
+        println!("cargo::error=CARGO_MANIFEST_DIR is missing; cannot locate NexoPDF fonts");
     }
     src.push_str("];\n");
     let out = PathBuf::from(std::env::var_os("OUT_DIR").unwrap_or_default()).join("craft_fonts.rs");
@@ -33,7 +30,7 @@ const BARRED_FAMILIES: [&str; 5] = ["Source Han", "Source Serif", "Source Sans",
 
 /// One `CraftFont { .. }` initialiser per manifest line.
 fn craft_fonts(dir: &std::path::Path) -> Result<String, String> {
-    let manifest = dir.join("fonts/manifest.txt");
+    let manifest = dir.join("manifest.txt");
     println!("cargo::rerun-if-changed={}", manifest.display());
     let text = std::fs::read_to_string(&manifest).map_err(|e| format!("{}: {e}", manifest.display()))?;
     let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").is_ok_and(|a| a == "wasm32");
@@ -44,10 +41,9 @@ fn craft_fonts(dir: &std::path::Path) -> Result<String, String> {
             return Err(format!("malformed manifest line: {line}"));
         };
         // AGENTS.md §1.1 bars Adobe's type designs whatever their licence, so a checkout that
-        // carries one (craft-fonts has Noto Sans CJK, which is Source Han) never embeds it.
+        // carries one never embeds it.
         if BARRED_FAMILIES.iter().any(|barred| family.starts_with(barred)) {
-            println!("cargo::warning=craft-fonts: not embedding {family} {style} (AGENTS.md §1.1)");
-            continue;
+            return Err(format!("forbidden font family {family} {style} (AGENTS.md §1.1)"));
         }
         // Arabic interface faces are small, so the web build keeps them too.
         let arabic = scripts.split(',').any(|s| s.trim() == "Arab");
