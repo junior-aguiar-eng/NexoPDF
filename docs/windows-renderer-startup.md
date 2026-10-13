@@ -63,14 +63,14 @@ the tested EXE and removing the forced-GL user setting, the user confirmed the o
 desktop shortcut and two ordinary PDF double-clicks worked. That local integration also
 included the separately credited Chinese font fix from #426; font changes are outside this PR.
 
-The startup-only contribution was then applied to main at
+The startup-only change was then applied to main at
 `bbbe60015c571ebfc39708ee07777b89e267122a` and rebuilt as a native x86 GUI EXE (PE `0x014c`,
 subsystem `2`). With both renderer variables unset it reproduced the same DX12 error, returned
 it, started OpenGL, and displayed the synthetic PDF. Page 2, 150% zoom, another file open and a
 nonexistent-file error were exercised without page errors or losing the open documents.
 This second run does not include the Chinese product fix and is not counted as font acceptance.
 
-On this contribution branch, workspace tests reported 2,132 passed and 7 declared ignored.
+On this historical branch, workspace tests reported 2,132 passed and 7 declared ignored.
 The required-adapter GPU regression, fmt, all-target workspace Clippy with warnings denied,
 assets, layering (34 crates) and WASM compilation (30 crates) passed. Browser runtime was
 not tested. Initial shared-cache checks hit an existing JBIG2 timeout and an outdated WASM

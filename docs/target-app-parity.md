@@ -1,6 +1,6 @@
 # NexoPDF parity with Adobe Acrobat Pro
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-12 · **Change:** web printing shipped, gap 4 closed, scores not re-judged; exclusive image-crop resize follow-up; minor (document-font subset completion, source styles and curved/shared image clips in the contributor fork; closed issues synced, scores not re-judged: #774, #756, #740, #759, #799–#821, #825, #844; earlier: readiness table with hours per audience; full number restated as the standard's additive weighted sum, 47% → 49%; earlier: second look: cross-cutting double count removed, mainstream-practitioner number added, core-workflow gate applied → alpha) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-12 · **Change:** web printing shipped, gap 4 closed, scores not re-judged; exclusive image-crop resize follow-up; minor (document-font subset completion, source styles and curved/shared image clips in the historical implementation; closed issues synced, scores not re-judged: #774, #756, #740, #759, #799–#821, #825, #844; earlier: readiness table with hours per audience; full number restated as the standard's additive weighted sum, 47% → 49%; earlier: second look: cross-cutting double count removed, mainstream-practitioner number added, core-workflow gate applied → alpha) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 
 The authoritative assessment of how close NexoPDF is to Acrobat Pro. [ROADMAP.md](../ROADMAP.md)
 summarizes it; [gaps.md](gaps.md) lists every shortfall one by one; the deep-dive checklists are
@@ -42,7 +42,7 @@ The gap between the numbers is the story of this release: most of what an Acroba
 for *exists*, but much of it is shallower than Acrobat's, rendering is still borrowed, quality has
 never been measured side by side with Acrobat, and the first public releases (0.4.0, 0.5.0) drew
 245 open issues in two days, including one that made our encrypted files unreadable in Acrobat
-([#774](https://github.com/junior-aguiar-eng/NexoPDF/issues/774), fixed by #836).
+(#774, fixed by #836).
 
 ## How this was measured
 
@@ -144,30 +144,6 @@ installing, launching, GPU and windows; OpenGL fallback) −5 points; discoverab
 (an Acrobat-like shell with Home and All tools, but tool-mode friction such as #721; #825 is fixed) −2;
 opening what people send (Chinese UI glyph boxes #826, CJK documents #758) −2.
 **Essentials user ≈ 66%** (60–70%).
-
-### User sentiment (second look, 2026-10-10)
-
-Practitioners' praise is real and consistent with these numbers:
-
-- **Adoption:** 7,595 GitHub stars, 2,661 forks; release downloads 177,301 (v0.4.0) and 39,447
-  (v0.5.0, its first day).
-- **Praise:** 23 of 359 issues written by users carry explicit praise ("amazing bit of software"
-  #693, "ridiculously fast and awesome PDF editor" #320, "brilliant" #542, "fantastic and very useful"
-  #369, "Gigantic stuff… I love it" #449). Switching reports: #179 switched from Adobe Reader on
-  Windows ("covers nearly everything I used Reader for"); #232 replacing macOS Preview; #273
-  "open source alternative to Acrobat"; #195 would "replace Acrobat completely" once hardware-token
-  signing exists.
-- **What users hit** (issue titles, excluding 35 agent-filed `fix(...)` reports): installation,
-  launch and GPU/window problems 54, rendering and display 46, editing text and images 41, CJK and
-  other fonts and glyphs 41, signing and certificates 35, printing 23, forms 18, conversion and
-  export 16, OCR 5. Roughly two thirds are bugs (≈ 213 vs ≈ 111 feature requests), concentrated in
-  core paths rather than niche features.
-
-The praise comes overwhelmingly from Reader-class work (view, annotate, fill, sign, organize), where
-the mainstream number is highest; the requests and bugs cluster on editing, CJK, printing,
-conversion and signing tokens, which is where the gaps are. That supports raising the full number
-from 40% to 47% (the double count; restated as 49% by the weighted-sum method) and reporting the mainstream 55% beside it; it does not support
-calling NexoPDF a replacement for Acrobat Pro yet.
 
 ## By dimension
 
@@ -294,7 +270,7 @@ licensed OCR or AI model.
 |---|---|---|
 | 2026-10-12 | minor | Exclusive image crops resize with their pixels across nested states, intervening operators and content streams; shared clips remain fixed. Synthetic engine/tool regressions and private image save/reopen checks; estimates unchanged. |
 | 2026-10-11 | minor | Web printing shipped (gap 4): Hardware, Platforms and L Print text updated. Text only: scores, readiness and hours not re-judged |
-| 2026-10-11 | minor | Contributor fork: document-font selection and subset completion, CFF, style ranges, contextual/bidi save/reopen and all-page Chinese keyboard acceptance; curve/hole hit testing (shared clips stay fixed, as on main). Scope remains bounded; percentages unchanged |
+| 2026-10-11 | minor | Historical implementation: document-font selection and subset completion, CFF, style ranges, contextual/bidi save/reopen and all-page Chinese keyboard acceptance; curve/hole hit testing (shared clips stay fixed, as on main). Scope remains bounded; percentages unchanged |
 | 2026-10-11 | minor | Synced with closed issues: encrypted output opens in Acrobat (#774, #836), Windows prints (#756, #847), column select (#740), 1:1 touchpad scrolling (#759), same-page multi-object move (#844), #825 and the #799–#821 fix batch. Text only: scores, readiness and hours not re-judged |
 | 2026-10-10 | minor | Readiness table: hours to ≈ 95% per audience (full 780–1,400, mainstream 500–900, essentials 180–330). Full number restated as the standard's additive weighted sum over dimensions with written weights: 47% → 49%. Method aligned with the standard, no new evidence |
 | 2026-10-10 | minor | Added the essentials-user score (≈ 66%): weighted depth of 13 everyday features, discounted for launch, discoverability and opening others' files |

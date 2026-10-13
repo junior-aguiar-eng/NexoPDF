@@ -1,6 +1,12 @@
 # NexoPDF — instructions for agents
 
-NexoPDF is a clean-room, open-source, Rust-native PDF application targeting Adobe Acrobat Pro parity. It runs natively on macOS, Windows, Linux and FreeBSD, and on the web via WASM. It is the sibling of `../photocraft` (a Photoshop-class editor) and follows the same conventions.
+NexoPDF is a clean-room, Rust-native PDF application maintained exclusively by its owner targeting Adobe Acrobat Pro parity. It runs natively on macOS, Windows, Linux and FreeBSD, and on the web via WASM. It is the sibling of `../photocraft` (a Photoshop-class editor) and follows the same conventions.
+
+## Desenvolvimento fechado
+
+O NexoPDF é desenvolvido exclusivamente pelo proprietário, **junior-aguiar-eng**. O repositório permanece público para consulta e distribuição, mas não recebe contribuições externas, pull requests, patches, propostas de alteração ou traduções. Não há processo de inscrição, colaboração ou inclusão de novos participantes.
+
+A manutenção é realizada apenas pelo proprietário e por ferramentas que ele autorizar. Os avisos legais, licenças e atribuições existentes continuam válidos.
 
 ## Start every session here
 1. Read `plan/STATUS.md`: the current milestone, the next unchecked task and any blockers. `ROADMAP.md` is the one-page summary (stage, numbers, progress log) and `docs/roadmap.md` the milestone table; at the end of every session update the milestone row and add a line to the ROADMAP.md progress log.
@@ -12,7 +18,7 @@ NexoPDF is a clean-room, open-source, Rust-native PDF application targeting Adob
 `plan/` is gitignored (local-only, like PhotoCraft). The machine-readable parity checklist lives in `parity/` (committed).
 
 ## Non-negotiables
-- **Assets: read `AGENTS.md` §1 before adding or showing any icon, image, font or document.** No assets from Adobe products, ever. Only openly licensed or contributor-original assets are allowed, each with an entry in `ATTRIBUTION.toml`. `cargo xtask assets` enforces this. `AGENTS.md` overrides this file.
+- **Assets: read `AGENTS.md` §1 before adding or showing any icon, image, font or document.** No assets from Adobe products, ever. Only openly licensed or project-original assets are allowed, each with an entry in `ATTRIBUTION.toml`. `cargo xtask assets` enforces this. `AGENTS.md` overrides this file.
 - **Fonts live in [storytold/craft-fonts](https://github.com/storytold/craft-fonts).** Never commit font files here (`AGENTS.md` §1.4; team members: [craftrules `standards/fonts.md`](https://github.com/storytold/craftrules/blob/main/standards/fonts.md), internal). It is the optional build input `CRAFT_FONTS_DIR`: `git clone https://github.com/storytold/craft-fonts ../craft-fonts && CRAFT_FONTS_DIR=../craft-fonts cargo test --workspace` embeds the Japanese fonts (UI fallback, Japanese text in edited PDFs) and runs their tests, which otherwise skip. Code using `nexopdf_fonts::CRAFT_FONTS` must work when it is empty.
 - **Clean-room.**
   - Never read, disassemble or copy anything inside the Acrobat bundle (names and listings only). **Never open `Contents/Resources/JavaScripts/`.**

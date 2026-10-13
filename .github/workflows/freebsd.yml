@@ -5,13 +5,6 @@ name: FreeBSD
 on:
   push:
     branches: [main]
-  pull_request:
-    paths:
-      - Cargo.toml
-      - Cargo.lock
-      - "**/Cargo.toml"
-      - .github/workflows/freebsd.yml
-      - packaging/freebsd/**
   workflow_dispatch:
 
 concurrency:
@@ -23,7 +16,7 @@ permissions:
 
 jobs:
   freebsd:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without PR churn across all craftapp repos.
+    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without manual coordination across all craftapp repos.
     uses: storytold/craft-common-actions/.github/workflows/freebsd.yml@main
     with:
       craft-fonts-ref: 3d9ab3a132ed0eff457e424226a435a901da30d3

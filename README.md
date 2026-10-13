@@ -19,6 +19,12 @@
 
 ---
 
+## Desenvolvimento fechado
+
+O NexoPDF é desenvolvido exclusivamente pelo proprietário, **junior-aguiar-eng**. O repositório permanece público para consulta e distribuição, mas não recebe contribuições externas, pull requests, patches, propostas de alteração ou traduções. Não há processo de inscrição, colaboração ou inclusão de novos participantes.
+
+A manutenção é realizada apenas pelo proprietário e por ferramentas que ele autorizar. Os avisos legais, licenças e atribuições existentes continuam válidos.
+
 ## ✦ Visão Geral
 
 O **NexoPDF** é uma bancada de trabalho completa e offline para visualização, manipulação e gestão de documentos PDF. Desenvolvido inteiramente em **Rust**, o NexoPDF combina fidelidade tipográfica estrita com máxima velocidade e proteção de dados: nenhum dado ou telemetria sai do seu computador.

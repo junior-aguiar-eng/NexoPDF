@@ -17,8 +17,8 @@ add a language: [localization.md](localization.md). Summary in [ROADMAP.md](../R
   ships localized help).
 - **Script support** comes from [localization.md](localization.md), the vendored winit IME patches
   (`vendor/README.md`) and user reports.
-- **Native review**: "community" means a native speaker contributed or corrected the catalog in a
-  pull request or issue; "no" means no record of review. No catalog has had a formal review.
+- **Native review**: "historical review" means a native speaker reviewed or corrected the catalog in the
+  historical record; "no" means no record of review. No catalog has had a formal review.
 - **Acrobat** ships 24 interface localizations on macOS (`.lproj`: cs, da, de, en, es, fi, fr, hu,
   it, ja, ko, nl, no, pl, pt, ru, sv, tr, uk, zh_CN, zh_TW, plus en_AE, en_IL, fr_MA) and Middle
   East / North Africa editions (MEA Arabic, MEH Hebrew, NAF French; `Resources/Sequences/`).
@@ -33,10 +33,10 @@ add a language: [localization.md](localization.md). Summary in [ROADMAP.md](../R
 | Hindi | `hi` | 0 | none | Devanagari not tested (egui shapes Telugu conjuncts, so shaping is likely workable); no Devanagari face in craft-fonts | no | none | no | 10–18 |
 | Arabic | `ar` | 2,143 (100%) | dialogs and tooltips; no help | Letters joined and lines reordered at load, but **layout not mirrored**, wrapped lines break at the wrong end, typed text runs left to right (`localization.md` §Arabic) | no | partial | yes (Middle East edition) | 25–45 |
 | French | `fr` | 2,128 (99.3%) | dialogs and tooltips; no help | Latin | no | partial | yes | 1–2 |
-| Portuguese (Brazil) | `pt-br` | 2,130 (99.4%) | dialogs and tooltips; no help | Latin | community (#288) | partial | yes | 1–2 |
+| Portuguese (Brazil) | `pt-br` | 2,130 (99.4%) | dialogs and tooltips; no help | Latin | historical review (#288) | partial | yes | 1–2 |
 | Indonesian | `id` | 0 | none | Latin | no | none | no | 3–5 |
 | Japanese | `ja` | 2,123 (99.1%) | dialogs and tooltips; no help | BIZ UDPGothic from craft-fonts; IME patched on macOS, Windows, X11, Wayland; vertical text renders but can't be edited | no | partial | yes | 4–8 |
-| German | `de` | 2,128 (99.3%) | dialogs and tooltips; no help | Latin | community, in progress (#828: terminology, clipping) | partial | yes | 2–4 |
+| German | `de` | 2,128 (99.3%) | dialogs and tooltips; no help | Latin | historical review, in progress (#828: terminology, clipping) | partial | yes | 2–4 |
 | Korean | `ko` | 0 | none | Hangul IME patched (Microsoft and Apple Korean, `vendor/README.md` winit 3, 6, 9, 10); no Hangul UI face in craft-fonts | no | none | yes | 6–10 |
 | Vietnamese | `vi` | 0 | none | Latin with stacked diacritics; bundled Inter covers them (not tested) | no | none | no | 3–5 |
 
@@ -65,7 +65,7 @@ none has translated help.
 | Slovenian | `sl` | 2,324 entries | partial | no |
 | Greek | `el` | 2,341 entries | partial | no |
 | Turkish | `tr` | 2,313 entries | partial | yes |
-| Lithuanian | `lt` | 2,578 entries | partial; community native-speaker review ([#1401](https://github.com/junior-aguiar-eng/NexoPDF/pull/1401)) | no |
+| Lithuanian | `lt` | 2,578 entries | partial; historical native-speaker review (#1401) | no |
 
 **14 other languages** ship (21 catalogs plus English, 22 interface languages in Preferences).
 The entry counts without percentages were measured on 2026-10-12; they are not percentages of the older 2,143-key snapshot above. Their presence does not imply a detailed linguistic or runtime review.

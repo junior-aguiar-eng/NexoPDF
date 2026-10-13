@@ -1,6 +1,8 @@
-# Developing NexoPDF
+# Maintaining NexoPDF
 
-Working instructions for agents and contributors are in `AGENTS.md` and `CLAUDE.md`. This page
+External participation is closed. Maintenance instructions apply only to the owner and authorized tools.
+
+Working instructions for the owner and authorized agents are in `AGENTS.md` and `CLAUDE.md`. This page
 collects what the desktop app reads from its environment and where it writes its diagnostics.
 
 ## Low-disk Cargo profile

@@ -22,7 +22,7 @@ ids stay lowercase (`nexopdf-<version>-<platform>-<arch>.<ext>`, `io.nexohub.nex
 2. **Merge `main` into `release`** (or fast-forward it) and push. The workflow starts by itself.
 3. **Wait for the draft.** When every job has finished (notarization is the slow part), the
    Releases page has a draft `NexoPDF v0.3.0` targeting the pushed commit, with every artifact
-   and `SHA256SUMS.txt`. The notes are generated from the merged PRs.
+   and `SHA256SUMS.txt`. The notes describe the published changes; release preparation is reserved to the owner.
 4. **Check it.** Download an installer or two and read the job summaries. A `::warning::` there
    means a signing secret was missing and that artifact is unsigned.
 5. **Publish** the draft in the GitHub UI. Publishing creates the `v0.3.0` tag. Versions with a
@@ -217,7 +217,7 @@ release does.
 ## Scanner detections
 
 Antivirus and reputation scanners sometimes flag a released file. Check the facts before you change
-code or answer publicly. The first report was [issue #747](https://github.com/junior-aguiar-eng/NexoPDF/issues/747),
+code or answer publicly. The first report was issue #747,
 a match of the `CobaltStrikeBeacon` family rule.
 
 1. **Confirm the file is the release.** Compare its SHA-256 with `SHA256SUMS.txt` on the GitHub
@@ -252,5 +252,5 @@ a match of the `CobaltStrikeBeacon` family rule.
    current one does not. Don't alter NexoPDF's binaries to change a scanner's result. That changes
    nothing about the software.
 7. **Report.** To the scanner, send the file's SHA-256, the release URL, the rule name and revision,
-   and the matched identifiers and offsets. Report NexoPDF problems at
-   <https://github.com/junior-aguiar-eng/NexoPDF/issues> with the same facts.
+   and the matched identifiers and offsets. Keep NexoPDF findings in the owner's
+   maintenance records with the same facts; there is no public submission channel.
