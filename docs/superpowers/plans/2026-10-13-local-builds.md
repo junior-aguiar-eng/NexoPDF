@@ -56,3 +56,9 @@
 - Full locked offline workspace suite, with --test-threads=1: 2,833 passed, zero failed, 14 pre-existing ignored tests. The original performance limits and concurrent IPC election assertions passed.
 - Final whole-workspace Clippy, all targets and warnings denied, passed. Native build, official WASM check (31 libraries), formatting, asset attribution and packaging/workflow checks passed as recorded above.
 - Delivery is split into independent IPC, local-font and local-automation commits. Platform runner execution is checked after push; release dispatch, installer installation and publication were not performed locally.
+
+## GitHub follow-up - 2026-10-13
+
+- All four runs on aa6212e completed: CI, Packaging lint and Windows ARM64 passed. FreeBSD failed only in the real asset-manifest test because Git was absent inside the VM. The error was `running git ls-files: No such file or directory`.
+- Commit ae909d3 installs Git in both FreeBSD VM preparation commands and checks its version before the full suite. Local validation rejects the missing executable dependency in either workflow; 47 xtask tests and three Python tests passed, as did actionlint, formatting and Clippy. Product code and test assertions are unchanged.
+- Remote tests are rerun after push. The release workflow itself was not dispatched, and no release was published.
