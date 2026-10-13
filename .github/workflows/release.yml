@@ -186,12 +186,14 @@ jobs:
     - uses: vmactions/freebsd-vm@c46abacb49f09938ca4e1702d15d836285d694cc
       with:
         release: '15.1'
+        mem: 8192
         usesh: true
         envs: NEXOPDF_VERSION
         prepare: pkg install -y bash git rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
         run: |-
           set -eu
           export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
+          export CARGO_BUILD_JOBS=1
           # The VM runs as root; rsync preserves the host runner's checkout owner.
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0=safe.directory

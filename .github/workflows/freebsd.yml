@@ -17,6 +17,7 @@ jobs:
     - uses: vmactions/freebsd-vm@c46abacb49f09938ca4e1702d15d836285d694cc
       with:
         release: '15.1'
+        mem: 8192
         usesh: true
         prepare: pkg install -y bash git rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
         run: |-
@@ -28,5 +29,6 @@ jobs:
           export GIT_CONFIG_VALUE_0="$(pwd)"
           git ls-files --cached > /dev/null
           export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
+          export CARGO_BUILD_JOBS=1
           cargo test --locked --workspace -- --test-threads=1
           cargo build --locked -p nexopdf -p nexopdf-cli

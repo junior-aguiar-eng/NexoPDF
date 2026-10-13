@@ -17,6 +17,7 @@ def validate(root):
         vm = next(step for step in job["steps"] if step.get("uses", "").startswith("vmactions/freebsd-vm@"))
         assert "git" in vm["with"]["prepare"].split(), "FreeBSD asset validation requires Git inside the VM"
         run = vm["with"]["run"]
+        assert int(vm["with"].get("mem", 0)) >= 8192 and "export CARGO_BUILD_JOBS=1" in run, "Bound FreeBSD compiler memory pressure"
         assert 'export GIT_CONFIG_VALUE_0="$(pwd)"' in run and "export GIT_CONFIG_KEY_0=safe.directory" in run, "Trust only the synced FreeBSD checkout"
         assert run.index("git ls-files --cached") < run.index("cargo "), "Check the VM checkout before compiling"
     for name in ("windows", "macos", "draft"):

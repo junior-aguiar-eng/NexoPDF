@@ -64,3 +64,5 @@
 - Remote tests are rerun after push. The release workflow itself was not dispatched, and no release was published.
 
 - The rerun on 0d6b377 passed CI and Windows ARM64, but FreeBSD still failed on `git ls-files failed`: the executable now exists, but the root VM reads a checkout whose host owner is preserved by rsync. The exact-path Git process configuration is applied to both VMs, with a checkout-read preflight before compilation. A synthetic different-owner Git checkout reproduces rejection and passes with the same scoped configuration. No wildcard or persistent user Git setting is used.
+
+- On 7aec6c3, Packaging lint, CI and Windows ARM64 passed. FreeBSD passed the Git-read preflight, then compilation was killed with exit 137 before tests began. The VM default was 6144 MiB. Both FreeBSD jobs now request 8192 MiB and use one Cargo compiler job to reduce peak memory pressure; tests and performance limits are unchanged. Local workflow contracts, Python tests and actionlint passed. A fresh platform run is required.
