@@ -18,9 +18,10 @@ jobs:
       with:
         release: '15.1'
         usesh: true
-        prepare: pkg install -y bash rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
+        prepare: pkg install -y bash git rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
         run: |-
           set -eu
+          git --version
           export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
           cargo test --locked --workspace -- --test-threads=1
           cargo build --locked -p nexopdf -p nexopdf-cli

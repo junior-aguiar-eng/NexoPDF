@@ -12,6 +12,10 @@ def validate(root):
     tests = [step for step in ci["jobs"]["test"]["steps"] if step.get("name") == "Test"]
     assert len(tests) == 1 and "if" not in tests[0], "Workspace tests must run on Linux and Windows with local fonts"
     release = yaml.safe_load((workflows / "release.yml").read_text())
+    freebsd = yaml.safe_load((workflows / "freebsd.yml").read_text())
+    for job in (freebsd["jobs"]["test"], release["jobs"]["freebsd"]):
+        vm = next(step for step in job["steps"] if step.get("uses", "").startswith("vmactions/freebsd-vm@"))
+        assert "git" in vm["with"]["prepare"].split(), "FreeBSD asset validation requires Git inside the VM"
     for name in ("windows", "macos", "draft"):
         assert release["jobs"][name].get("if") == "github.ref == 'refs/heads/release'", f"Release branch guard missing: {name}"
         assert "environment" not in release["jobs"][name], "Do not implicitly create a GitHub environment"

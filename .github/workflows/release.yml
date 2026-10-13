@@ -188,7 +188,7 @@ jobs:
         release: '15.1'
         usesh: true
         envs: NEXOPDF_VERSION
-        prepare: pkg install -y bash rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
+        prepare: pkg install -y bash git rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
         run: |-
           set -eu
           export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
