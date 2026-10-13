@@ -809,7 +809,7 @@
 	Downsample to	Μείωση ανάλυσης σε
 	Also recognize pages that already have text	Αναγνώριση και σελίδων που έχουν ήδη κείμενο
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Αναγνωρίζονται και οι εικόνες αυτών των σελίδων· οι λέξεις που υπάρχουν ήδη στο κείμενο της σελίδας δεν προστίθενται ξανά
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Η αναγνώριση κειμένου δεν είναι εγκατεστημένη: λείπουν τα αρχεία μοντέλων. Εγκαταστήστε ξανά το NexoPDF ή ορίστε το NexoPDF_MODELS στον φάκελο που τα περιέχει.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Η αναγνώριση κειμένου δεν είναι εγκατεστημένη: λείπουν τα αρχεία μοντέλων. Εγκαταστήστε ξανά το NexoPDF ή ορίστε το NEXOPDF_MODELS στον φάκελο που τα περιέχει.
 	Planned · {m}	Προγραμματισμένο · {m}
 	Planned for milestone {m} — open to see what it will include	Προγραμματισμένο για το ορόσημο {m} — ανοίξτε για να δείτε τι θα περιλαμβάνει
 	Coming in milestone {m}. Items marked Ready work today.	Αναμένεται στο ορόσημο {m}. Τα στοιχεία με ένδειξη «Έτοιμο» λειτουργούν ήδη.
@@ -1251,7 +1251,7 @@
 	there are no pages to print	δεν υπάρχουν σελίδες προς εκτύπωση
 	the document has no tags	το έγγραφο δεν περιέχει ετικέτες δομής
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	τα μοντέλα αναγνώρισης κειμένου δεν είναι εγκατεστημένα (επανεγκαταστήστε το NexoPDF ή ορίστε το NexoPDF_MODELS στον φάκελο που τα περιέχει)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	τα μοντέλα αναγνώρισης κειμένου δεν είναι εγκατεστημένα (επανεγκαταστήστε το NexoPDF ή ορίστε το NEXOPDF_MODELS στον φάκελο που τα περιέχει)
 	the image is empty	η εικόνα είναι κενή
 	this file isn't XFDF, FDF, XML or text form data	αυτό το αρχείο δεν περιέχει δεδομένα φόρμας XFDF, FDF, XML ή κειμένου
 	nothing in the file matches this document	κανένα στοιχείο του αρχείου δεν αντιστοιχεί στο έγγραφο
@@ -1535,7 +1535,7 @@
 	Sort	Ταξινόμηση
 	Table	Πίνακας
 	Table rows belong directly in a table or its head, body or foot. Fix the table's tags.	Οι γραμμές πίνακα πρέπει να ανήκουν απευθείας στον πίνακα ή στην κεφαλίδα, το σώμα ή το υποσέλιδό του. Διορθώστε τις ετικέτες δομής του πίνακα.
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	Η αναγνώριση κειμένου δεν έχει εγκατασταθεί: λείπουν τα μοντέλα της (εκτελέστε `cargo xtask models` ή ορίστε το NexoPDF_MODELS).
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	Η αναγνώριση κειμένου δεν έχει εγκατασταθεί: λείπουν τα μοντέλα της (εκτελέστε `cargo xtask models` ή ορίστε το NEXOPDF_MODELS).
 	That didn't work: an internal error stopped it ({m}).	Η ενέργεια απέτυχε λόγω εσωτερικού σφάλματος ({m}).
 	The Windows store's digital IDs couldn't be listed: {e}	Δεν ήταν δυνατή η ανάκτηση των ψηφιακών ταυτοτήτων από το αποθετήριο των Windows: {e}
 	The document changed while you were choosing a file, so nothing was changed.	Το έγγραφο τροποποιήθηκε ενώ επιλέγατε αρχείο, οπότε δεν εφαρμόστηκε καμία αλλαγή.
@@ -2348,3 +2348,9 @@ animation effects	Off	Ανενεργά
 	Local cross-PDF links require the desktop app	Οι τοπικοί σύνδεσμοι μεταξύ PDF απαιτούν την εφαρμογή υπολογιστή
 	The existing action will be preserved.	Η υπάρχουσα ενέργεια θα διατηρηθεί.
 	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Τα σενάρια αυτής της φόρμας είναι απενεργοποιημένα, επειδή ένα από αυτά εκτελούνταν για πολύ ώρα. Ανοίξτε ξανά το έγγραφο για να εκτελεστούν ξανά.
+
+	An open-source PDF workbench — local, private, and fast.	Περιβάλλον PDF ανοικτού κώδικα — τοπικό, ιδιωτικό και γρήγορο.
+	NexoHub Ecosystem	Οικοσύστημα NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% εγγενές Rust  ·  Χωρίς τηλεμετρία  ·  Απόλυτη ιδιωτικότητα
+	High-performance document engineering — local, private and ultrafast.	Επεξεργασία εγγράφων υψηλών επιδόσεων — τοπική, ιδιωτική και εξαιρετικά γρήγορη.
+	High-performance document workbench written in native Rust.	Περιβάλλον εγγράφων υψηλών επιδόσεων γραμμένο σε εγγενές Rust.

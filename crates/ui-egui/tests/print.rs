@@ -2,11 +2,11 @@
 
 use egui_kittest::Harness;
 use egui_kittest::kittest::{NodeT, Queryable};
-use nexopdf_ui_egui::{Dialog, PdfCraftApp};
+use nexopdf_ui_egui::{Dialog, NexoPDFApp};
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("form.pdf", None, include_bytes!("data/form.pdf").to_vec()).unwrap();
         app
@@ -40,7 +40,7 @@ fn current_print_page_saves_the_viewed_page_when_labels_restart() {
     }
     bytes.extend_from_slice(format!("trailer << /Size {} /Root 1 0 R >>\nstartxref\n{xref}\n%%EOF\n", objects.len() + 1).as_bytes());
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("labelled.pdf", None, bytes).unwrap();
         app
@@ -58,7 +58,7 @@ fn current_print_page_saves_the_viewed_page_when_labels_restart() {
         h.run_steps(3);
         assert_eq!(h.state().print_draft.current_page, current);
         h.get_by_label("Sheet 1 of 1");
-        let out = std::env::temp_dir().join(format!("pdfcraft-print-current-{}-{current}.pdf", std::process::id()));
+        let out = std::env::temp_dir().join(format!("nexopdf-print-current-{}-{current}.pdf", std::process::id()));
         h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
         h.state_mut().print_draft.printer = None;
         h.run_steps(1);
@@ -90,7 +90,7 @@ fn print_dialog_lays_out_sheets_and_saves_a_pdf() {
     h.run_steps(2);
     h.get_by_label("Sheet 1 of 1");
     // No printer on a test machine: Save as PDF.
-    let out = std::env::temp_dir().join(format!("pdfcraft-print-test-{}.pdf", std::process::id()));
+    let out = std::env::temp_dir().join(format!("nexopdf-print-test-{}.pdf", std::process::id()));
     h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
     h.state_mut().print_draft.printer = None;
     h.run_steps(1);
@@ -127,7 +127,7 @@ fn print_dialog_prints_the_selected_pages() {
     assert_eq!(h.state().print_draft.which, PrintWhich::Selected);
     h.get_by_label("Selected pages (2)");
     h.get_by_label("Sheet 1 of 2");
-    let out = std::env::temp_dir().join(format!("pdfcraft-print-selected-{}.pdf", std::process::id()));
+    let out = std::env::temp_dir().join(format!("nexopdf-print-selected-{}.pdf", std::process::id()));
     h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
     h.state_mut().print_draft.printer = None;
     h.run_steps(1);
@@ -187,7 +187,7 @@ fn cut_stack_dialog_previews_saves_and_refuses_duplex() {
     assert!(!h.state_mut().print_now());
     h.state_mut().print_draft.duplex = Duplex::Off;
     h.state_mut().print_draft.printer = None;
-    let out = std::env::temp_dir().join(format!("pdfcraft-cut-stack-ui-{}.pdf", std::process::id()));
+    let out = std::env::temp_dir().join(format!("nexopdf-cut-stack-ui-{}.pdf", std::process::id()));
     h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
     h.run_steps(2);
     h.get_by_label("Save as PDF").click();
@@ -205,7 +205,7 @@ fn a_failed_save_as_pdf_keeps_the_dialog_open() {
     h.run_steps(3);
     h.state_mut().print_draft.printer = None;
     // A folder that doesn't exist: the write fails.
-    let out = std::env::temp_dir().join(format!("pdfcraft-missing-{}", std::process::id())).join("x.pdf");
+    let out = std::env::temp_dir().join(format!("nexopdf-missing-{}", std::process::id())).join("x.pdf");
     h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
     h.run_steps(2);
     h.get_by_label("Save as PDF").click();
@@ -312,7 +312,7 @@ fn printers_listed_in_the_background_preselect_the_default_unless_one_was_picked
 #[test]
 fn architectural_page_can_be_matched_at_100_percent() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1000.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         let bytes = app.session.create_blank(2592.0, 1728.0, 1).unwrap();
         app.open_bytes("architectural.pdf", None, bytes.as_ref().clone()).unwrap();

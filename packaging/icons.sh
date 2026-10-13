@@ -12,7 +12,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIR="$ROOT/assets/app-icon"
 SVG="$DIR/nexopdf.svg"
-ID="ai.storyteller.nexopdf"
+ID="io.nexohub.nexopdf"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 

@@ -7,7 +7,7 @@ use std::time::{Duration, SystemTime};
 
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
-use nexopdf_ui_egui::{PdfCraftApp, SaveTarget};
+use nexopdf_ui_egui::{NexoPDFApp, SaveTarget};
 
 /// An `n`-page document with a proper xref table; page `i` shows "Page i+1", and with `notes`
 /// each page has a sticky note.
@@ -50,7 +50,7 @@ struct TempPdf {
 
 impl TempPdf {
     fn new(test: &str, bytes: &[u8]) -> Self {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-reload-{test}-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-reload-{test}-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
         let path = dir.join("thesis.pdf").to_string_lossy().into_owned();
@@ -73,10 +73,11 @@ impl Drop for TempPdf {
     }
 }
 
-fn harness(path: &str) -> Harness<'static, PdfCraftApp> {
+fn harness(path: &str) -> Harness<'static, NexoPDFApp> {
     let path = path.to_owned();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
+        app.set_option("language", "en").unwrap();
         app.run_inline = true;
         app.open_path(&path);
         app
@@ -85,17 +86,17 @@ fn harness(path: &str) -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn pages(h: &Harness<'static, PdfCraftApp>) -> usize {
+fn pages(h: &Harness<'static, NexoPDFApp>) -> usize {
     let app = h.state();
     app.session.get(app.views[0].id).unwrap().info.pages.len()
 }
 
-fn dirty(h: &Harness<'static, PdfCraftApp>) -> bool {
+fn dirty(h: &Harness<'static, NexoPDFApp>) -> bool {
     let app = h.state();
     app.session.get(app.views[0].id).unwrap().dirty
 }
 
-fn rotate_first_page(h: &mut Harness<'static, PdfCraftApp>) {
+fn rotate_first_page(h: &mut Harness<'static, NexoPDFApp>) {
     h.state_mut().views[0].select_pages(&[0]);
     h.state_mut().apply_edit(nexopdf_engine::Edit::RotatePages { pages: vec![0], degrees: 90 });
 }
@@ -176,7 +177,7 @@ fn a_deleted_file_leaves_the_document_open() {
 
 #[test]
 fn nothing_reloads_with_the_preference_off() {
-    assert!(PdfCraftApp::new().reload_changed_files, "on by default");
+    assert!(NexoPDFApp::new().reload_changed_files, "on by default");
     let file = TempPdf::new("off", &fixture(2));
     let mut h = harness(&file.path);
     h.state_mut().reload_changed_files = false;
@@ -184,7 +185,7 @@ fn nothing_reloads_with_the_preference_off() {
     file.rebuild(&fixture(3));
     h.run_steps(4);
     assert_eq!(pages(&h), 2);
-    let mut restarted = PdfCraftApp::new();
+    let mut restarted = NexoPDFApp::new();
     restarted.restore(&h.state().persist());
     assert!(!restarted.reload_changed_files, "the choice is kept");
 }

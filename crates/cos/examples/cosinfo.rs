@@ -1,5 +1,5 @@
 //! Print how a file was opened: revisions, repair notes, trailer, security and the catalog.
-//! `cargo run -p pdfcraft-cos --example cosinfo f.pdf [password] [object-number…]`
+//! `cargo run -p nexopdf-cos --example cosinfo f.pdf [password] [object-number…]`
 fn show(o: &nexopdf_cos::Object) -> String {
     let mut t = Vec::new();
     nexopdf_cos::serialize(o, &mut t);

@@ -13,7 +13,7 @@ use nexopdf_engine::{DocId, Edit};
 use nexopdf_render::{DestView, DocInfo, LayerOp, LinkTarget, PRINT_TAG, PageText, RenderPool, RenderRequest, RequestKind, Tile, device_pixels};
 
 use crate::theme::{self, Tokens};
-use crate::{PdfCraftApp, QuickTool, RightPanel, comments, icons, widgets};
+use crate::{NexoPDFApp, QuickTool, RightPanel, comments, icons, widgets};
 
 /// Logical pixels per PDF point at 100% (96 dpi, like browsers).
 pub const PT: f32 = 96.0 / 72.0;
@@ -113,7 +113,7 @@ impl PageLayout {
         }
     }
 
-    /// Registry command that switches to this base layout (`PdfCraftApp::execute`).
+    /// Registry command that switches to this base layout (`NexoPDFApp::execute`).
     pub fn command(self) -> &'static str {
         match self {
             Self::Single => "view.layout.single",
@@ -2028,7 +2028,7 @@ pub fn shortcuts(view: &mut DocView, ctx: &egui::Context) {
 /// of the previous screen in view.
 const KEY_SCROLL_LINE: f32 = 40.0;
 
-pub fn document_area(app: &mut PdfCraftApp, index: usize, ui: &mut egui::Ui) {
+pub fn document_area(app: &mut NexoPDFApp, index: usize, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     // Keyboard scrolling applies to this frame's page view only, never later.
     let key_scroll = std::mem::take(&mut app.views[index].key_scroll);
@@ -3470,7 +3470,7 @@ fn selection_actions(ui: &mut egui::Ui, viewport: Rect, view: &mut DocView, info
 }
 
 /// Run a push button's action (the ones that need no JavaScript engine).
-fn run_button(app: &mut PdfCraftApp, index: usize, name: &str, action: nexopdf_engine::form_scripts::ButtonAction) {
+fn run_button(app: &mut NexoPDFApp, index: usize, name: &str, action: nexopdf_engine::form_scripts::ButtonAction) {
     use nexopdf_engine::form_scripts::ButtonAction as B;
     let pages = app.session.get(app.views[index].id).map_or(0, |d| d.info.pages.len());
     match action {
@@ -3487,7 +3487,7 @@ fn run_button(app: &mut PdfCraftApp, index: usize, name: &str, action: nexopdf_e
         }
         B::Named(n) => match n.as_str() {
             "Print" => app.open_print(),
-            // What PdfCraft's XFA buttons use, and what a script's `execMenuItem("Save")`
+            // What NexoPDF's XFA buttons use, and what a script's `execMenuItem("Save")`
             // does too: the Save As dialog, so a click never overwrites the file unasked.
             "SaveAs" => app.run_command("file.save_as"),
             "NextPage" => app.views[index].step_page(true),
@@ -3551,7 +3551,7 @@ fn run_button(app: &mut PdfCraftApp, index: usize, name: &str, action: nexopdf_e
 
 /// Run a set-layer-visibility action from a button or link. It changes what is shown, as the
 /// Layers panel does (which follows), not the document.
-fn set_layers(app: &mut PdfCraftApp, index: usize, changes: &[(LayerOp, (u32, u16))], preserve_rb: bool) {
+fn set_layers(app: &mut NexoPDFApp, index: usize, changes: &[(LayerOp, (u32, u16))], preserve_rb: bool) {
     let id = app.views[index].id;
     if app.session.set_layer_state(id, changes, preserve_rb) {
         app.views[index].invalidate_content();
@@ -3840,7 +3840,7 @@ fn notice_bar(ui: &mut egui::Ui, t: &Tokens, icon: &str, icon_color: Color32, te
 }
 
 /// The floating quick-action bar at the left edge of the document area.
-fn quick_bar(app: &mut PdfCraftApp, area: Rect, ui: &mut egui::Ui) {
+fn quick_bar(app: &mut NexoPDFApp, area: Rect, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     let pos = area.left_top() + vec2(14.0, 14.0);
     egui::Area::new(egui::Id::new("quick-bar")).order(egui::Order::Middle).fixed_pos(pos).show(ui.ctx(), |ui| {
@@ -4891,7 +4891,7 @@ trailer << /Root 1 0 R >>
     #[test]
     fn many_open_documents_share_one_raster_allowance_and_close_releases_handles() {
         let ctx = egui::Context::default();
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         let bytes = app.session.create_blank(612.0, 792.0, 1).unwrap();
         let mut expected = Vec::new();
         for index in 0..6 {
@@ -5016,7 +5016,7 @@ trailer << /Root 1 0 R >>
         use egui_kittest::kittest::Queryable;
 
         let mut h = egui_kittest::Harness::builder().with_size(vec2(1400.0, 900.0)).build_eframe(|_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             let bytes = app.session.create_blank(300.0, 400.0, 100).unwrap();
             app.open_bytes("organize-gaps.pdf", None, bytes.as_ref().clone()).unwrap();
             app.views[0].organize = true;
@@ -5046,7 +5046,7 @@ trailer << /Root 1 0 R >>
     #[test]
     fn real_shell_pages_organizer_and_print_only_collect_current_thumbnail_consumers() {
         let mut h = egui_kittest::Harness::builder().with_size(vec2(1400.0, 900.0)).build_eframe(|_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             let bytes = app.session.create_blank(612.0, 792.0, 10_000).unwrap();
             app.open_bytes("synthetic-ten-thousand.pdf", None, bytes.as_ref().clone()).unwrap();
             app.right = Some(RightPanel::Pages);

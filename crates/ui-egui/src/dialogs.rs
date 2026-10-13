@@ -5,17 +5,17 @@ use egui::{Align, Layout};
 use crate::theme::{self, Tokens};
 use nexopdf_engine::Edit;
 
-use crate::{CloseRequest, Dialog, PdfCraftApp, PropsTab, panels::human_size, widgets};
+use crate::{CloseRequest, Dialog, NexoPDFApp, PropsTab, panels::human_size, widgets};
 
 const INFO_KEYS: [&str; 4] = ["Title", "Author", "Subject", "Keywords"];
 
-pub fn show(app: &mut PdfCraftApp, ctx: &egui::Context) {
+pub fn show(app: &mut NexoPDFApp, ctx: &egui::Context) {
     dialogs(app, ctx);
     // Last, so it sits above Document Properties when Security's Unlock… asked for it.
     unlock(app, ctx);
 }
 
-fn dialogs(app: &mut PdfCraftApp, ctx: &egui::Context) {
+fn dialogs(app: &mut NexoPDFApp, ctx: &egui::Context) {
     password(app, ctx);
     save_prompt(app, ctx);
     link_prompt(app, ctx);
@@ -1078,7 +1078,7 @@ fn dialogs(app: &mut PdfCraftApp, ctx: &egui::Context) {
             }
             Dialog::About => {
                 ui.horizontal(|ui| {
-                    widgets::artcraft_mark(ui, 42.0);
+                    widgets::nexopdf_mark(ui, 42.0);
                     ui.add_space(6.0);
                     ui.vertical(|ui| {
                         ui.label(egui::RichText::new("NexoPDF").font(theme::semibold(22.0)));
@@ -1086,7 +1086,7 @@ fn dialogs(app: &mut PdfCraftApp, ctx: &egui::Context) {
                     });
                 });
                 ui.add_space(10.0);
-                ui.label(egui::RichText::new(tl!("Workbench documental de alta performance escrito em Rust nativo.")).font(theme::medium(13.5)));
+                ui.label(egui::RichText::new(tl!("High-performance document workbench written in native Rust.")).font(theme::medium(13.5)));
                 ui.add_space(4.0);
                 ui.label(
                     egui::RichText::new("Engenharia documental 100% nativa em Rust · Totalmente offline · Sem telemetria · Privacidade absoluta.")
@@ -1095,11 +1095,9 @@ fn dialogs(app: &mut PdfCraftApp, ctx: &egui::Context) {
                 );
                 ui.add_space(8.0);
                 ui.label(
-                    egui::RichText::new(
-                        "Rendering: hayro / lopdf · UI: egui (DirectX 12 / GPU) · Icons: Lucide · Fonts: Inter, JetBrains Mono",
-                    )
-                    .color(t.text_faint)
-                    .small(),
+                    egui::RichText::new("Rendering: hayro / lopdf · UI: egui (DirectX 12 / GPU) · Icons: Lucide · Fonts: Inter, JetBrains Mono")
+                        .color(t.text_faint)
+                        .small(),
                 );
                 ui.add_space(12.0);
                 ui.label(egui::RichText::new("Ecossistema NexoHub").font(theme::semibold(13.0)).color(t.accent_text));
@@ -1321,7 +1319,7 @@ fn dialogs(app: &mut PdfCraftApp, ctx: &egui::Context) {
 }
 
 /// Info edits needed to make the document match the Description draft.
-fn draft_changes(app: &PdfCraftApp) -> Option<Vec<Edit>> {
+fn draft_changes(app: &NexoPDFApp) -> Option<Vec<Edit>> {
     let (id, draft) = app.props_draft.as_ref()?;
     let doc = app.session.get(*id)?;
     let mut edits: Vec<Edit> = INFO_KEYS
@@ -1358,7 +1356,7 @@ pub(crate) fn save_prompt_key(ctx: &egui::Context) -> Option<Option<bool>> {
 }
 
 /// "Save changes?" when closing a tab or quitting with unsaved edits.
-fn save_prompt(app: &mut PdfCraftApp, ctx: &egui::Context) {
+fn save_prompt(app: &mut NexoPDFApp, ctx: &egui::Context) {
     let Some(req) = app.close_request else { return };
     let index = match req {
         CloseRequest::Tab(id) => app.views.iter().position(|v| v.id == id),
@@ -1429,7 +1427,7 @@ fn shorten_middle(name: &str, max: usize) -> String {
 /// "Open this web page?" when a document's link, button or script asks to open an address
 /// (#90, #91). Shows where the address really goes and the whole address; Cancel is the default,
 /// and Escape or clicking outside cancels.
-fn link_prompt(app: &mut PdfCraftApp, ctx: &egui::Context) {
+fn link_prompt(app: &mut NexoPDFApp, ctx: &egui::Context) {
     let Some(pending) = app.pending_link.clone() else { return };
     let t = Tokens::get(ctx);
     let email = pending.url.get(..7).is_some_and(|s| s.eq_ignore_ascii_case("mailto:"));
@@ -1548,7 +1546,7 @@ fn password_modal(
 }
 
 /// Password prompt for encrypted documents (Acrobat: "Password" dialog on open).
-fn password(app: &mut PdfCraftApp, ctx: &egui::Context) {
+fn password(app: &mut NexoPDFApp, ctx: &egui::Context) {
     let Some(prompt) = app.password_prompt.as_mut() else { return };
     let message = crate::i18n::fmt(tl!("“{name}” is protected. Enter a password to open it."), &[("name", &prompt.name)]);
     match password_modal(ctx, "password", tl!("Password required"), message, &mut prompt.input, prompt.error.as_deref(), tl!("Open")) {
@@ -1562,7 +1560,7 @@ fn password(app: &mut PdfCraftApp, ctx: &egui::Context) {
 }
 
 /// Permissions password prompt: lifts the restrictions of an open document (#995).
-fn unlock(app: &mut PdfCraftApp, ctx: &egui::Context) {
+fn unlock(app: &mut NexoPDFApp, ctx: &egui::Context) {
     let Some(prompt) = app.unlock_prompt.as_mut() else { return };
     let message =
         crate::i18n::fmt(tl!("“{name}” has security restrictions. Enter its permissions password to lift them."), &[("name", &prompt.name)]);

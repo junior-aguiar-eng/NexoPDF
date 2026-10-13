@@ -1,4 +1,4 @@
-//! pdfcraft-organize — page and document-structure edits (L4).
+//! nexopdf-organize — page and document-structure edits (L4).
 //!
 //! Every operation mutates a `nexopdf_cos::Document` (copy-on-write), so callers snapshot the
 //! document before an edit for undo. Operations never drop data they do not understand.

@@ -1,4 +1,4 @@
-//! Text extraction (bootstrap for `pdfcraft-text`, architecture §8).
+//! Text extraction (bootstrap for `nexopdf-text`, architecture §8).
 //!
 //! A hayro `Device` that ignores paint and records every glyph: its Unicode value (ToUnicode →
 //! encoding → glyph name fallbacks, handled by hayro) and its box in *page view space*, i.e.
@@ -548,7 +548,7 @@ impl<'a> Device<'a> for TextDevice {
             Some(hayro::hayro_interpret::hayro_cmap::BfString::String(s)) => s,
             None if replaced => String::new(),
             None => {
-                if std::env::var_os("PDFCRAFT_TEXT_DEBUG").is_some() {
+                if std::env::var_os("NEXOPDF_TEXT_DEBUG").is_some() {
                     eprintln!(
                         "NOUNICODE {} {:?}",
                         if matches!(glyph, Glyph::Type3(_)) { "t3" } else { "ol" },
@@ -564,7 +564,7 @@ impl<'a> Device<'a> for TextDevice {
         // Glyph space → view space. Glyph space uses 1000 units per em for outline glyphs; the em
         // box spans descender (−200) to ascender (800), the advance gives the width.
         let t = transform * glyph_transform;
-        if std::env::var_os("PDFCRAFT_TEXT_DEBUG").is_some() {
+        if std::env::var_os("NEXOPDF_TEXT_DEBUG").is_some() {
             let kind = if matches!(glyph, Glyph::Type3(_)) { "t3" } else { "ol" };
             eprintln!("{kind} {text:?} transform={:?} glyph_transform={:?}", transform.as_coeffs(), glyph_transform.as_coeffs());
         }

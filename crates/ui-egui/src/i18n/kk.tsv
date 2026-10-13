@@ -2174,7 +2174,7 @@ calendar date	December	Желтоқсан
 	Slash	Қиғаш сызық
 	Some bookmarks are not shown here: the panel lists a limited number, nested a limited depth.	Кейбір бетбелгілер осында көрсетілмеген: панель шектеулі санды, шектеулі тереңдікке дейін ғана тізеді.
 	Switch to List view to change the pages it takes.	Қамтитын беттерін өзгерту үшін Тізім көрінісіне ауысыңыз.
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Мәтінді тану орнатылмаған: модель файлдары жоқ. NexoPDF қайта орнатыңыз немесе NexoPDF_MODELS айнымалысына олар жатқан қалтаны көрсетіңіз.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Мәтінді тану орнатылмаған: модель файлдары жоқ. NexoPDF қайта орнатыңыз немесе NEXOPDF_MODELS айнымалысына олар жатқан қалтаны көрсетіңіз.
 	Text used as a clipping path cannot be moved with this selection.	Қиып алу жолы ретінде қолданылатын мәтін бұл таңдаумен жылжытылмайды.
 	The document changed while you were editing field properties.	Өріс сипаттарын түзетіп жүргенде құжат өзгерді.
 	The document is no longer open.	Құжат енді ашық емес.
@@ -2190,7 +2190,7 @@ calendar date	December	Желтоқсан
 	Zoom in ({key})	Үлкейту ({key})
 	Zoom in / out (also pinch or {key}-scroll)	Үлкейту / кішірейту (сонымен қатар қысу немесе {key}-айналдыру)
 	Zoom out ({key})	Кішірейту ({key})
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	мәтінді тану модельдері орнатылмаған (NexoPDF қайта орнатыңыз немесе NexoPDF_MODELS айнымалысына олар жатқан қалтаны көрсетіңіз)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	мәтінді тану модельдері орнатылмаған (NexoPDF қайта орнатыңыз немесе NEXOPDF_MODELS айнымалысына олар жатқан қалтаны көрсетіңіз)
 	{name} is too large for a word list (at most 1 MB).	{name} сөз тізімі үшін тым үлкен (ең көбі 1 МБ).
 	{n} fields selected	{n} өріс таңдалды
 	{n} word(s) or phrase(s)	{n} сөз немесе тіркес
@@ -2336,3 +2336,9 @@ animation effects	Off	Өшірулі
 	The linked PDF opened, but its named destination was not applied.	Байланысты PDF ашылды, бірақ оның аталған мақсаты қолданылмады.
 	The linked PDF opened, but its page destination was out of range.	Байланысты PDF ашылды, бірақ оның мақсатты беті ауқымнан тыс.
 	Local cross-PDF links require the desktop app	PDF файлдары арасындағы жергілікті сілтемелер үшін жұмыс үстелі қолданбасы қажет
+
+	An open-source PDF workbench — local, private, and fast.	Ашық кодты PDF жұмыс ортасы — жергілікті, жеке және жылдам.
+	NexoHub Ecosystem	NexoHub экожүйесі
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% төл Rust  ·  Телеметриясыз  ·  Толық құпиялылық
+	High-performance document engineering — local, private and ultrafast.	Жоғары өнімді құжат өңдеу — жергілікті, жеке және өте жылдам.
+	High-performance document workbench written in native Rust.	Төл Rust тілінде жазылған жоғары өнімді құжат жұмыс ортасы.

@@ -63,7 +63,10 @@ jobs:
 
       - name: Require Windows executable resources
         if: runner.os == 'Windows'
-        run: Add-Content -Path $env:GITHUB_ENV -Value 'NEXOPDF_REQUIRE_WINRES=1'
+        run: |
+          Add-Content -Path $env:GITHUB_ENV -Value 'NEXOPDF_REQUIRE_WINRES=1'
+          # Match the desktop application's Windows renderer and avoid an unrelated Vulkan driver.
+          Add-Content -Path $env:GITHUB_ENV -Value 'WGPU_BACKEND=dx12'
         shell: pwsh
 
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2

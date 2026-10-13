@@ -1245,7 +1245,7 @@
 	Downsample to	ダウンサンプル:
 	Also recognize pages that already have text	テキストを含むページも認識
 	Pictures on those pages are recognized too; words already in the page's text are not added again	それらのページ上の画像も認識します。ページのテキストに既にある単語は再度追加されません
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	テキスト認識がインストールされていません。モデルファイルがありません。NexoPDF を再インストールするか、NexoPDF_MODELS にモデルファイルのあるフォルダーを設定してください。
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	テキスト認識がインストールされていません。モデルファイルがありません。NexoPDF を再インストールするか、NEXOPDF_MODELS にモデルファイルのあるフォルダーを設定してください。
 	Settings	設定
 	Optional	任意
 	Planned · {m}	予定 · {m}
@@ -1837,7 +1837,7 @@
 	there are no pages to print	印刷するページはありません
 	the document has no tags	文書にタグはありません
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	テキスト認識モデルがインストールされていません（NexoPDF を再インストールするか、NexoPDF_MODELS にモデルのあるフォルダーを設定してください）
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	テキスト認識モデルがインストールされていません（NexoPDF を再インストールするか、NEXOPDF_MODELS にモデルのあるフォルダーを設定してください）
 	the image is empty	画像が空です
 	this file isn't XFDF, FDF, XML or text form data	このファイルは XFDF、FDF、XML、テキストのフォームデータではありません
 	nothing in the file matches this document	この文書に一致する項目がファイルにありません
@@ -2148,7 +2148,7 @@
 	Squiggly	波線
 	Table	表
 	Table rows belong directly in a table or its head, body or foot. Fix the table's tags.	表の行は、表、またはそのヘッダー・本体・フッターの直下に置く必要があります。表のタグを修正してください。
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	テキスト認識がインストールされていません。必要なモデルがありません（`cargo xtask models` を実行するか、NexoPDF_MODELS を設定してください）。
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	テキスト認識がインストールされていません。必要なモデルがありません（`cargo xtask models` を実行するか、NEXOPDF_MODELS を設定してください）。
 	That didn't work: an internal error stopped it ({m}).	内部エラーのため、操作を完了できませんでした（{m}）。
 	The Windows store's digital IDs couldn't be listed: {e}	Windows 証明書ストアのデジタル ID の一覧を取得できませんでした：{e}
 	The document changed while you were choosing a file, so nothing was changed.	ファイルを選択している間に文書が変更されたため、何も変更されていません。
@@ -2338,3 +2338,9 @@ animation effects	Off	オフ
 	The linked PDF opened, but its named destination was not applied.	リンク先の PDF を開きましたが、名前付き移動先は適用されませんでした。
 	The linked PDF opened, but its page destination was out of range.	リンク先の PDF を開きましたが、移動先のページが範囲外です。
 	Local cross-PDF links require the desktop app	PDF 間のローカルリンクにはデスクトップアプリが必要です
+
+	An open-source PDF workbench — local, private, and fast.	オープンソースのPDF作業環境 — ローカル、プライベート、高速。
+	NexoHub Ecosystem	NexoHubエコシステム
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100%ネイティブRust  ·  テレメトリなし  ·  完全なプライバシー
+	High-performance document engineering — local, private and ultrafast.	高性能な文書処理 — ローカル、プライベート、超高速。
+	High-performance document workbench written in native Rust.	ネイティブRustで開発された高性能な文書作業環境。

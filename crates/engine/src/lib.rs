@@ -1,4 +1,4 @@
-//! pdfcraft-engine — the façade every frontend talks to (architecture §4).
+//! nexopdf-engine — the façade every frontend talks to (architecture §4).
 //!
 //! Holds open documents, their edit history and the tool catalogue. Frontends never touch the
 //! parsing, rendering or editing crates directly.
@@ -332,7 +332,7 @@ pub struct Document {
     /// What field scripts printed or asked for (see [`Session::take_js_output`]).
     js_output: js::JsOutput,
     /// Dynamic XFA forms: what laying the template out produced (pages and fields are
-    /// PdfCraft's; Adobe's viewers draw the form from the XFA packets themselves).
+    /// NexoPDF's; Adobe's viewers draw the form from the XFA packets themselves).
     pub xfa: Option<XfaLayout>,
     /// The parsed template of a laid-out XFA form, for its scripts.
     xfa_template: Option<Arc<nexopdf_xfa::model::Template>>,
@@ -351,7 +351,7 @@ pub struct Document {
 
 /// Text an edit stored as typed but drew with `?` in place of `ch`, because the font it is drawn
 /// with (a form field's, or the standard fonts for comments) can't draw that character. Acrobat
-/// keeps such text too, drawing it with fonts PdfCraft can't embed yet.
+/// keeps such text too, drawing it with fonts NexoPDF can't embed yet.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct TextNotice {
     /// The form field's full name, or `None` for a comment.
@@ -371,7 +371,7 @@ impl std::fmt::Display for TextNotice {
         match (&self.field, self.redrawn_elsewhere) {
             (Some(name), true) => write!(
                 f,
-                "form field {name:?} (page {page}) holds {ch}, which its font can't draw: the value is saved, PdfCraft shows ? in its place, and other PDF viewers redraw the field from the value"
+                "form field {name:?} (page {page}) holds {ch}, which its font can't draw: the value is saved, NexoPDF shows ? in its place, and other PDF viewers redraw the field from the value"
             ),
             (Some(name), false) => write!(
                 f,
@@ -762,7 +762,7 @@ fn is_placeholder_title(title: &str) -> bool {
 }
 
 /// What is displayed: the working file, plus (in memory only, never saved) the appearances
-/// PdfCraft draws for comments that have none ([`nexopdf_annot::with_missing_appearances`]).
+/// NexoPDF draws for comments that have none ([`nexopdf_annot::with_missing_appearances`]).
 /// The working file is unchanged, and so is everything that reads it (saving, signatures, …).
 fn display_bytes(editor: Option<&mut Editor>, bytes: &Arc<Vec<u8>>) -> Arc<Vec<u8>> {
     let Some(display) = editor.and_then(|e| nexopdf_annot::with_missing_appearances_cached(&e.cos, &mut e.appearances)) else {
@@ -1685,7 +1685,7 @@ impl Edit {
             Edit::ReplacePages { pages, .. } => plural("Replace page", "Replace pages", pages.len()),
             Edit::SetPageBox { pages, which: PageBox::Crop, .. } => plural("Crop page", "Crop pages", pages.len()),
             Edit::SetPageBox { .. } => Label::of("Set page boxes"),
-            // The four `/Info` keys PdfCraft itself offers get a wording of their own, so each can
+            // The four `/Info` keys NexoPDF itself offers get a wording of their own, so each can
             // be said in another language; any other key is the document's and goes in as it stands.
             Edit::SetInfo { key, .. } => match key.as_str() {
                 "Title" => Label::of("Change Title"),
@@ -2160,8 +2160,8 @@ fn run_edit(doc: &mut nexopdf_cos::Document, edit: &Edit, cx: &mut EditCtx) -> R
             // for image fields (a laid-out one carries its SOM path; a static form's field name
             // is its path).
             let is_xfa = nexopdf_xfa::read_packets(doc).ok().flatten().is_some();
-            let image_field = is_xfa
-                && nexopdf_forms::fields(doc).iter().any(|f| f.name == *name && f.button == Some(nexopdf_forms::af::ButtonAction::ImportIcon));
+            let image_field =
+                is_xfa && nexopdf_forms::fields(doc).iter().any(|f| f.name == *name && f.button == Some(nexopdf_forms::af::ButtonAction::ImportIcon));
             if image_field {
                 let Some(content_type) = image_content_type(image) else {
                     return Err(EditError::Invalid(format!("{name}: an XFA form keeps a PNG, JPEG or GIF picture; choose one of those")));
@@ -2347,8 +2347,8 @@ fn run_edit(doc: &mut nexopdf_cos::Document, edit: &Edit, cx: &mut EditCtx) -> R
             match text {
                 Some(Ok(text)) if is_xfa_data_file(&text) => {
                     let expect_root = cx.xfa.as_ref().and_then(|t| t.root.common.name.clone());
-                    let r = nexopdf_xfa::import_data(doc, &text, expect_root.as_deref(), cx.xfa_datasets)
-                        .map_err(|e| EditError::Write(e.to_string()))?;
+                    let r =
+                        nexopdf_xfa::import_data(doc, &text, expect_root.as_deref(), cx.xfa_datasets).map_err(|e| EditError::Write(e.to_string()))?;
                     cx.xfa_datasets = r.stream.or(cx.xfa_datasets);
                     cx.xfa_out.errors.extend(r.warnings);
                     cx.xfa_out.console.push(format!("Imported XFA data: {} node(s)", r.nodes));
@@ -2630,7 +2630,7 @@ pub(crate) fn xfa_redraw(doc: &mut nexopdf_cos::Document) -> Result<(), String> 
     Ok(())
 }
 
-/// A warning for each field whose appearance PdfCraft drew with `?` for a character its font
+/// A warning for each field whose appearance NexoPDF drew with `?` for a character its font
 /// can't draw (laying out an XFA form's own values).
 fn undrawn_field_warnings(doc: &nexopdf_cos::Document) -> Vec<String> {
     nexopdf_forms::undrawn_fields(doc)
@@ -3726,7 +3726,7 @@ impl Session {
         self.write_new(&nexopdf_create::from_text(title, text, nexopdf_create::LETTER, 11.0)?)
     }
 
-    /// [`Self::create_from_text`] for a report PdfCraft writes from documents (comment summaries,
+    /// [`Self::create_from_text`] for a report NexoPDF writes from documents (comment summaries,
     /// compare reports), which can quote any language: characters Helvetica can't draw are written
     /// as `[U+XXXX]`, and the report's first line says so, rather than the report being refused.
     fn create_report(&self, title: &str, text: &str) -> Result<Arc<Vec<u8>>, EditError> {
@@ -3807,7 +3807,7 @@ impl Session {
         .map_err(EditError::Write)
     }
 
-    /// The print-ready PDF for `settings` (sheets laid out for the paper; see `pdfcraft-print`).
+    /// The print-ready PDF for `settings` (sheets laid out for the paper; see `nexopdf-print`).
     pub fn print_pdf(&self, id: DocId, settings: &print::Settings) -> Result<Vec<u8>, EditError> {
         let doc = self.get(id).ok_or(EditError::NoDocument)?;
         if !doc.allows_printing() {
@@ -4334,11 +4334,7 @@ pub struct MarkFile {
 }
 
 /// Embed an image that is placed on a page, turned the way its EXIF Orientation says.
-fn embed_image(
-    doc: &mut nexopdf_cos::Document,
-    name: &str,
-    bytes: &[u8],
-) -> Result<(nexopdf_cos::ObjRef, (f64, f64)), nexopdf_create::CreateError> {
+fn embed_image(doc: &mut nexopdf_cos::Document, name: &str, bytes: &[u8]) -> Result<(nexopdf_cos::ObjRef, (f64, f64)), nexopdf_create::CreateError> {
     nexopdf_create::image_xobject(doc, name, &upright_image::upright(bytes))
 }
 

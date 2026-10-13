@@ -1,4 +1,4 @@
-//! pdfcraft-forms — interactive forms (AcroForm, ISO 32000-2 §12.7), execution plan M6.1–M6.2.
+//! nexopdf-forms — interactive forms (AcroForm, ISO 32000-2 §12.7), execution plan M6.1–M6.2.
 //!
 //! - [`fields`]: the field tree flattened to terminal fields, each with its widgets (page,
 //!   rectangle, on-state), inherited attributes (`/FT`, `/Ff`, `/V`, `/DV`, `/DA`, `/Q`,
@@ -254,7 +254,7 @@ const MAX_LAYER_STATE: usize = 1024;
 
 /// A push button's mouse-up action (`/A`, or `/AA /U`, on the field or its widget).
 fn button_action(doc: &Document, d: &Dict, widgets: &[ObjRef]) -> Option<af::ButtonAction> {
-    // A button PdfCraft generated for an XFA image field (`/PCXfaImage true`, no PDF action):
+    // A button NexoPDF generated for an XFA image field (`/PCXfaImage true`, no PDF action):
     // clicking it picks a picture, as `buttonImportIcon()` does.
     if matches!(d.get(b"PCXfaImage").map(|o| doc.resolve(o)).as_deref(), Some(Object::Bool(true))) {
         return Some(af::ButtonAction::ImportIcon);
@@ -1040,7 +1040,7 @@ fn set_states(doc: &mut Document, f: &Field, on: Option<&str>) -> Result<(), For
             (Some(c), Some(s)) if c == s => s,
             _ => "Off",
         };
-        // A widget without appearances for its states gets PdfCraft's own.
+        // A widget without appearances for its states gets NexoPDF's own.
         let has_ap = doc.get(w.obj).as_dict().and_then(|d| d.get(b"AP").cloned()).is_some();
         if !has_ap {
             let on_name = w.on_state.clone().unwrap_or_else(|| on.unwrap_or("Yes").to_string());
@@ -1162,7 +1162,7 @@ pub fn declares_pdfa(doc: &Document) -> bool {
     }
 }
 
-/// Every field with a widget whose appearance PdfCraft drew with `?` for a character its font
+/// Every field with a widget whose appearance NexoPDF drew with `?` for a character its font
 /// can't hold (`nexopdf_fonts::UNDRAWN_MARK`): the field's name and that character, once per
 /// field.
 pub fn undrawn_fields(doc: &Document) -> Vec<(String, char)> {

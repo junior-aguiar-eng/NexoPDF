@@ -1441,7 +1441,7 @@ pub enum CanvasAction {
 const RECENT_CUSTOM: usize = 5;
 
 fn recent_custom_id() -> egui::Id {
-    egui::Id::new("pdfcraft-recent-custom-colours")
+    egui::Id::new("nexopdf-recent-custom-colours")
 }
 
 /// Custom colours picked with "Other colour…" this session, newest first (#1193).

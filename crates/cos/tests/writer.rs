@@ -166,7 +166,7 @@ fn qpdf_check(bytes: &[u8]) -> Option<std::process::Output> {
     assert!(version.status.success());
     static NEXT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
     let n = NEXT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-    let path = std::env::temp_dir().join(format!("pdfcraft-xref-{}-{n}.pdf", std::process::id()));
+    let path = std::env::temp_dir().join(format!("nexopdf-xref-{}-{n}.pdf", std::process::id()));
     std::fs::write(&path, bytes).unwrap();
     let check = std::process::Command::new("qpdf").arg("--check").arg(&path).output().unwrap();
     let _ = std::fs::remove_file(&path);
@@ -254,7 +254,7 @@ fn qpdf_accepts_object_stream_output() {
     assert!(out.status.success());
     let doc = Document::open(Arc::new(fixture())).unwrap();
     let packed = write_full(&doc, &SaveOptions::default()).unwrap();
-    let path = std::env::temp_dir().join(format!("pdfcraft-objstm-{}.pdf", std::process::id()));
+    let path = std::env::temp_dir().join(format!("nexopdf-objstm-{}.pdf", std::process::id()));
     std::fs::write(&path, &packed).unwrap();
     let check = std::process::Command::new("qpdf").arg("--check").arg(&path).output().unwrap();
     let _ = std::fs::remove_file(&path);

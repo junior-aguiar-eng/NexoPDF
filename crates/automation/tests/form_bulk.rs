@@ -19,7 +19,7 @@ fn tool(a: &mut Automation, name: &str, args: Value) -> Value {
 }
 
 fn setup(test: &str) -> (Automation, u64, std::path::PathBuf) {
-    let dir = std::env::temp_dir().join(format!("pdfcraft-form-bulk-{test}-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-form-bulk-{test}-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     let mut s = Session::new();
     let bytes = s.create_blank(300.0, 400.0, 2).unwrap();

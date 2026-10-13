@@ -5,7 +5,7 @@ use egui::{Align2, CornerRadius, Rect, Sense, Stroke, vec2};
 use nexopdf_engine::catalog;
 
 use crate::theme::{self, Tokens};
-use crate::{PdfCraftApp, icons, panels::human_size, widgets};
+use crate::{NexoPDFApp, icons, panels::human_size, widgets};
 
 const RECOMMENDED: [&str; 5] = ["organize", "comment", "form", "edit", "protect"];
 
@@ -18,15 +18,13 @@ fn card_lift(ui: &egui::Ui, t: &Tokens, rect: Rect, press: theme::Press) {
     }
 }
 
-pub fn show(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
+pub fn show(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
             ui.label(egui::RichText::new(tl!("Welcome to NexoPDF")).font(theme::semibold(24.0)));
             ui.label(
-                egui::RichText::new(tl!("An open-source PDF workbench — local, private, and fast."))
-                    .color(t.text_muted)
-                    .font(theme::regular(14.0)),
+                egui::RichText::new(tl!("An open-source PDF workbench — local, private, and fast.")).color(t.text_muted).font(theme::regular(14.0)),
             );
             ui.add_space(14.0);
             egui::Frame::NONE
@@ -37,22 +35,18 @@ pub fn show(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
                 .show(ui, |ui| {
                     ui.set_width(ui.available_width());
                     ui.vertical_centered(|ui| {
-                        widgets::artcraft_mark(ui, 36.0);
+                        widgets::nexopdf_mark(ui, 36.0);
                         ui.add_space(6.0);
-                        ui.label(
-                            egui::RichText::new(tl!("Ecossistema NexoHub"))
-                                .font(theme::semibold(16.5))
-                                .color(t.accent_text),
-                        );
+                        ui.label(egui::RichText::new(tl!("NexoHub Ecosystem")).font(theme::semibold(16.5)).color(t.accent_text));
                         ui.add_space(4.0);
                         ui.label(
-                            egui::RichText::new(tl!("Engenharia documental de alta performance — local, privada e ultrarrápida."))
+                            egui::RichText::new(tl!("High-performance document engineering — local, private and ultrafast."))
                                 .font(theme::medium(14.0))
                                 .color(t.text),
                         );
                         ui.add_space(4.0);
                         ui.label(
-                            egui::RichText::new(tl!("100% Nativo em Rust  ·  Zero Telemetria  ·  Privacidade Absoluta"))
+                            egui::RichText::new(tl!("100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy"))
                                 .font(theme::medium(11.5))
                                 .color(t.text_muted),
                         );
@@ -234,7 +228,7 @@ mod tests {
         crate::i18n::set_current(de);
         let ctx = egui::Context::default();
         ctx.set_fonts(theme::font_definitions());
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         let blurb = catalog::group("form")
             .unwrap()
             .sections

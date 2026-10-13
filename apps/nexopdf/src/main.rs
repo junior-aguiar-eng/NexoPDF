@@ -1,6 +1,6 @@
-//! PdfCraft desktop app.
+//! NexoPDF desktop app.
 //!
-//! Usage: `pdfcraft [options] [files…]`
+//! Usage: `nexopdf [options] [files…]`
 //! `--create-images [images…]` stages the images in one PDF and asks for the page DPI.
 //!
 //! View options (applied after the files open; also the seed of the UI control channel):
@@ -11,12 +11,12 @@
 //!  --combine-view grid|list  --combine-zoom 60..200`
 //!
 //! `--new-window` opens a window of its own. Without it, on Windows, a launch that only names files
-//! hands them to the PdfCraft already running, where they open as tabs (`single_instance`).
+//! hands them to the NexoPDF already running, where they open as tabs (`single_instance`).
 //!
 //! `--control <file>` enables the UI control channel (off by default): the app listens on a random
 //! loopback port and writes `{"port", "token", "pid"}` to `<file>` (owner-only permissions). The
 //! app doesn't start if it can't.
-//! Agents then drive it with `pdfcraft-cli ui --control <file> <method> …`.
+//! Agents then drive it with `nexopdf-cli ui --control <file> <method> …`.
 
 // Release builds on Windows are GUI-subsystem programs, so launching the app doesn't open a console
 // window next to it (#57). `--version` and diagnostics then go nowhere when started from a terminal
@@ -27,7 +27,7 @@
 use std::cell::Cell;
 use std::rc::Rc;
 
-use nexopdf_ui_egui::PdfCraftApp;
+use nexopdf_ui_egui::NexoPDFApp;
 
 #[cfg(target_os = "macos")]
 mod apple_events;
@@ -74,7 +74,7 @@ fn migrate_legacy_folders() {
     // Recovery lives in the settings folder except on Windows, where it is under %LOCALAPPDATA%.
     if cfg!(windows) {
         let local = std::env::var_os("LOCALAPPDATA").filter(|v| !v.is_empty()).map(std::path::PathBuf::from);
-        moves.push((local.as_ref().map(|d| d.join("PrintCraft")), local.map(|d| d.join("PdfCraft"))));
+        moves.push((local.as_ref().map(|d| d.join("PrintCraft")), local.map(|d| d.join("NexoPDF"))));
     }
     for (old, new) in moves {
         let (Some(old), Some(new)) = (old, new) else { continue };
@@ -93,7 +93,7 @@ fn migrate_legacy_folders() {
 
 /// Desktop launchers (GNOME Files, KDE Dolphin…) only recognise an app as the default handler for a
 /// mime type if its `Exec` takes URIs (`%u`/`%U`), not just paths (`%F`); the packaged `.desktop`
-/// file uses `%U` accordingly (packaging/linux/ai.storyteller.pdfcraft.desktop). Decode a local
+/// file uses `%U` accordingly (packaging/linux/io.nexohub.nexopdf.desktop). Decode a local
 /// `file://` argument (`file:///path` or `file://localhost/path`) to a plain path here so the rest
 /// of the app, which only ever opens paths, is unaffected. Other schemes (`http://`, `mailto:`…),
 /// URIs naming another host, and plain paths pass through untouched.
@@ -139,7 +139,7 @@ fn main() -> eframe::Result {
             log::error!("{report}");
         } else {
             // `eprintln!` panics on a broken stderr pipe, and a panic inside the panic hook aborts.
-            let _ = std::io::Write::write_fmt(&mut std::io::stderr(), format_args!("pdfcraft: {report}\n"));
+            let _ = std::io::Write::write_fmt(&mut std::io::stderr(), format_args!("nexopdf: {report}\n"));
         }
     }));
     let mut files = Vec::new();
@@ -177,7 +177,7 @@ fn main() -> eframe::Result {
         }
     }
     // Windows: a launch that only names files (an Outlook attachment, an Explorer double-click)
-    // hands them to the PdfCraft already running and exits (#282, #317). Any option means the
+    // hands them to the NexoPDF already running and exits (#282, #317). Any option means the
     // caller wants this launch's own window.
     let may_hand_off = !new_window && !files.is_empty() && options.is_empty() && control_file.is_none() && !create_images;
     let instance = match single_instance::claim(&single_instance::absolute(&files), may_hand_off) {
@@ -185,7 +185,7 @@ fn main() -> eframe::Result {
         single_instance::Claim::Primary(server) => Some(server),
         single_instance::Claim::Alone => None,
     };
-    let choice = renderer_choice(std::env::var("PDFCRAFT_RENDERER").ok().as_deref());
+    let choice = renderer_choice(std::env::var("NEXOPDF_RENDERER").ok().as_deref());
     let launch = Launch { files, options, control_file, create_images, integrated };
     // Finder, Open With and the Dock deliver files as Apple events, not arguments; catch the one
     // that launched us as well as later ones. Lives until the event loop returns.
@@ -211,7 +211,7 @@ fn main() -> eframe::Result {
         Err(e @ eframe::Error::Wgpu(_)) if retry_with_gl(choice, started.get()) => {
             // Old or unusual GPUs and drivers (#461, #435, #392) can't give wgpu a device; OpenGL
             // usually still works there, so that's better than quitting.
-            log::error!("the GPU renderer (wgpu) didn't start: {e}. Starting with OpenGL instead; set PDFCRAFT_RENDERER=gl to skip wgpu.");
+            log::error!("the GPU renderer (wgpu) didn't start: {e}. Starting with OpenGL instead; set NEXOPDF_RENDERER=gl to skip wgpu.");
             eframe::run_native(
                 "NexoPDF",
                 native_options(integrated, eframe::Renderer::Glow),
@@ -228,7 +228,7 @@ fn main() -> eframe::Result {
     }
 }
 
-/// Which renderer to start with, from `PDFCRAFT_RENDERER`.
+/// Which renderer to start with, from `NEXOPDF_RENDERER`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum RendererChoice {
     /// wgpu, then OpenGL if wgpu can't start (unset, or anything unrecognised).
@@ -260,7 +260,7 @@ fn native_options(integrated: bool, renderer: eframe::Renderer) -> eframe::Nativ
         .with_inner_size([1440.0, 920.0])
         .with_min_inner_size([820.0, 520.0])
         .with_drag_and_drop(true)
-        // Wayland app id: matches packaging/linux/ai.storyteller.pdfcraft.desktop.
+        // Wayland app id: matches packaging/linux/io.nexohub.nexopdf.desktop.
         .with_app_id(APP_ID);
     // Dock, taskbar, Alt-Tab and launcher icon when running unbundled.
     match eframe::icon_data::from_png_bytes(APP_ICON_PNG) {
@@ -298,14 +298,14 @@ fn app_creator<'a>(
     let Launch { files, options, control_file, create_images, integrated } = launch;
     Box::new(move |cc| {
         started.set(true);
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         // First start (or settings from before Units existed): the region's unit.
         app.units = nexopdf_ui_egui::units::Unit::system();
         #[cfg(target_os = "linux")]
         app.enable_desktop_theme();
         // The system's reopen-windows choice (macOS) starts the preference; a saved choice replaces it.
         app.reopen_last_session = reopen::system_default();
-        if let Some(json) = cc.storage.and_then(|s| s.get_string("nexopdf").or_else(|| s.get_string("pdfcraft")).or_else(|| s.get_string(LEGACY_STORAGE_KEY))) {
+        if let Some(json) = cc.storage.and_then(|s| s.get_string("nexopdf").or_else(|| s.get_string(LEGACY_STORAGE_KEY))) {
             app.restore(&json);
         }
         app.integrated_titlebar = integrated;
@@ -377,9 +377,9 @@ fn app_creator<'a>(
 
 /// Tell the user when wgpu draws on the processor (WARP on Windows, llvmpipe on Linux) rather than
 /// a GPU, which makes everything slower. egui-wgpu only logs it, so the reporter of #519 had to find
-/// it in pdfcraft.log. The OpenGL fallback isn't covered: glow only reports its renderer through
+/// it in nexopdf.log. The OpenGL fallback isn't covered: glow only reports its renderer through
 /// `unsafe` calls.
-fn notify_software_renderer(app: &mut PdfCraftApp, device_type: eframe::wgpu::DeviceType) {
+fn notify_software_renderer(app: &mut NexoPDFApp, device_type: eframe::wgpu::DeviceType) {
     if device_type == eframe::wgpu::DeviceType::Cpu {
         app.notify_tr("NexoPDF is drawing without a graphics processor, so it may be slow. Updating the graphics driver may help.");
     }
@@ -399,7 +399,7 @@ fn open_control_channel(file: &str, endpoint: std::io::Result<nexopdf_ui_egui::c
             Ok(())
         }
         Err(e) => {
-            let message = format!("--control {file}: {e}. Use a control file in a folder only you can write, such as ~/.pdfcraft-control.json");
+            let message = format!("--control {file}: {e}. Use a control file in a folder only you can write, such as ~/.nexopdf-control.json");
             log::error!("{message}");
             Err(message)
         }
@@ -476,7 +476,7 @@ fn write_control_file(path: &str, port: u16, token: &str) -> std::io::Result<()>
 ///   on the discrete one.
 /// - On Windows, use Direct3D 12, falling back to OpenGL, and never load Vulkan drivers unless
 ///   `WGPU_BACKEND` asks for them. Creating a Vulkan instance loads every installed Vulkan driver
-///   into the process, and a faulty one (an Intel driver in issue #37) crashed PdfCraft before
+///   into the process, and a faulty one (an Intel driver in issue #37) crashed NexoPDF before
 ///   its window appeared. D3D12 is the native, best-supported backend there.
 fn configure_gpu(native: &mut eframe::NativeOptions) {
     let eframe::egui_wgpu::WgpuSetup::CreateNew(setup) = &mut native.wgpu_options.wgpu_setup else { return };
@@ -691,7 +691,7 @@ mod tests {
 
     #[test]
     fn a_control_channel_that_cant_be_published_stops_the_app() {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-app-control-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-app-control-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
         let path = |name: &str| dir.join(name).to_str().unwrap().to_owned();
@@ -755,13 +755,13 @@ mod tests {
     #[test]
     fn a_software_renderer_is_shown_to_the_user() {
         use eframe::wgpu::DeviceType;
-        // Issue #519: WARP or llvmpipe is announced in the app, not just in pdfcraft.log.
-        let mut app = super::PdfCraftApp::new();
+        // Issue #519: WARP or llvmpipe is announced in the app, not just in nexopdf.log.
+        let mut app = super::NexoPDFApp::new();
         super::notify_software_renderer(&mut app, DeviceType::Cpu);
         let notice = app.toast.as_ref().map(|(m, _)| m.as_str()).unwrap_or_default();
         assert!(notice.contains("without a graphics processor"), "{notice:?}");
         for gpu in [DeviceType::IntegratedGpu, DeviceType::DiscreteGpu, DeviceType::VirtualGpu, DeviceType::Other] {
-            let mut app = super::PdfCraftApp::new();
+            let mut app = super::NexoPDFApp::new();
             super::notify_software_renderer(&mut app, gpu);
             assert!(app.toast.is_none(), "{gpu:?}: {:?}", app.toast);
         }
@@ -890,8 +890,8 @@ mod tests {
     fn a_gpu_error_while_a_window_is_set_up_is_returned_not_a_panic() {
         // Issue #519: on a 2015 Intel GPU, wgpu's GL backend couldn't configure the window's
         // surface (`GpuWaitTimeout`), and wgpu's default error handler panicked before the app was
-        // created, so PdfCraft never got to retry with OpenGL. vendor/egui-wgpu configures a new
-        // window's surface inside `catch_errors`. A real device on PdfCraft's own GPU settings,
+        // created, so NexoPDF never got to retry with OpenGL. vendor/egui-wgpu configures a new
+        // window's surface inside `catch_errors`. A real device on NexoPDF's own GPU settings,
         // and an error wgpu raises before anything reaches the driver: a texture one pixel wider
         // than the device allows.
         use eframe::wgpu;
@@ -968,7 +968,7 @@ mod tests {
         let instance = pollster::block_on(native.wgpu_options.wgpu_setup.new_instance());
         let options = wgpu::RequestAdapterOptions { power_preference: setup.power_preference, ..Default::default() };
         let Ok(adapter) = pollster::block_on(instance.request_adapter(&options)) else {
-            assert!(std::env::var_os("PDFCRAFT_TEST_REQUIRE_GPU").is_none(), "a GPU adapter is required for this run");
+            assert!(std::env::var_os("NEXOPDF_TEST_REQUIRE_GPU").is_none(), "a GPU adapter is required for this run");
             eprintln!("skipping pipeline regression: no GPU adapter");
             return;
         };
@@ -1124,7 +1124,7 @@ mod tests {
     #[cfg(target_os = "linux")]
     #[test]
     fn linux_display_gpus_reads_connected_connectors() -> std::io::Result<()> {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-drm-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-drm-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         let card = |name: &str, (vendor, device): (u32, u32)| -> std::io::Result<()> {
             std::fs::create_dir_all(dir.join(name).join("device"))?;
@@ -1162,7 +1162,7 @@ mod tests {
     fn scratch() -> std::path::PathBuf {
         static N: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
         let n = N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-        let d = std::env::temp_dir().join(format!("pdfcraft-control-file-{}-{n}", std::process::id()));
+        let d = std::env::temp_dir().join(format!("nexopdf-control-file-{}-{n}", std::process::id()));
         let _ = std::fs::remove_dir_all(&d);
         std::fs::create_dir_all(&d).unwrap();
         d
@@ -1234,7 +1234,7 @@ mod tests {
     /// so it has to be the class the window carries: the app id, on Wayland and X11 alike.
     #[test]
     fn the_desktop_entry_names_the_window_class() {
-        let entry = include_str!("../../../packaging/linux/ai.storyteller.pdfcraft.desktop");
+        let entry = include_str!("../../../packaging/linux/io.nexohub.nexopdf.desktop");
         let class = entry.lines().find_map(|line| line.strip_prefix("StartupWMClass="));
         assert_eq!(class, Some(super::APP_ID));
     }

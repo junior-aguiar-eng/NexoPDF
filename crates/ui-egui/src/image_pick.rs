@@ -5,7 +5,7 @@
 
 use egui::{Color32, CornerRadius, Pos2, Stroke};
 
-use crate::PdfCraftApp;
+use crate::NexoPDFApp;
 use crate::canvas::{DocView, PageXform};
 use nexopdf_render::DocInfo;
 
@@ -67,9 +67,9 @@ fn safe_name(s: &str) -> String {
 
 /// The per-user folder that holds the file of the last Copy Image in Original Format: `Clipboard`
 /// in the portable data folder in portable mode ([`crate::portable`]), otherwise the platform's
-/// per-user cache folder: `~/Library/Caches/PdfCraft/Clipboard` (macOS),
-/// `%LOCALAPPDATA%\PdfCraft\Clipboard` (Windows), or `$XDG_CACHE_HOME/pdfcraft/clipboard` /
-/// `~/.cache/pdfcraft/clipboard` (others). Never the shared temporary folder, where another user
+/// per-user cache folder: `~/Library/Caches/NexoPDF/Clipboard` (macOS),
+/// `%LOCALAPPDATA%\NexoPDF\Clipboard` (Windows), or `$XDG_CACHE_HOME/nexopdf/clipboard` /
+/// `~/.cache/nexopdf/clipboard` (others). Never the shared temporary folder, where another user
 /// could plant a link or a folder of their own.
 #[cfg(not(target_arch = "wasm32"))]
 fn clipboard_dir() -> Option<std::path::PathBuf> {
@@ -102,7 +102,7 @@ fn is_copied_image_name(name: &str) -> bool {
 }
 
 /// Makes `dir` (a real folder, not a link, owned by us and private to us on Unix), removes the
-/// earlier copies PdfCraft wrote there, and writes `bytes` as a new file `name`. Links are never
+/// earlier copies NexoPDF wrote there, and writes `bytes` as a new file `name`. Links are never
 /// followed and nothing else in the folder is touched.
 #[cfg(not(target_arch = "wasm32"))]
 fn write_clipboard_file(dir: &std::path::Path, name: &str, bytes: &[u8]) -> Result<std::path::PathBuf, String> {
@@ -143,7 +143,7 @@ fn write_clipboard_file(dir: &std::path::Path, name: &str, bytes: &[u8]) -> Resu
     Ok(path)
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// ⌘C / Ctrl+C copies the selected picture in its original format; Escape deselects it.
     pub(crate) fn image_pick_keys(&mut self, i: usize, ctx: &egui::Context) {
         let Some(picked) = self.views.get(i).and_then(|v| v.picked_image) else { return };
@@ -190,7 +190,7 @@ impl PdfCraftApp {
         }
     }
 
-    /// Writes `bytes` to PdfCraft's private clipboard folder ([`clipboard_dir`]), replacing the
+    /// Writes `bytes` to NexoPDF's private clipboard folder ([`clipboard_dir`]), replacing the
     /// previous copy, and puts that file on the system clipboard.
     #[cfg(not(target_arch = "wasm32"))]
     fn put_file_on_clipboard(&self, name: &str, bytes: &[u8]) -> Result<(), String> {
@@ -238,14 +238,14 @@ mod tests {
     #[test]
     #[cfg(not(target_arch = "wasm32"))]
     fn clipboard_folder_only_replaces_our_own_copies() {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-clipboard-test-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-clipboard-test-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
         std::fs::write(dir.join("keep.txt"), b"other").unwrap();
         std::fs::write(dir.join("Old p1 img1.png"), b"old").unwrap();
         let path = write_clipboard_file(&dir, "New p2 img1.jpg", b"new").unwrap();
         assert_eq!(std::fs::read(&path).unwrap(), b"new");
-        assert!(dir.join("keep.txt").exists(), "files PdfCraft didn't write are kept");
+        assert!(dir.join("keep.txt").exists(), "files NexoPDF didn't write are kept");
         assert!(!dir.join("Old p1 img1.png").exists(), "the previous copy is removed");
         assert!(write_clipboard_file(&dir, "../escape p1 img1.png", b"x").is_err());
         #[cfg(unix)]
@@ -262,7 +262,7 @@ mod tests {
             assert!(write_clipboard_file(&dir, "Link p1 img1.png", b"x").is_err(), "writing never follows a link");
             assert_eq!(std::fs::read(&target).unwrap(), b"other");
             // A link in place of the folder is refused.
-            let linked = std::env::temp_dir().join(format!("pdfcraft-clipboard-test-link-{}", std::process::id()));
+            let linked = std::env::temp_dir().join(format!("nexopdf-clipboard-test-link-{}", std::process::id()));
             let _ = std::fs::remove_file(&linked);
             std::os::unix::fs::symlink(&dir, &linked).unwrap();
             assert!(write_clipboard_file(&linked, "X p1 img1.png", b"x").is_err());

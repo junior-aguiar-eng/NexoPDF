@@ -1,5 +1,5 @@
 //! Printing from the browser (docs/gaps.md gap 4). A web page can't reach a spooler, so the
-//! print-ready PDF is drawn sheet by sheet with PdfCraft's own renderer, one sheet a frame (the
+//! print-ready PDF is drawn sheet by sheet with NexoPDF's own renderer, one sheet a frame (the
 //! web build has no threads), and the pictures go to the browser's print dialog in a hidden
 //! iframe, one sheet per printed page. That prints the same in every browser, with or without a
 //! PDF viewer of its own, and matches the preview. Copies, two-sided printing and colour are

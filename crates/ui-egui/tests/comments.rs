@@ -5,7 +5,7 @@ use egui::{Pos2, pos2};
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
 use nexopdf_render::Annotation;
-use nexopdf_ui_egui::{PdfCraftApp, QuickTool};
+use nexopdf_ui_egui::{NexoPDFApp, QuickTool};
 
 /// Two 300×200 pages of Helvetica text.
 const TEXT_FIXTURE: &[u8] = b"%PDF-1.7
@@ -23,9 +23,9 @@ endstream endobj
 trailer << /Root 1 0 R >>
 %%EOF";
 
-fn harness(setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harness<'static, PdfCraftApp> {
+fn harness(setup: impl FnOnce(&mut NexoPDFApp) + 'static) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("text.pdf", None, TEXT_FIXTURE.to_vec()).expect("opens");
         app.set_option("left", "closed").unwrap();
@@ -38,7 +38,7 @@ fn harness(setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harness<'static, P
     h
 }
 
-fn settle(h: &mut Harness<'static, PdfCraftApp>) {
+fn settle(h: &mut Harness<'static, NexoPDFApp>) {
     for _ in 0..200 {
         h.run_steps(2);
         if !h.state().render_pending() {
@@ -49,12 +49,12 @@ fn settle(h: &mut Harness<'static, PdfCraftApp>) {
 }
 
 /// A point on page 1 in PDF user space → screen (no rotation; MediaBox 300×200).
-fn at(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32) -> Pos2 {
+fn at(h: &Harness<'static, NexoPDFApp>, x: f32, y: f32) -> Pos2 {
     let r = h.state().views[0].page_screen_rect(0).expect("page 1 on screen");
     pos2(r.left() + x / 300.0 * r.width(), r.top() + (200.0 - y) / 200.0 * r.height())
 }
 
-fn drag(h: &mut Harness<'static, PdfCraftApp>, from: Pos2, to: Pos2) {
+fn drag(h: &mut Harness<'static, NexoPDFApp>, from: Pos2, to: Pos2) {
     h.hover_at(from);
     h.run_steps(1);
     h.drag_at(from);
@@ -67,7 +67,7 @@ fn drag(h: &mut Harness<'static, PdfCraftApp>, from: Pos2, to: Pos2) {
     h.run_steps(3);
 }
 
-fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
+fn click(h: &mut Harness<'static, NexoPDFApp>, p: Pos2) {
     h.hover_at(p);
     h.run_steps(1);
     h.drag_at(p);
@@ -77,23 +77,23 @@ fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
 }
 
 /// Drag between two page points (user space).
-fn drag_pt(h: &mut Harness<'static, PdfCraftApp>, a: (f32, f32), b: (f32, f32)) {
+fn drag_pt(h: &mut Harness<'static, NexoPDFApp>, a: (f32, f32), b: (f32, f32)) {
     let (a, b) = (at(h, a.0, a.1), at(h, b.0, b.1));
     drag(h, a, b);
 }
 
 /// Click a page point (user space).
-fn click_pt(h: &mut Harness<'static, PdfCraftApp>, p: (f32, f32)) {
+fn click_pt(h: &mut Harness<'static, NexoPDFApp>, p: (f32, f32)) {
     let p = at(h, p.0, p.1);
     click(h, p);
 }
 
 /// A text field by its placeholder ("Add a comment", "Add a reply").
-fn field<'a>(h: &'a Harness<'static, PdfCraftApp>, placeholder: &'a str) -> egui_kittest::Node<'a> {
+fn field<'a>(h: &'a Harness<'static, NexoPDFApp>, placeholder: &'a str) -> egui_kittest::Node<'a> {
     h.query_all_by(|n| n.placeholder() == Some(placeholder)).next().unwrap_or_else(|| panic!("no field {placeholder:?}"))
 }
 
-fn comments(h: &Harness<'static, PdfCraftApp>) -> Vec<Annotation> {
+fn comments(h: &Harness<'static, NexoPDFApp>) -> Vec<Annotation> {
     let s = h.state();
     s.session.get(s.views[0].id).unwrap().info.annotations.clone()
 }
@@ -395,8 +395,8 @@ fn the_panel_posts_comments_and_replies() {
 }
 
 /// The side panel's width as egui keeps it from one frame to the next.
-fn panel_width(h: &Harness<'static, PdfCraftApp>) -> f32 {
-    h.ctx.data(|data| data.get_temp::<egui::Rect>(egui::Id::new("pdfcraft-inspector-body"))).expect("the inspector body is shown").width()
+fn panel_width(h: &Harness<'static, NexoPDFApp>) -> f32 {
+    h.ctx.data(|data| data.get_temp::<egui::Rect>(egui::Id::new("nexopdf-inspector-body"))).expect("the inspector body is shown").width()
 }
 
 #[test]
@@ -458,10 +458,7 @@ fn line_ending_properties_change_and_undo() {
     h.run_steps(2);
     let s = h.state();
     let doc = s.session.get(s.views[0].id).unwrap();
-    assert_eq!(
-        doc.comment_props(0, 0).unwrap().endings.as_deref(),
-        Some(&[nexopdf_engine::LineEnding::None, nexopdf_engine::LineEnding::None][..])
-    );
+    assert_eq!(doc.comment_props(0, 0).unwrap().endings.as_deref(), Some(&[nexopdf_engine::LineEnding::None, nexopdf_engine::LineEnding::None][..]));
 }
 
 #[test]
@@ -505,7 +502,7 @@ fn shapes_take_a_fill_colour_from_the_quick_bar_and_properties() {
     assert_eq!(h.state().comment_prefs.style(CommentTool::Line).fill, None);
     h.run_steps(2);
     drag_pt(&mut h, (40.0, 100.0), (140.0, 40.0));
-    let fill_of = |h: &Harness<'static, PdfCraftApp>, index: usize| {
+    let fill_of = |h: &Harness<'static, NexoPDFApp>, index: usize| {
         let s = h.state();
         let doc = s.session.get(s.views[0].id).unwrap();
         let p = doc.comment_props(0, index).unwrap();
@@ -744,7 +741,7 @@ fn the_panel_filters_by_colour_and_checkmark() {
     });
     h.state_mut().apply_edit(nexopdf_engine::Edit::MarkAnnotation { page: 0, index: 0, marked: true, author: "Tester".into() });
     h.run_steps(2);
-    let cards = |h: &Harness<'static, PdfCraftApp>| (h.query_all_by_label("Rectangle").count(), h.query_all_by_label("Oval").count());
+    let cards = |h: &Harness<'static, NexoPDFApp>| (h.query_all_by_label("Rectangle").count(), h.query_all_by_label("Oval").count());
     // The filter menu lists the colours by name (counted with it open: it names the types too).
     h.get_by_label("Filter comments").click();
     h.run_steps(2);
@@ -787,7 +784,7 @@ fn make_current_properties_default() {
     // The default survives a restart (#340): a fresh app reads the persisted settings and its
     // next rectangle still takes the style.
     let json = h.state().persist();
-    let mut fresh = PdfCraftApp::new();
+    let mut fresh = NexoPDFApp::new();
     fresh.restore(&json);
     let st = fresh.comment_prefs.style(nexopdf_ui_egui::comments::CommentTool::Rectangle);
     assert_eq!((st.color, st.opacity, st.width), ([0.0, 0.47, 0.84], 0.5, 5.0), "the tool default persisted");
@@ -858,7 +855,7 @@ fn attaching_a_file_as_a_comment() {
 }
 
 /// Drag with the middle button (the mouse wheel) in small steps.
-fn middle_drag(h: &mut Harness<'static, PdfCraftApp>, from: Pos2, to: Pos2) {
+fn middle_drag(h: &mut Harness<'static, NexoPDFApp>, from: Pos2, to: Pos2) {
     let button = |pos, pressed| egui::Event::PointerButton { pos, button: egui::PointerButton::Middle, pressed, modifiers: egui::Modifiers::NONE };
     h.event(egui::Event::PointerMoved(from));
     h.run_steps(1);
@@ -928,7 +925,7 @@ fn hovering_a_comment_shows_its_author_and_text() {
         "8 0 obj << /Type /Annot /Subtype /Square /Rect [50 50 150 120] /C [1 0 0] /T (Ada) /Contents (Check this figure) >> endobj\ntrailer",
     );
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("hover.pdf", None, pdf.into_bytes()).expect("opens");
         app.set_option("left", "closed").unwrap();
@@ -1017,7 +1014,7 @@ fn a_closed_comments_panel_stays_closed_when_picking_comment_tools() {
         h.run_steps(2);
         assert_eq!(h.state().right, None, "{tool} reopened the closed Comments panel");
     }
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.restore(&h.state().persist());
     assert!(again.comments_panel_closed, "the choice survives a restart");
     // Opening it again from the rail lets the tools open it once more.

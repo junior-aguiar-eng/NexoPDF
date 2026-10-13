@@ -1,4 +1,4 @@
-# Build with: trunk build --release   (from apps/pdfcraft-web)
+# Build with: trunk build --release   (from apps/nexopdf-web)
 # The release zip (packaging/web/package.sh) expects the site in dist/web with relative URLs.
 [build]
 target = "index.html"

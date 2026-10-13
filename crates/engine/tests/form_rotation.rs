@@ -1,4 +1,4 @@
-//! Rendering checks for form fields. They live here, not in pdfcraft-forms, because forms and
+//! Rendering checks for form fields. They live here, not in nexopdf-forms, because forms and
 //! render are both layer 3 and may not depend on each other, not even for tests.
 
 use std::sync::Arc;

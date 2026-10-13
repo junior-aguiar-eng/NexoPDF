@@ -9,7 +9,7 @@ use nexopdf_engine::DocId;
 use nexopdf_engine::ocr::{LANGUAGES, OcrPage, OcrSettings};
 
 use crate::theme::{self, Tokens};
-use crate::{PdfCraftApp, widgets};
+use crate::{NexoPDFApp, widgets};
 
 /// Which pages to read.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -67,7 +67,7 @@ pub struct OcrRun {
     pub progress: Arc<Mutex<OcrProgress>>,
 }
 
-pub(crate) fn body(ui: &mut egui::Ui, app: &mut PdfCraftApp, t: &Tokens) -> (bool, bool) {
+pub(crate) fn body(ui: &mut egui::Ui, app: &mut NexoPDFApp, t: &Tokens) -> (bool, bool) {
     let pages = app.active_ids().and_then(|(_, id)| app.session.get(id)).map_or(1, |d| d.info.pages.len().max(1));
     let available = nexopdf_engine::ocr::available();
     let d = &mut app.ocr_draft;
@@ -146,7 +146,7 @@ pub(crate) fn body(ui: &mut egui::Ui, app: &mut PdfCraftApp, t: &Tokens) -> (boo
     (go, cancel)
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Recognize text on the pages chosen in the dialog, in the background.
     pub fn start_ocr(&mut self) {
         let Some((vi, id)) = self.active_ids() else { return };
@@ -185,7 +185,7 @@ impl PdfCraftApp {
         if self.run_inline {
             work();
         } else {
-            std::thread::Builder::new().name("pdfcraft-ocr".into()).spawn(work).ok();
+            std::thread::Builder::new().name("nexopdf-ocr".into()).spawn(work).ok();
         }
         #[cfg(target_arch = "wasm32")]
         work();
@@ -271,7 +271,7 @@ impl PdfCraftApp {
         if self.run_inline {
             work();
         } else {
-            std::thread::Builder::new().name("pdfcraft-ocr-files".into()).spawn(work).ok();
+            std::thread::Builder::new().name("nexopdf-ocr-files".into()).spawn(work).ok();
         }
         #[cfg(target_arch = "wasm32")]
         work();

@@ -68,7 +68,7 @@ foreach ($sequence in @('InstallUISequence', 'InstallExecuteSequence')) {
   }
 }
 $manufacturer = Read-Row 'SELECT `Value` FROM `Property` WHERE `Property` = ''Manufacturer''' 1
-Assert-Equal $manufacturer[0] 'Learning Machines LLC' 'MSI manufacturer'
+Assert-Equal $manufacturer[0] 'NexoPDF' 'MSI manufacturer'
 $status = Read-Row 'SELECT `Text` FROM `Control` WHERE `Dialog_` = ''InstallProgress'' AND `Control` = ''Status''' 1
 Assert-Equal $status[0] 'Please wait while setup completes.' 'Persistent progress message'
 Assert-NoRow 'SELECT `Event` FROM `EventMapping` WHERE `Dialog_` = ''InstallProgress'' AND `Control_` = ''Status''' 'progress text subscription'
@@ -76,12 +76,12 @@ Assert-NoRow 'SELECT `Event` FROM `EventMapping` WHERE `Dialog_` = ''InstallProg
 # Plain (non-advertised) shortcuts to nexopdf.exe, each in its own component; the desktop one is
 # gated by INSTALLDESKTOPSHORTCUT, which defaults to 1 and is secure so the UI choice reaches the
 # elevated install.
-foreach ($entry in @(@('StartMenuShortcut', 'ProgramMenuFolder', 'PdfcraftStartMenuShortcut', ''),
-                     @('DesktopShortcut', 'DesktopFolder', 'PdfcraftDesktopShortcut', 'INSTALLDESKTOPSHORTCUT = 1'))) {
+foreach ($entry in @(@('StartMenuShortcut', 'ProgramMenuFolder', 'NexoPDFStartMenuShortcut', ''),
+                     @('DesktopShortcut', 'DesktopFolder', 'NexoPDFDesktopShortcut', 'INSTALLDESKTOPSHORTCUT = 1'))) {
   $row = Read-Row ('SELECT `Directory_`, `Target`, `Icon_`, `WkDir`, `Component_` FROM `Shortcut` WHERE `Shortcut` = ''' + $entry[0] + '''') 5
   Assert-Equal $row[0] $entry[1] "$($entry[0]) directory"
-  Assert-Equal $row[1] '[#PdfcraftExe]' "$($entry[0]) target"
-  Assert-Equal $row[2] 'PdfcraftIcon.ico' "$($entry[0]) icon"
+  Assert-Equal $row[1] '[#NexoPDFExe]' "$($entry[0]) target"
+  Assert-Equal $row[2] 'NexoPDFIcon.ico' "$($entry[0]) icon"
   Assert-Equal $row[3] 'INSTALLFOLDER' "$($entry[0]) working directory"
   Assert-Equal $row[4] $entry[2] "$($entry[0]) component"
   $component = Read-Row ('SELECT `Directory_`, `Condition` FROM `Component` WHERE `Component` = ''' + $entry[2] + '''') 2
@@ -98,8 +98,8 @@ Assert-Equal $checkbox[1] 'INSTALLDESKTOPSHORTCUT' 'Welcome checkbox property'
 if ($checkbox[2] -notmatch 'desktop shortcut') { throw "Welcome checkbox label: '$($checkbox[2])'" }
 $checked = Read-Row 'SELECT `Value` FROM `CheckBox` WHERE `Property` = ''INSTALLDESKTOPSHORTCUT''' 1
 Assert-Equal $checked[0] '1' 'Welcome checkbox value'
-$app = Read-Row 'SELECT `KeyPath` FROM `Component` WHERE `Component` = ''PdfcraftApp''' 1
-Assert-Equal $app[0] 'PdfcraftExe' 'Shortcut executable key path'
+$app = Read-Row 'SELECT `KeyPath` FROM `Component` WHERE `Component` = ''NexoPDFApp''' 1
+Assert-Equal $app[0] 'NexoPDFExe' 'Shortcut executable key path'
 $scope = Read-Row 'SELECT `Value` FROM `Property` WHERE `Property` = ''ALLUSERS''' 1
 Assert-Equal $scope[0] '1' 'Per-machine shortcut scope'
 
@@ -109,10 +109,10 @@ foreach ($ext in @('png', 'jpg', 'jpeg', 'tif', 'tiff', 'gif', 'bmp', 'jp2', 'j2
   $key = 'Software\Classes\SystemFileAssociations\.' + $ext + '\shell\NexoPDF.CreatePdf'
   $menu = Read-Row ('SELECT `Value`, `Component_`, `Root` FROM `Registry` WHERE `Key` = ''' + $key + ''' AND `Name` IS NULL') 3
   Assert-Equal $menu[0] 'Create PDF with NexoPDF…' "$ext context menu label"
-  Assert-Equal $menu[1] 'PdfcraftApp' "$ext context menu component"
+  Assert-Equal $menu[1] 'NexoPDFApp' "$ext context menu component"
   Assert-Equal $menu[2] '2' "$ext context menu HKLM root"
   $command = Read-Row ('SELECT `Value` FROM `Registry` WHERE `Key` = ''' + $key + '\command''') 1
-  Assert-Equal $command[0] '"[#PdfcraftExe]" --create-images "%1"' "$ext context menu command"
+  Assert-Equal $command[0] '"[#NexoPDFExe]" --create-images "%1"' "$ext context menu command"
   $selection = Read-Row ('SELECT `Value` FROM `Registry` WHERE `Key` = ''' + $key + ''' AND `Name` = ''MultiSelectModel''') 1
   Assert-Equal $selection[0] 'Single' "$ext context menu selection"
 }
@@ -125,17 +125,17 @@ foreach ($ext in @('png', 'jpg', 'jpeg', 'tif', 'tiff', 'gif', 'bmp', 'jp2', 'j2
 $pdfKey = 'Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit'
 $pdfMenu = Read-Row ('SELECT `Registry`, `Value`, `Component_`, `Root` FROM `Registry` WHERE `Key` = ''' + $pdfKey + ''' AND `Name` IS NULL') 4
 Assert-Equal $pdfMenu[1] 'Edit with NexoPDF' 'PDF context menu label'
-Assert-Equal $pdfMenu[2] 'PdfcraftPdfContextMenu' 'PDF context menu component'
+Assert-Equal $pdfMenu[2] 'NexoPDFPdfContextMenu' 'PDF context menu component'
 Assert-Equal $pdfMenu[3] '2' 'PDF context menu HKLM root'
-foreach ($value in @(@('Icon', '"[#PdfcraftExe]",0'), @('MultiSelectModel', 'Document'))) {
+foreach ($value in @(@('Icon', '"[#NexoPDFExe]",0'), @('MultiSelectModel', 'Document'))) {
   $row = Read-Row ('SELECT `Value`, `Component_` FROM `Registry` WHERE `Key` = ''' + $pdfKey + ''' AND `Name` = ''' + $value[0] + '''') 2
   Assert-Equal $row[0] $value[1] "PDF context menu $($value[0])"
-  Assert-Equal $row[1] 'PdfcraftPdfContextMenu' "PDF context menu $($value[0]) component"
+  Assert-Equal $row[1] 'NexoPDFPdfContextMenu' "PDF context menu $($value[0]) component"
 }
 $pdfCommand = Read-Row ('SELECT `Value`, `Component_` FROM `Registry` WHERE `Key` = ''' + $pdfKey + '\command''') 2
-Assert-Equal $pdfCommand[0] '"[#PdfcraftExe]" "%1"' 'PDF context menu command'
-Assert-Equal $pdfCommand[1] 'PdfcraftPdfContextMenu' 'PDF context menu command component'
-$pdfComponent = Read-Row 'SELECT `Condition`, `KeyPath` FROM `Component` WHERE `Component` = ''PdfcraftPdfContextMenu''' 2
+Assert-Equal $pdfCommand[0] '"[#NexoPDFExe]" "%1"' 'PDF context menu command'
+Assert-Equal $pdfCommand[1] 'NexoPDFPdfContextMenu' 'PDF context menu command component'
+$pdfComponent = Read-Row 'SELECT `Condition`, `KeyPath` FROM `Component` WHERE `Component` = ''NexoPDFPdfContextMenu''' 2
 Assert-Equal $pdfComponent[0] 'INSTALLPDFCONTEXTMENU = 1' 'PDF context menu condition'
 Assert-Equal $pdfComponent[1] $pdfMenu[0] 'PDF context menu key path'
 $pdfDefault = Read-Row 'SELECT `Value` FROM `Property` WHERE `Property` = ''INSTALLPDFCONTEXTMENU''' 1

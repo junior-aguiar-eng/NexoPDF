@@ -11,7 +11,7 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::PdfCraftApp;
+use crate::NexoPDFApp;
 
 /// How often unsaved changes are written to the recovery folder.
 pub const AUTOSAVE_SECS: f64 = 60.0;
@@ -41,9 +41,9 @@ impl RecoveryStore {
     }
 
     /// `Recovery` in the portable data folder in portable mode ([`crate::portable`]), otherwise
-    /// the platform's per-user data folder: `~/Library/Application Support/PdfCraft/Recovery`
-    /// (macOS), `%LOCALAPPDATA%\PdfCraft\Recovery` (Windows), or
-    /// `$XDG_DATA_HOME/pdfcraft/recovery` / `~/.local/share/pdfcraft/recovery` (others).
+    /// the platform's per-user data folder: `~/Library/Application Support/NexoPDF/Recovery`
+    /// (macOS), `%LOCALAPPDATA%\NexoPDF\Recovery` (Windows), or
+    /// `$XDG_DATA_HOME/nexopdf/recovery` / `~/.local/share/nexopdf/recovery` (others).
     pub fn default_dir() -> Option<PathBuf> {
         if let Some(dir) = crate::portable::data_dir() {
             return Some(dir.join("Recovery"));
@@ -154,7 +154,7 @@ fn now_secs() -> u64 {
     std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0)
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Turn on autosave into `store`, and look for documents a previous session left behind.
     pub fn enable_recovery(&mut self, store: RecoveryStore) {
         self.recoverable = store.list();

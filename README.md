@@ -66,7 +66,7 @@ Sem contas, sem nuvem, sem conexões externas ocultas. Opera 100% offline direto
 ## 🚀 Como Compilar e Executar
 
 ### Pré-requisitos
-- **Rust 1.88+** (recomenda-se canal estável atualizado)
+- **Rust 1.95+** (recomenda-se canal estável atualizado)
 - **Git**
 - Sistema Operacional: Windows 10/11 x64, macOS ou Linux
 

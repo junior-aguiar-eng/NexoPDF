@@ -1,4 +1,4 @@
-//! pdfcraft-preflight — Standards: PDF/A (L4).
+//! nexopdf-preflight — Standards: PDF/A (L4).
 //!
 //! [`verify`] checks a document against the parts of ISO 19005-2/-3 (PDF/A-2b, PDF/A-3b) that can
 //! be decided from the object graph:

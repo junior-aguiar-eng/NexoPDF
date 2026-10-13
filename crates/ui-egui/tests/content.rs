@@ -4,11 +4,11 @@
 use egui::Pos2;
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
-use nexopdf_ui_egui::{PdfCraftApp, QuickTool};
+use nexopdf_ui_egui::{NexoPDFApp, QuickTool};
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("form.pdf", None, include_bytes!("data/form.pdf").to_vec()).unwrap();
         app.set_option("zoom", "150").unwrap();
@@ -24,13 +24,13 @@ fn harness() -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn at(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32) -> Pos2 {
+fn at(h: &Harness<'static, NexoPDFApp>, x: f32, y: f32) -> Pos2 {
     let r = h.state().views[0].page_screen_rect(0).expect("on screen");
     let k = r.width() / 300.0;
     r.min + egui::vec2(x * k, y * k)
 }
 
-fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
+fn click(h: &mut Harness<'static, NexoPDFApp>, p: Pos2) {
     h.hover_at(p);
     h.run_steps(1);
     h.drag_at(p);
@@ -39,13 +39,13 @@ fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
     h.run_steps(3);
 }
 
-fn added(h: &Harness<'static, PdfCraftApp>) -> Vec<nexopdf_engine::Added> {
+fn added(h: &Harness<'static, NexoPDFApp>) -> Vec<nexopdf_engine::Added> {
     let s = h.state();
     s.session.get(s.views[0].id).unwrap().added.clone()
 }
 
 /// A click whose press and release arrive in the same frame, as a quick real mouse click does.
-fn quick_click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
+fn quick_click(h: &mut Harness<'static, NexoPDFApp>, p: Pos2) {
     h.hover_at(p);
     h.run_steps(1);
     for pressed in [true, false] {
@@ -54,7 +54,7 @@ fn quick_click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2) {
     h.run_steps(3);
 }
 
-fn texts(h: &Harness<'static, PdfCraftApp>) -> Vec<String> {
+fn texts(h: &Harness<'static, NexoPDFApp>) -> Vec<String> {
     added(h)
         .into_iter()
         .filter_map(|a| match a.content {
@@ -168,7 +168,7 @@ fn text_the_standard_fonts_cant_draw_stays_in_the_editor() {
     h.event(egui::Event::Text("Hello 世界".into()));
     h.run_steps(2);
     h.get_by_label_contains("can't draw “世” (U+4E16)");
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         h.render().unwrap().save(format!("{dir}/undrawable-text.png")).unwrap();
     }
     h.get_by_label("Done adding text").click();

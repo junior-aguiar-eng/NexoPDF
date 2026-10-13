@@ -1,4 +1,4 @@
-//! pdfcraft-a11y — accessibility (L4): the Accessibility Checker's full check.
+//! nexopdf-a11y — accessibility (L4): the Accessibility Checker's full check.
 //!
 //! [`check`] runs the 32 rules in Acrobat's seven categories (Document, Page Content, Forms,
 //! Alternate Text, Tables, Lists, Headings) and returns, per rule, Passed, Failed, Needs manual

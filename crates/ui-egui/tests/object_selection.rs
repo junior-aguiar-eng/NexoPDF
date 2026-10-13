@@ -3,7 +3,7 @@ use egui::{Key, Modifiers, Pos2};
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
 use nexopdf_engine::{AddedText, Edit, EditableObject};
-use nexopdf_ui_egui::PdfCraftApp;
+use nexopdf_ui_egui::NexoPDFApp;
 
 fn fixture(clipping: bool) -> Vec<u8> {
     fixture_with_background(clipping, false)
@@ -46,17 +46,17 @@ fn fixture_with_background(clipping: bool, background: bool) -> Vec<u8> {
     out
 }
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     harness_with(false)
 }
 
-fn harness_with(clipping: bool) -> Harness<'static, PdfCraftApp> {
+fn harness_with(clipping: bool) -> Harness<'static, NexoPDFApp> {
     harness_document(clipping, false)
 }
 
-fn harness_document(clipping: bool, background: bool) -> Harness<'static, PdfCraftApp> {
+fn harness_document(clipping: bool, background: bool) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.session = nexopdf_engine::Session::new().with_clock(|| 1_700_000_000);
         app.set_option("language", "en").unwrap();
         app.open_bytes("group.pdf", None, fixture_with_background(clipping, background)).unwrap();
@@ -83,15 +83,15 @@ fn harness_document(clipping: bool, background: bool) -> Harness<'static, PdfCra
     h
 }
 
-fn at(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32) -> Pos2 {
+fn at(h: &Harness<'static, NexoPDFApp>, x: f32, y: f32) -> Pos2 {
     let r = h.state().views[0].page_screen_rect(0).unwrap();
     r.min + egui::vec2(x, y) * (r.width() / 400.0)
 }
-fn objects(h: &Harness<'static, PdfCraftApp>) -> Vec<EditableObject> {
+fn objects(h: &Harness<'static, NexoPDFApp>) -> Vec<EditableObject> {
     let app = h.state();
     app.session.get(app.views[0].id).unwrap().editable_objects(0).unwrap()
 }
-fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2, mods: Modifiers) {
+fn click(h: &mut Harness<'static, NexoPDFApp>, p: Pos2, mods: Modifiers) {
     h.hover_at(p);
     h.run_steps(2);
     for pressed in [true, false] {
@@ -99,7 +99,7 @@ fn click(h: &mut Harness<'static, PdfCraftApp>, p: Pos2, mods: Modifiers) {
     }
     h.run_steps(4);
 }
-fn marquee(h: &mut Harness<'static, PdfCraftApp>) {
+fn marquee(h: &mut Harness<'static, NexoPDFApp>) {
     let (a, b) = (at(h, 25.0, 45.0), at(h, 235.0, 175.0));
     h.hover_at(a);
     h.run_steps(2);
@@ -111,7 +111,7 @@ fn marquee(h: &mut Harness<'static, PdfCraftApp>) {
     h.run_steps(4);
     h.get_by_label("3 objects selected");
 }
-fn drag(h: &mut Harness<'static, PdfCraftApp>, a: Pos2, b: Pos2) {
+fn drag(h: &mut Harness<'static, NexoPDFApp>, a: Pos2, b: Pos2) {
     h.hover_at(a);
     h.run_steps(2);
     h.drag_at(a);
@@ -140,7 +140,7 @@ fn marquee_and_mixed_group_drag_move_once_and_undo_together() {
     h.get_by_label("3 objects selected");
     let app = h.state();
     assert_eq!(app.session.get(app.views[0].id).unwrap().can_undo(), Some("Move objects"));
-    if let Ok(path) = std::env::var("PDFCRAFT_GROUP_SHOT") {
+    if let Ok(path) = std::env::var("NEXOPDF_GROUP_SHOT") {
         h.render().unwrap().save(path).unwrap();
     }
     h.key_press_modifiers(Modifiers::COMMAND, Key::Z);

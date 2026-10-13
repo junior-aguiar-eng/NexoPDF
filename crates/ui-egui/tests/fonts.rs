@@ -131,7 +131,7 @@ fn system_fallback_fills_missing_scripts() {
     assert!(!theme::font_definitions().font_data.contains_key(theme::SYSTEM_FALLBACK));
     let defs = theme::installed_font_definitions(theme::CjkPreference::Default);
     if !defs.font_data.contains_key(theme::SYSTEM_FALLBACK) {
-        eprintln!("skipping system_fallback_fills_missing_scripts: no installed fallback font (or PDFCRAFT_SYSTEM_FONTS=0)");
+        eprintln!("skipping system_fallback_fills_missing_scripts: no installed fallback font (or NEXOPDF_SYSTEM_FONTS=0)");
         assert!(defs.families.values().all(|stack| !stack.iter().any(|n| n == theme::SYSTEM_FALLBACK)));
         return;
     }
@@ -142,7 +142,7 @@ fn system_fallback_fills_missing_scripts() {
     let mut fonts = Fonts::new(TextOptions::default(), defs);
     for id in families() {
         assert!(fonts.has_glyphs(&id, ARABIC), "{id:?} lacks {ARABIC}");
-        assert!(fonts.has_glyphs(&id, "PdfCraft"), "{id:?}");
+        assert!(fonts.has_glyphs(&id, "NexoPDF"), "{id:?}");
     }
     assert!(layout_widths(&mut fonts, ARABIC).iter().all(|w| w.is_finite() && *w > 0.0));
 }
@@ -154,7 +154,7 @@ fn system_fallback_covers_devanagari() {
     assert!(!theme::font_definitions().font_data.contains_key(theme::SYSTEM_DEVANAGARI_FALLBACK));
     let defs = theme::installed_font_definitions(theme::CjkPreference::Default);
     if !defs.font_data.contains_key(theme::SYSTEM_DEVANAGARI_FALLBACK) {
-        eprintln!("skipping system_fallback_covers_devanagari: no installed Devanagari fallback font (or PDFCRAFT_SYSTEM_FONTS=0)");
+        eprintln!("skipping system_fallback_covers_devanagari: no installed Devanagari fallback font (or NEXOPDF_SYSTEM_FONTS=0)");
         assert!(defs.families.values().all(|stack| !stack.iter().any(|n| n == theme::SYSTEM_DEVANAGARI_FALLBACK)));
         return;
     }
@@ -199,7 +199,7 @@ fn chinese_ui_uses_an_installed_chinese_face() {
     ] {
         let defs = theme::installed_font_definitions(cjk);
         if !defs.font_data.contains_key(theme::SYSTEM_FALLBACK) {
-            eprintln!("skipping chinese_ui_uses_an_installed_chinese_face: no installed Chinese face (or PDFCRAFT_SYSTEM_FONTS=0)");
+            eprintln!("skipping chinese_ui_uses_an_installed_chinese_face: no installed Chinese face (or NEXOPDF_SYSTEM_FONTS=0)");
             return;
         }
         for (family, stack) in &defs.families {
@@ -232,11 +232,11 @@ fn chinese_ui_uses_an_installed_chinese_face() {
 fn ui_fonts_work_without_craft_fonts() {
     let mut fonts = Fonts::new(TextOptions::default(), theme::font_definitions());
     for id in families() {
-        assert!(fonts.has_glyphs(&id, "PdfCraft"), "{id:?}");
+        assert!(fonts.has_glyphs(&id, "NexoPDF"), "{id:?}");
         assert_eq!(fonts.has_glyphs(&id, JAPANESE), !nexopdf_fonts::ui_japanese_fonts().is_empty(), "{id:?}");
     }
     assert!(layout_widths(&mut fonts, JAPANESE).iter().all(|w| w.is_finite() && *w > 0.0));
-    assert!(layout_widths(&mut fonts, "PdfCraft").iter().all(|w| *w > 20.0));
+    assert!(layout_widths(&mut fonts, "NexoPDF").iter().all(|w| *w > 20.0));
     let ctx = egui::Context::default();
     theme::install_fonts(&ctx);
 }

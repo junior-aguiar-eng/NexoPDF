@@ -28,10 +28,10 @@ fn main() {
         .set("OriginalFilename", "nexopdf.exe")
         .set("InternalName", "nexopdf");
     if let Err(e) = res.compile() {
-        if std::env::var_os("PDFCRAFT_REQUIRE_WINRES").is_some() {
+        if std::env::var_os("NEXOPDF_REQUIRE_WINRES").is_some() {
             println!("cargo::error=embedding Windows resources failed: {e}");
             return;
         }
-        println!("cargo:warning=pdfcraft.exe built without icon/version resources: {e}");
+        println!("cargo:warning=nexopdf.exe built without icon/version resources: {e}");
     }
 }

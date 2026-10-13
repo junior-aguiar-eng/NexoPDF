@@ -939,7 +939,7 @@
 	Downsample to	Намали разделителната способност до
 	Also recognize pages that already have text	Разпознай и страници, които вече съдържат текст
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Изображенията на тези страници също се разпознават; думите, които вече са в текста на страницата, не се добавят отново
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Разпознаването на текст не е инсталирано: файловете на моделите му липсват. Инсталирайте NexoPDF отново или задайте в NexoPDF_MODELS папката, която ги съдържа.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Разпознаването на текст не е инсталирано: файловете на моделите му липсват. Инсталирайте NexoPDF отново или задайте в NEXOPDF_MODELS папката, която ги съдържа.
 	Settings	Настройки
 	Protect	Защита
 	Advanced options	Разширени опции
@@ -2038,7 +2038,7 @@
 	the image is empty	изображението е празно
 	The operation failed.	Операцията е неуспешна.
 	the password is incorrect	паролата е грешна
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	моделите за разпознаване на текст не са инсталирани (инсталирайте NexoPDF отново или задайте в NexoPDF_MODELS папката, която ги съдържа)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	моделите за разпознаване на текст не са инсталирани (инсталирайте NexoPDF отново или задайте в NEXOPDF_MODELS папката, която ги съдържа)
 	The title in the metadata and the document information differ	Заглавието в метаданните и в информацията за документа се различават
 	the title must not be empty	заглавието не може да е празно
 	there are no pages to print	няма страници за печат
@@ -2301,3 +2301,9 @@ animation effects	Off	Изключени
 	The linked PDF opened, but its named destination was not applied.	Свързаният PDF се отвори, но именуваната му цел не беше приложена.
 	The linked PDF opened, but its page destination was out of range.	Свързаният PDF се отвори, но целевата му страница е извън обхвата.
 	Local cross-PDF links require the desktop app	Локалните връзки между PDF файлове изискват настолното приложение
+
+	An open-source PDF workbench — local, private, and fast.	PDF работна среда с отворен код — локална, поверителна и бърза.
+	NexoHub Ecosystem	Екосистема NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% нативен Rust  ·  Без телеметрия  ·  Пълна поверителност
+	High-performance document engineering — local, private and ultrafast.	Високопроизводителна обработка на документи — локална, поверителна и ултрабърза.
+	High-performance document workbench written in native Rust.	Високопроизводителна работна среда за документи, написана на нативен Rust.

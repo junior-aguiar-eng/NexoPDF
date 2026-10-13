@@ -10,7 +10,7 @@ use nexopdf_engine::export::{ExportSource, Exporter, ImageFormat};
 
 use crate::marks_ui::PageRange;
 use crate::theme::{self, Tokens};
-use crate::{PdfCraftApp, widgets};
+use crate::{NexoPDFApp, widgets};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ExportKind {
@@ -38,7 +38,7 @@ impl Default for ExportDraft {
 /// Progress of a background export: (done, total, final message once finished).
 pub type ExportStatus = Arc<Mutex<Option<(usize, usize, Option<String>)>>>;
 
-pub(crate) fn body(ui: &mut egui::Ui, app: &mut PdfCraftApp, t: &Tokens, kind: ExportKind) -> (bool, bool) {
+pub(crate) fn body(ui: &mut egui::Ui, app: &mut NexoPDFApp, t: &Tokens, kind: ExportKind) -> (bool, bool) {
     let count = app.active_ids().and_then(|(_, id)| app.session.get(id)).map(|d| d.info.pages.len()).unwrap_or(0);
     let d = &mut app.export_draft;
     ui.label(
@@ -215,7 +215,7 @@ fn run(
     }
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Start exporting the active document with the dialog's settings.
     pub(crate) fn start_export(&mut self, kind: ExportKind) {
         // What's typed in a form field is part of the document (#166).
@@ -254,7 +254,7 @@ impl PdfCraftApp {
                 if inline {
                     work(); // tests and automation: synchronous
                 } else {
-                    std::thread::Builder::new().name("pdfcraft-export".into()).spawn(work).ok();
+                    std::thread::Builder::new().name("nexopdf-export".into()).spawn(work).ok();
                 }
                 app.export_status = Some(status);
             };

@@ -946,7 +946,7 @@
 	Downsample to	降采样至
 	Also recognize pages that already have text	同时识别已有文本的页面
 	Pictures on those pages are recognized too; words already in the page's text are not added again	这些页面上的图片也会被识别；页面文本中已有的单词不会重复添加
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	未安装文本识别：缺少模型文件。请重新安装 NexoPDF，或将 NexoPDF_MODELS 设置为包含这些文件的文件夹。
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	未安装文本识别：缺少模型文件。请重新安装 NexoPDF，或将 NEXOPDF_MODELS 设置为包含这些文件的文件夹。
 	Settings	设置
 	Protect	保护
 	Advanced options	高级选项
@@ -2048,7 +2048,7 @@
 	the image is empty	图像为空
 	The operation failed.	操作失败。
 	the password is incorrect	密码不正确
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	尚未安装文本识别模型（请重新安装 NexoPDF，或将 NexoPDF_MODELS 设置为包含这些模型的文件夹）
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	尚未安装文本识别模型（请重新安装 NexoPDF，或将 NEXOPDF_MODELS 设置为包含这些模型的文件夹）
 	The title in the metadata and the document information differ	元数据与文档信息中的标题不一致
 	the title must not be empty	标题不能为空
 	there are no pages to print	没有可打印的页面
@@ -2302,3 +2302,9 @@ animation effects	Off	关
 	The linked PDF opened, but its named destination was not applied.	已打开链接的 PDF，但未应用其命名目标。
 	The linked PDF opened, but its page destination was out of range.	已打开链接的 PDF，但其页面目标超出范围。
 	Local cross-PDF links require the desktop app	PDF 之间的本地链接需要桌面应用
+
+	An open-source PDF workbench — local, private, and fast.	开源 PDF 工作台——本地、私密、快速。
+	NexoHub Ecosystem	NexoHub 生态系统
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% 原生 Rust  ·  零遥测  ·  完全隐私
+	High-performance document engineering — local, private and ultrafast.	高性能文档处理——本地、私密、极速。
+	High-performance document workbench written in native Rust.	使用原生 Rust 编写的高性能文档工作台。

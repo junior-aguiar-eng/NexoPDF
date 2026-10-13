@@ -116,7 +116,7 @@ mod tests {
         }
     }
 
-    /// Live: asks GitHub over TLS with the OS's roots (`cargo test -p pdfcraft -- --ignored`).
+    /// Live: asks GitHub over TLS with the OS's roots (`cargo test -p nexopdf -- --ignored`).
     #[test]
     #[ignore = "needs network access"]
     fn github_answers_with_the_latest_release() {

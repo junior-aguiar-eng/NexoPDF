@@ -1225,7 +1225,7 @@
 	Downsample to	Sous-échantillonner à
 	Also recognize pages that already have text	Reconnaître aussi les pages qui contiennent déjà du texte
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Les images de ces pages sont aussi reconnues ; les mots déjà présents dans le texte de la page ne sont pas ajoutés une seconde fois
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	La reconnaissance de texte n'est pas installée : ses fichiers de modèles sont absents. Réinstallez NexoPDF, ou définissez NexoPDF_MODELS sur le dossier qui les contient.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	La reconnaissance de texte n'est pas installée : ses fichiers de modèles sont absents. Réinstallez NexoPDF, ou définissez NEXOPDF_MODELS sur le dossier qui les contient.
 	Settings	Réglages
 	Optional	Facultatif
 	Planned · {m}	Prévu · {m}
@@ -1755,7 +1755,7 @@
 	there are no pages to print	il n'y a aucune page à imprimer
 	the document has no tags	le document ne contient aucune balise
 	{0}: {1}	{0} : {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	les modèles de reconnaissance de texte ne sont pas installés (réinstallez NexoPDF, ou définissez NexoPDF_MODELS sur le dossier qui les contient)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	les modèles de reconnaissance de texte ne sont pas installés (réinstallez NexoPDF, ou définissez NEXOPDF_MODELS sur le dossier qui les contient)
 	the image is empty	l'image est vide
 	this file isn't XFDF, FDF, XML or text form data	ce fichier n'est pas des données de formulaire XFDF, FDF, XML ou texte
 	nothing in the file matches this document	rien dans le fichier ne correspond à ce document
@@ -2338,3 +2338,9 @@ animation effects	Off	Désactivés
 	The linked PDF opened, but its named destination was not applied.	Le PDF lié s'est ouvert, mais sa destination nommée n'a pas été appliquée.
 	The linked PDF opened, but its page destination was out of range.	Le PDF lié s'est ouvert, mais sa page de destination est hors limites.
 	Local cross-PDF links require the desktop app	Les liens locaux entre PDF nécessitent l'application de bureau
+
+	An open-source PDF workbench — local, private, and fast.	Un atelier PDF open source : local, privé et rapide.
+	NexoHub Ecosystem	Écosystème NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100 % Rust natif  ·  Aucune télémétrie  ·  Confidentialité absolue
+	High-performance document engineering — local, private and ultrafast.	Ingénierie documentaire haute performance : locale, privée et ultrarapide.
+	High-performance document workbench written in native Rust.	Atelier documentaire haute performance écrit en Rust natif.

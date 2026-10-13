@@ -1,4 +1,4 @@
-//! pdfcraft-model — typed views over the PDF object graph (L2). See the README.
+//! nexopdf-model — typed views over the PDF object graph (L2). See the README.
 
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 

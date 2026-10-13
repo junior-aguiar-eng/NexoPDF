@@ -6,7 +6,7 @@ use egui::{Key, Modifiers};
 use egui_kittest::Harness;
 use egui_kittest::kittest::{NodeT, Queryable};
 use nexopdf_render::{PageRenderer, RenderRequest, RequestKind};
-use nexopdf_ui_egui::{CloseRequest, Dialog, PdfCraftApp};
+use nexopdf_ui_egui::{CloseRequest, Dialog, NexoPDFApp};
 
 /// An `n`-page document with a proper xref table; page `i` shows "Page i+1".
 fn fixture(n: usize) -> Vec<u8> {
@@ -34,13 +34,13 @@ fn fixture(n: usize) -> Vec<u8> {
     out
 }
 
-fn harness(pages: usize, setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harness<'static, PdfCraftApp> {
+fn harness(pages: usize, setup: impl FnOnce(&mut NexoPDFApp) + 'static) -> Harness<'static, NexoPDFApp> {
     let mut builder = Harness::builder().with_size(egui::vec2(1400.0, 900.0));
-    if std::env::var_os("PDFCRAFT_ORGANIZE_SNAPSHOT").is_some() {
+    if std::env::var_os("NEXOPDF_ORGANIZE_SNAPSHOT").is_some() {
         builder = builder.wgpu();
     }
     let mut h = builder.build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("doc.pdf", None, fixture(pages)).expect("fixture opens");
         setup(&mut app);
@@ -50,11 +50,11 @@ fn harness(pages: usize, setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harn
     h
 }
 
-fn organize(pages: usize) -> Harness<'static, PdfCraftApp> {
+fn organize(pages: usize) -> Harness<'static, NexoPDFApp> {
     harness(pages, |app| app.set_option("organize", "on").unwrap())
 }
 
-fn type_selection(h: &mut Harness<'static, PdfCraftApp>, text: &str) {
+fn type_selection(h: &mut Harness<'static, NexoPDFApp>, text: &str) {
     use egui::accesskit::Role;
     h.get_by_role_and_label(Role::TextInput, "Selected pages").click();
     h.run_steps(1);
@@ -80,7 +80,7 @@ fn organize_page_range_tracks_thumbnails_and_applies_typed_selection() {
     h.run_steps(2);
     assert_eq!(h.state().views[0].target_pages(), [0, 11, 15, 16, 17, 88, 91, 92, 96, 98]);
     assert_eq!(h.get_by_role_and_label(Role::TextInput, "Selected pages").value().as_deref(), Some("1, 12, 16-18, 89, 92-93, 97, 99"));
-    if let Some(path) = std::env::var_os("PDFCRAFT_ORGANIZE_SNAPSHOT") {
+    if let Some(path) = std::env::var_os("NEXOPDF_ORGANIZE_SNAPSHOT") {
         h.render().unwrap().save(std::path::Path::new(&path)).unwrap();
     }
     h.get_by_label("Rotate clockwise").click();
@@ -149,7 +149,7 @@ fn organize_tool_opens_the_overview_directly_and_can_be_reentered() {
 
 #[test]
 fn organize_tool_chosen_before_opening_a_document_shows_its_pages() {
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.set_option("tool", "organize").unwrap();
     app.open_bytes("doc.pdf", None, fixture(3)).unwrap();
     assert!(app.views[0].organize);
@@ -180,7 +180,7 @@ fn organize_page_actions_rotate_only_the_named_page_and_undo() {
     h.run_steps(2);
     h.get_by_label("Rotate page 1 clockwise").click();
     h.run_steps(3);
-    let rotations = |h: &Harness<'static, PdfCraftApp>| {
+    let rotations = |h: &Harness<'static, NexoPDFApp>| {
         h.state().session.get(h.state().views[0].id).unwrap().info.pages.iter().map(|p| p.rotation).collect::<Vec<_>>()
     };
     assert_eq!(rotations(&h), [90, 0, 0]);
@@ -235,7 +235,7 @@ fn organize_local_actions_respect_document_permissions() {
 }
 
 /// Page labels of the active document, read back from its current bytes.
-fn page_texts(app: &PdfCraftApp) -> Vec<String> {
+fn page_texts(app: &NexoPDFApp) -> Vec<String> {
     let doc = app.session.get(app.views[0].id).unwrap();
     let mut r = PageRenderer::new(doc.bytes.clone(), Default::default());
     (0..r.page_count())
@@ -246,13 +246,13 @@ fn page_texts(app: &PdfCraftApp) -> Vec<String> {
         .collect()
 }
 
-fn dirty(h: &Harness<'static, PdfCraftApp>) -> bool {
+fn dirty(h: &Harness<'static, NexoPDFApp>) -> bool {
     let app = h.state();
     app.session.get(app.views[0].id).is_some_and(|d| d.dirty)
 }
 
 fn temp_path(name: &str) -> std::path::PathBuf {
-    let dir = std::env::temp_dir().join(format!("pdfcraft-ui-tests-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-ui-tests-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     dir.join(name)
 }
@@ -617,7 +617,7 @@ struct TempPdfs(std::path::PathBuf);
 
 impl TempPdfs {
     fn new(test: &str) -> Self {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-session-{test}-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-session-{test}-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
         Self(dir)
@@ -636,10 +636,10 @@ impl Drop for TempPdfs {
     }
 }
 
-/// The app with Preferences ▸ Reopen the files that were open when PdfCraft last closed on.
-fn session_harness(setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harness<'static, PdfCraftApp> {
+/// The app with Preferences ▸ Reopen the files that were open when NexoPDF last closed on.
+fn session_harness(setup: impl FnOnce(&mut NexoPDFApp) + 'static) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.reopen_last_session = true;
         setup(&mut app);
@@ -649,7 +649,7 @@ fn session_harness(setup: impl FnOnce(&mut PdfCraftApp) + 'static) -> Harness<'s
     h
 }
 
-fn open_paths(app: &PdfCraftApp) -> Vec<String> {
+fn open_paths(app: &NexoPDFApp) -> Vec<String> {
     app.views.iter().map(|v| app.session.get(v.id).and_then(|d| d.path.clone()).unwrap_or_default()).collect()
 }
 
@@ -689,13 +689,13 @@ fn quitting_with_unsaved_changes_still_remembers_every_file() {
     h.state_mut().active = Some(1);
     h.state_mut().close_request = Some(CloseRequest::Quit);
     h.run_steps(3);
-    // Each unsaved tab closes as it is answered, before PdfCraft quits.
+    // Each unsaved tab closes as it is answered, before NexoPDF quits.
     for _ in 0..2 {
         h.get_by_label("Don't save").click();
         h.run_steps(3);
     }
     assert!(h.state().views.is_empty());
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.restore(&h.state().persist());
     app.reopen_last_files(&[]);
     assert_eq!(open_paths(&app), files, "both files come back");
@@ -706,21 +706,21 @@ fn quitting_with_unsaved_changes_still_remembers_every_file() {
 fn the_last_session_is_off_by_default_and_skips_missing_and_duplicate_files() {
     let dir = TempPdfs::new("skip");
     let (a, b) = (dir.file("a.pdf", 1), dir.file("b.pdf", 1));
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.open_path(&a);
     app.open_path(&b);
     let off: serde_json::Value = serde_json::from_str(&app.persist()).unwrap();
     assert!(off["last_session"].is_null(), "nothing is kept while the preference is off");
     app.reopen_last_session = true;
     let settings = app.persist();
-    let mut later = PdfCraftApp::new();
+    let mut later = NexoPDFApp::new();
     later.restore(&settings);
     later.reopen_last_session = false;
     later.reopen_last_files(&[]);
     assert!(later.views.is_empty(), "turned off again: nothing reopens");
     // b.pdf is gone, and a.pdf is about to open from the command line.
     std::fs::remove_file(&b).unwrap();
-    let mut later = PdfCraftApp::new();
+    let mut later = NexoPDFApp::new();
     later.restore(&settings);
     later.reopen_last_files(&[a]);
     assert!(later.views.is_empty(), "neither opens from the session");
@@ -733,7 +733,7 @@ fn save_prompt_stays_inside_the_screen_for_a_long_filename() {
     let name = "Psychology_ The Science of Mind and Behaviour, -- Nigel Holt, Andy Bremner, Michael \
                 Vliek, Ed Sutherland, -- 5, 2024 -- McGraw-Hill Education (UK) Ltd -- isbn13 97815268.pdf";
     let mut h = Harness::builder().with_size(egui::vec2(1365.0, 719.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes(name, None, fixture(1)).expect("fixture opens");
         app.close_request = Some(CloseRequest::Tab(app.views[0].id));
@@ -763,12 +763,12 @@ fn save_prompt_fits_the_smallest_window_whatever_the_name() {
         format!("{}.pdf", "年".repeat(251)),
         format!("{}.pdf", "W".repeat(2000)),
     ];
-    // The desktop window's minimum inner size (apps/pdfcraft/src/main.rs).
+    // The desktop window's minimum inner size (apps/nexopdf/src/main.rs).
     let size = egui::vec2(820.0, 520.0);
     for name in names {
         let start: String = name.chars().take(10).collect();
         let mut h = Harness::builder().with_size(size).build_eframe(move |_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             app.set_option("language", "en").unwrap();
             app.open_bytes(&name, None, fixture(1)).expect("fixture opens");
             app.close_request = Some(CloseRequest::Tab(app.views[0].id));
@@ -920,7 +920,7 @@ fn combine_list_does_not_warn_that_a_split_file_collides_with_itself() {
 /// copy keeps the field's name rather than becoming Text1-1.
 #[test]
 fn pasting_pages_into_their_own_document_keeps_field_names() {
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.set_option("language", "en").unwrap();
     app.open_bytes("form.pdf", None, form_pdf("Text1")).unwrap();
     app.views[0].select_pages(&[0]);
@@ -931,7 +931,7 @@ fn pasting_pages_into_their_own_document_keeps_field_names() {
     assert!(doc.form.iter().all(|f| f.name == "Text1"), "{:?}", doc.form.iter().map(|f| &f.name).collect::<Vec<_>>());
 }
 
-fn texts_of(app: &PdfCraftApp, tab: usize) -> Vec<String> {
+fn texts_of(app: &NexoPDFApp, tab: usize) -> Vec<String> {
     let doc = app.session.get(app.views[tab].id).unwrap();
     let mut r = PageRenderer::new(doc.bytes.clone(), Default::default());
     (0..r.page_count())
@@ -1093,12 +1093,12 @@ fn alt_arrows_move_the_selected_file() {
     assert_eq!(h.state().combine_selection(), [1]);
 }
 
-fn combine_names(h: &Harness<'static, PdfCraftApp>) -> Vec<String> {
+fn combine_names(h: &Harness<'static, NexoPDFApp>) -> Vec<String> {
     h.state().combine_draft.iter().map(|f| f.name.clone()).collect()
 }
 
 /// Files in the Combine tab's list view (the table: headings, page ranges, row links).
-fn combine_of(names: &[(&str, usize)]) -> Harness<'static, PdfCraftApp> {
+fn combine_of(names: &[(&str, usize)]) -> Harness<'static, NexoPDFApp> {
     let files: Vec<(String, Vec<u8>)> = names.iter().map(|(n, p)| (n.to_string(), fixture(*p))).collect();
     let mut h = harness(1, move |app| {
         app.set_option("combine-view", "list").unwrap();
@@ -1244,7 +1244,7 @@ fn columns_resize_and_the_layout_is_kept_in_the_settings() {
     let size_index = nexopdf_ui_egui::SortKey::Size as usize;
     assert!(widths[size_index] > 120.0, "{widths:?}");
     let saved = h.state().persist();
-    let mut fresh = PdfCraftApp::new();
+    let mut fresh = NexoPDFApp::new();
     fresh.set_option("language", "en").unwrap();
     fresh.restore(&saved);
     assert_eq!(fresh.combine_columns, h.state().combine_columns);
@@ -1255,7 +1255,7 @@ fn columns_resize_and_the_layout_is_kept_in_the_settings() {
 
 #[test]
 fn a_folder_adds_its_pdfs_images_and_text_in_order_and_optionally_its_subfolders() {
-    let dir = std::env::temp_dir().join(format!("pdfcraft-combine-folder-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-combine-folder-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(dir.join("sub")).unwrap();
     for (name, pages) in [("page10.pdf", 1), ("page2.PDF", 2), ("sub/inner.pdf", 3)] {
@@ -1341,7 +1341,7 @@ fn files_that_cannot_be_read_are_listed_and_left_out_once_the_user_agrees() {
     assert_eq!(texts_of(h.state(), 1), ["Page 1", "Page 2", "Page 1"]);
 }
 
-fn type_password(h: &mut Harness<'static, PdfCraftApp>, password: &str) {
+fn type_password(h: &mut Harness<'static, NexoPDFApp>, password: &str) {
     let field = h.get_by_role(Role::PasswordInput);
     field.focus();
     field.type_text(password);
@@ -1622,7 +1622,7 @@ impl egui::DroppedFile for Dropped {
     }
 }
 
-fn drop_files(h: &mut Harness<'static, PdfCraftApp>, files: Vec<Dropped>) {
+fn drop_files(h: &mut Harness<'static, NexoPDFApp>, files: Vec<Dropped>) {
     for f in files {
         h.input_mut().dropped_files.push(std::sync::Arc::new(f));
     }
@@ -1676,14 +1676,14 @@ fn files_dropped_outside_the_page_grid_still_open_as_documents() {
     assert_eq!(texts_of(h.state(), 0), ["Page 1", "Page 2"]);
 }
 
-fn grid_zoom(h: &Harness<'static, PdfCraftApp>) -> f32 {
+fn grid_zoom(h: &Harness<'static, NexoPDFApp>) -> f32 {
     h.state().views[0].grid_zoom()
 }
 
 #[test]
 fn page_grid_zooms_with_its_buttons_keys_and_pinch() {
     let mut h = organize(12);
-    let width = |h: &Harness<'static, PdfCraftApp>| h.get_by_label("Page 2").rect().left() - h.get_by_label("Page 1").rect().left();
+    let width = |h: &Harness<'static, NexoPDFApp>| h.get_by_label("Page 2").rect().left() - h.get_by_label("Page 1").rect().left();
     let usual = width(&h);
     h.get_by_label("Larger pages").click();
     h.run_steps(3);
@@ -1745,7 +1745,7 @@ fn zoomed_pages_in_view_are_rendered_at_the_size_drawn() {
     // The 200 × 300 fixture fits by height; keep its aspect ratio instead of stretching
     // it to the full cell width. Request enough pixels for that actual preview width.
     let drawn = 194.0 * 3.0 * (200.0 / 300.0) * h.ctx.pixels_per_point();
-    let sharp = |h: &Harness<'static, PdfCraftApp>, page| h.state().views[0].grid_page_pixels(page);
+    let sharp = |h: &Harness<'static, NexoPDFApp>, page| h.state().views[0].grid_page_pixels(page);
     for _ in 0..200 {
         if sharp(&h, 0).is_some_and(|w| w as f32 >= drawn * 0.9) {
             break;
@@ -1801,7 +1801,7 @@ fn save_pages_writes_what_the_grid_shows() {
     h.get_by_label("Save pages").click();
     h.run_steps(4);
     assert!(!dirty(&h));
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.set_option("language", "en").unwrap();
     app.open_bytes("saved.pdf", None, std::fs::read(&path).unwrap()).unwrap();
     assert_eq!(texts_of(&app, 0), ["Page 1", "Page 3"]);
@@ -1895,7 +1895,7 @@ fn protected_with(algorithm: nexopdf_cos::Algorithm, user: &str, owner: &str, pe
 #[test]
 fn password_prompt_opens_and_security_tab_reports_the_details() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("secret.pdf", None, protected("pw", "owner", -1)).unwrap();
         app
@@ -1925,7 +1925,7 @@ fn the_security_notice_wraps_beside_its_buttons_and_lines_up_with_them() {
     // Wide: one line. Narrower: wrapped. Narrowest: cut short (the full text is on hover).
     for (width, wraps) in [(1700.0, false), (1250.0, true), (900.0, false)] {
         let mut h = Harness::builder().with_size(egui::vec2(width, 800.0)).build_eframe(|_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             app.set_option("language", "en").unwrap();
             app.open_bytes("locked.pdf", None, protected("", "owner", 0b0100)).unwrap();
             app.set_option("panel", "bookmarks").unwrap();
@@ -1951,7 +1951,7 @@ fn the_security_notice_wraps_beside_its_buttons_and_lines_up_with_them() {
 #[test]
 fn the_security_notice_unlocks_with_the_permissions_password() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("locked.pdf", None, protected("", "owner", 0b0100)).unwrap();
         app
@@ -1979,7 +1979,7 @@ fn the_security_notice_unlocks_with_the_permissions_password() {
 #[test]
 fn remove_security_asks_for_the_permissions_password_first() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("locked.pdf", None, protected("", "owner", 0b0100)).unwrap();
         app
@@ -2004,7 +2004,7 @@ fn remove_security_asks_for_the_permissions_password_first() {
 #[test]
 fn restricted_documents_show_a_notice_and_block_page_changes() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("locked.pdf", None, protected("", "owner", 0b0100)).unwrap(); // opens without a password
         app.set_option("organize", "on").unwrap();
@@ -2033,9 +2033,9 @@ fn restricted_documents_show_a_notice_and_block_page_changes() {
 /// in. ⌘C, snapshots and exports are refused with a notice; the owner password lifts that.
 #[test]
 fn copying_out_of_a_document_honours_its_security() {
-    fn open(password: &'static str) -> Harness<'static, PdfCraftApp> {
+    fn open(password: &'static str) -> Harness<'static, NexoPDFApp> {
         let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             app.set_option("language", "en").unwrap();
             app.system_clipboard = false;
             app.open_bytes("no-copy.pdf", None, protected("pw", "owner", -1 ^ 0b1_0000)).unwrap();
@@ -2054,7 +2054,7 @@ fn copying_out_of_a_document_honours_its_security() {
         assert_eq!(h.state().views[0].selected_text().as_deref(), Some("Page 1"));
         h
     }
-    fn copy(h: &mut Harness<'static, PdfCraftApp>) -> bool {
+    fn copy(h: &mut Harness<'static, NexoPDFApp>) -> bool {
         h.state_mut().toast = None;
         h.event(egui::Event::Copy);
         let mut copied = false;
@@ -2064,7 +2064,7 @@ fn copying_out_of_a_document_honours_its_security() {
         }
         copied
     }
-    fn snapshot(h: &mut Harness<'static, PdfCraftApp>) {
+    fn snapshot(h: &mut Harness<'static, NexoPDFApp>) {
         // Around "Page 1", at (20, 150) on the 200 × 300 pt page.
         let r = h.state().views[0].page_screen_rect(0).expect("on screen");
         let at = |x: f32, y: f32| egui::pos2(r.left() + x / 200.0 * r.width(), r.top() + (300.0 - y) / 300.0 * r.height());
@@ -2104,7 +2104,7 @@ fn copying_out_of_a_document_honours_its_security() {
 
 #[test]
 fn replace_pages_dialog_swaps_page_content() {
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.set_option("language", "en").unwrap();
     app.open_bytes("doc.pdf", None, fixture(3)).unwrap();
     app.views[0].select_pages(&[1]);
@@ -2156,7 +2156,7 @@ fn extract_options_and_rotate_pages_dialog() {
 fn dragging_thumbnails_reorders_pages() {
     let mut h = organize(4);
     let before = page_texts(h.state());
-    let grab = |h: &Harness<'static, PdfCraftApp>, label: &str| h.get_by_label(label).rect();
+    let grab = |h: &Harness<'static, NexoPDFApp>, label: &str| h.get_by_label(label).rect();
     let (from, to) = (grab(&h, "Page 1").center(), grab(&h, "Page 3").right_center() - egui::vec2(10.0, 0.0));
     h.hover_at(from);
     h.run_steps(1);
@@ -2213,7 +2213,7 @@ fn source_font_fixture_with_text(body: &str) -> Vec<u8> {
         "<< /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >>".into(),
         "<< /Type /Page /Parent 2 0 R /Contents 7 0 R /Resources << /Font << /F1 3 0 R /F2 5 0 R >> >> >>".into(),
         "<< /Type /Font /Subtype /Type1 /BaseFont /Courier-Oblique >>".into(),
-        "<< /Producer (PdfCraft) >>".into(),
+        "<< /Producer (NexoPDF) >>".into(),
         format!("<< /Length {} >>\nstream\n{body}\nendstream", body.len()),
     ];
     let mut out = b"%PDF-1.7\n".to_vec();
@@ -2231,9 +2231,9 @@ fn source_font_fixture_with_text(body: &str) -> Vec<u8> {
     out
 }
 
-fn open_source_font_fixture() -> Harness<'static, PdfCraftApp> {
+fn open_source_font_fixture() -> Harness<'static, NexoPDFApp> {
     Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("fonts.pdf", None, source_font_fixture()).expect("font fixture opens");
         app
@@ -2296,7 +2296,7 @@ fn deleting_a_draft_does_not_show_the_original_text_underneath() {
         std::thread::sleep(std::time::Duration::from_millis(5));
     }
     let shot = h.render().unwrap();
-    if let Ok(path) = std::env::var("PDFCRAFT_TEXT_PREVIEW_SHOT") {
+    if let Ok(path) = std::env::var("NEXOPDF_TEXT_PREVIEW_SHOT") {
         shot.save(path).unwrap();
     }
     // The right half of the original glyphs, away from the caret and editor border.
@@ -2326,7 +2326,7 @@ fn switching_from_a_narrow_editor_keeps_one_frame_and_a_wide_heading_on_one_line
         "BT /F1 18 Tf 20 220 Td (Editable PDF heading) Tj ET BT /F2 18 Tf 20 120 Td (Mono) Tj ET BT /F2 18 Tf 20 98 Td (Text) Tj ET",
     );
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("editor.pdf", None, bytes).unwrap();
         app
@@ -2371,7 +2371,7 @@ fn switching_from_a_narrow_editor_keeps_one_frame_and_a_wide_heading_on_one_line
         })
         .count();
     assert_eq!(frames, 1, "the active block has only the editor frame");
-    if let Ok(path) = std::env::var("PDFCRAFT_TEXT_FRAME_SHOT") {
+    if let Ok(path) = std::env::var("NEXOPDF_TEXT_FRAME_SHOT") {
         h.render().unwrap().save(path).unwrap();
     }
     assert!(!dirty(&h));
@@ -2437,7 +2437,7 @@ fn double_drawn() -> Vec<u8> {
 #[test]
 fn editing_a_double_drawn_line_replaces_every_copy() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("bold.pdf", None, double_drawn()).expect("opens");
         app
@@ -2496,7 +2496,7 @@ fn editing_existing_form_artwork_on_the_page() {
 
 fn check_existing_artwork(name: &'static str, bytes: Vec<u8>) {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes(name, None, bytes.clone()).expect("opens");
         app
@@ -2602,7 +2602,7 @@ fn selected_text_formatting_keeps_the_rest_of_the_paragraph_and_reopens() {
 }
 
 /// Drag with the pointer from `from` to `to` in a few steps.
-fn drag(h: &mut Harness<'static, PdfCraftApp>, from: egui::Pos2, to: egui::Pos2) {
+fn drag(h: &mut Harness<'static, NexoPDFApp>, from: egui::Pos2, to: egui::Pos2) {
     h.hover_at(from);
     h.run_steps(1);
     h.drag_at(from);
@@ -2620,7 +2620,7 @@ fn dragging_a_paragraph_moves_it_and_its_edge_rewraps_it() {
     let mut h = harness(1, |_| {});
     assert!(h.state_mut().execute("edit.edit_text"));
     h.run_steps(2);
-    let block = |h: &Harness<'static, PdfCraftApp>| {
+    let block = |h: &Harness<'static, NexoPDFApp>| {
         let s = h.state();
         s.session.get(s.views[0].id).unwrap().text_blocks(0)[0].clone()
     };
@@ -2669,9 +2669,9 @@ fn paragraph_drag_fixture(content: &str, rotation: i64, unit: i64) -> Vec<u8> {
     nexopdf_cos::write_incremental(&doc, &Default::default()).unwrap()
 }
 
-fn paragraph_drag_harness(bytes: Vec<u8>, view_rotation: u16) -> Harness<'static, PdfCraftApp> {
+fn paragraph_drag_harness(bytes: Vec<u8>, view_rotation: u16) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.session = nexopdf_engine::Session::new().with_clock(|| 1_700_000_000);
         app.set_option("language", "en").unwrap();
         app.open_bytes("paragraphs.pdf", None, bytes).unwrap();
@@ -2684,14 +2684,14 @@ fn paragraph_drag_harness(bytes: Vec<u8>, view_rotation: u16) -> Harness<'static
     h
 }
 
-fn dragged_paragraphs(h: &Harness<'static, PdfCraftApp>) -> Vec<nexopdf_engine::TextBlock> {
+fn dragged_paragraphs(h: &Harness<'static, NexoPDFApp>) -> Vec<nexopdf_engine::TextBlock> {
     let app = h.state();
     app.session.get(app.views[0].id).unwrap().text_blocks(0)
 }
 
 /// Resolve the current inventory and transform for every gesture, never an old block index
 /// or cached screen position. With identical labels, choose the last (topmost) source box.
-fn paragraph_drag_points(h: &Harness<'static, PdfCraftApp>, text: &str, offset: [f64; 2]) -> (egui::Pos2, egui::Pos2) {
+fn paragraph_drag_points(h: &Harness<'static, NexoPDFApp>, text: &str, offset: [f64; 2]) -> (egui::Pos2, egui::Pos2) {
     let app = h.state();
     let view = &app.views[0];
     let doc = app.session.get(view.id).unwrap();
@@ -2706,7 +2706,7 @@ fn paragraph_drag_points(h: &Harness<'static, PdfCraftApp>, text: &str, offset: 
     (xf.user_rect(&doc.info, 0, b.rect.map(|v| v as f32)).center(), xf.user_rect(&doc.info, 0, moved).center())
 }
 
-fn drag_paragraph(h: &mut Harness<'static, PdfCraftApp>, text: &str, offset: [f64; 2]) {
+fn drag_paragraph(h: &mut Harness<'static, NexoPDFApp>, text: &str, offset: [f64; 2]) {
     let (from, to) = paragraph_drag_points(h, text, offset);
     h.get_by_label("Shift-click to select several objects. Drag empty space to select an area.");
     assert!(h.state().views[0].line_editor.is_none());
@@ -2727,7 +2727,7 @@ fn assert_dragged_paragraphs(actual: &[nexopdf_engine::TextBlock], expected: &[n
 
 /// Read only the current page contents, not stale revisions or the renderer's deduplicated
 /// text layer. These synthetic fixtures contain each literal exactly once per source draw.
-fn paragraph_drag_content(h: &Harness<'static, PdfCraftApp>) -> String {
+fn paragraph_drag_content(h: &Harness<'static, NexoPDFApp>) -> String {
     let app = h.state();
     let doc = nexopdf_cos::Document::open(app.session.get(app.views[0].id).unwrap().bytes.clone()).unwrap();
     let page = nexopdf_model::pages(&doc)[0].clone();
@@ -2745,7 +2745,7 @@ fn paragraph_drag_content(h: &Harness<'static, PdfCraftApp>) -> String {
     String::from_utf8(bytes).unwrap()
 }
 
-fn save_paragraph_drag(h: &mut Harness<'static, PdfCraftApp>, name: &str, original: &[u8]) -> Vec<u8> {
+fn save_paragraph_drag(h: &mut Harness<'static, NexoPDFApp>, name: &str, original: &[u8]) -> Vec<u8> {
     let out = temp_path(name);
     let id = h.state().views[0].id;
     h.state_mut().save_override = Some(out.to_string_lossy().into_owned());
@@ -2759,8 +2759,8 @@ fn save_paragraph_drag(h: &mut Harness<'static, PdfCraftApp>, name: &str, origin
     saved
 }
 
-fn paragraph_drag_shot(h: &mut Harness<'static, PdfCraftApp>, name: &str) {
-    if let Ok(directory) = std::env::var("PDFCRAFT_PARAGRAPH_DRAG_SHOTS") {
+fn paragraph_drag_shot(h: &mut Harness<'static, NexoPDFApp>, name: &str) {
+    if let Ok(directory) = std::env::var("NEXOPDF_PARAGRAPH_DRAG_SHOTS") {
         for _ in 0..60 {
             h.run_steps(2);
             if !h.state().render_pending() {
@@ -2944,7 +2944,7 @@ fn check_added_text_drag(panel_open: bool) {
     h = paragraph_drag_harness(original.as_ref().clone(), 0);
     h.state_mut().left_open = panel_open;
     h.run_steps(4);
-    let added = |h: &Harness<'static, PdfCraftApp>| {
+    let added = |h: &Harness<'static, NexoPDFApp>| {
         let app = h.state();
         app.session.get(app.views[0].id).unwrap().added.clone()
     };
@@ -3035,7 +3035,7 @@ fn an_ordinary_paragraph_drag_cannot_reuse_an_index_after_an_edit() {
 }
 
 /// A quick flick: press at `from`, and the next frame already finds the pointer at `to`.
-fn flick(h: &mut Harness<'static, PdfCraftApp>, from: egui::Pos2, to: egui::Pos2) {
+fn flick(h: &mut Harness<'static, NexoPDFApp>, from: egui::Pos2, to: egui::Pos2) {
     h.hover_at(from);
     h.run_steps(1);
     h.drag_at(from);
@@ -3051,11 +3051,11 @@ fn a_quick_flick_on_either_edge_rewraps_the_paragraph() {
     let mut h = harness(1, |_| {});
     assert!(h.state_mut().execute("edit.edit_text"));
     h.run_steps(2);
-    let lines = |h: &Harness<'static, PdfCraftApp>| {
+    let lines = |h: &Harness<'static, NexoPDFApp>| {
         let s = h.state();
         s.session.get(s.views[0].id).unwrap().text_lines(0)
     };
-    let block = |h: &Harness<'static, PdfCraftApp>| {
+    let block = |h: &Harness<'static, NexoPDFApp>| {
         let s = h.state();
         s.session.get(s.views[0].id).unwrap().text_blocks(0)[0].clone()
     };
@@ -3091,9 +3091,9 @@ fn a_quick_flick_on_either_edge_rewraps_the_paragraph() {
 }
 
 /// The Pages panel, in a window tall enough to show every thumbnail of a short fixture.
-fn pages_panel(pages: usize) -> Harness<'static, PdfCraftApp> {
+fn pages_panel(pages: usize) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("doc.pdf", None, fixture(pages)).expect("fixture opens");
         app.set_option("panel", "pages").unwrap();
@@ -3103,7 +3103,7 @@ fn pages_panel(pages: usize) -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn picked(h: &Harness<'static, PdfCraftApp>) -> Vec<usize> {
+fn picked(h: &Harness<'static, NexoPDFApp>) -> Vec<usize> {
     h.state().views[0].selected.iter().copied().collect()
 }
 
@@ -3196,7 +3196,7 @@ fn dragging_pages_panel_thumbnails_reorders_pages() {
     let mut h = harness(4, |app| app.right = Some(nexopdf_ui_egui::RightPanel::Pages));
     let before = page_texts(h.state());
     // The Pages panel is on the right; the document view may label its pages too.
-    let thumb = |h: &Harness<'static, PdfCraftApp>, label: &str| {
+    let thumb = |h: &Harness<'static, NexoPDFApp>, label: &str| {
         h.get_all_by_label(label).map(|n| n.rect()).max_by(|a, b| a.left().total_cmp(&b.left())).expect("the thumbnail")
     };
     // Grab page 3 (page 4 is below the window) and drop it above page 1.
@@ -3229,11 +3229,11 @@ fn a_thumbnail_drag_that_ends_off_the_panel_or_outlives_the_pages_is_dropped() {
 }
 
 /// A Pages panel thumbnail (the rightmost node with that label).
-fn panel_thumb(h: &Harness<'static, PdfCraftApp>, label: &str) -> egui::Pos2 {
+fn panel_thumb(h: &Harness<'static, NexoPDFApp>, label: &str) -> egui::Pos2 {
     h.get_all_by_label(label).map(|n| n.rect()).max_by(|a, b| a.left().total_cmp(&b.left())).expect("the thumbnail").center()
 }
 
-fn right_click_at(h: &mut Harness<'static, PdfCraftApp>, at: egui::Pos2) {
+fn right_click_at(h: &mut Harness<'static, NexoPDFApp>, at: egui::Pos2) {
     h.hover_at(at);
     h.run_steps(1);
     h.event(egui::Event::PointerButton { pos: at, button: egui::PointerButton::Secondary, pressed: true, modifiers: Default::default() });
@@ -3315,7 +3315,7 @@ fn one_editor_contains_mixed_styles_and_visual_rows() {
          BT /F2 10 Tf 20 195 Td (Last row) Tj ET",
     );
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("mixed.pdf", None, bytes).unwrap();
         app
@@ -3369,7 +3369,7 @@ fn one_editor_contains_mixed_styles_and_visual_rows() {
     assert!(frame.contains_rect(visible), "fallback font rows remain inside the growing frame");
     h.state_mut().views[0].line_editor.as_mut().unwrap().text = original_text;
     h.run_steps(3);
-    if let Ok(path) = std::env::var("PDFCRAFT_RICH_FRAME_SHOT") {
+    if let Ok(path) = std::env::var("NEXOPDF_RICH_FRAME_SHOT") {
         h.render().unwrap().save(path).unwrap();
     }
     h.state_mut().views[0].line_editor.as_mut().unwrap().text.clear();
@@ -3384,15 +3384,15 @@ fn one_editor_contains_mixed_styles_and_visual_rows() {
 }
 
 /// Opt-in private-document regression. This never captures images or saves the source file.
-/// Run with PDFCRAFT_TEXT_REGRESSION_PDF=/path/to/document.pdf and --ignored.
+/// Run with NEXOPDF_TEXT_REGRESSION_PDF=/path/to/document.pdf and --ignored.
 #[test]
 #[ignore = "requires an explicitly supplied local PDF"]
 fn private_document_regions_open_as_one_editor() {
-    let path = std::env::var("PDFCRAFT_TEXT_REGRESSION_PDF").expect("supply a local PDF path");
+    let path = std::env::var("NEXOPDF_TEXT_REGRESSION_PDF").expect("supply a local PDF path");
     let bytes = std::fs::read(&path).unwrap();
     let original = bytes.clone();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("private.pdf", None, bytes).unwrap();
         app
@@ -3523,7 +3523,7 @@ fn inline_editor_preserves_source_font_and_previews_live_bounds() {
     cos.update_dict(nexopdf_cos::ObjRef::new(3, 0), |d| *d = font).unwrap();
     let bytes = write_incremental(&cos, &Default::default()).unwrap();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("stable.pdf", None, bytes).unwrap();
         app
@@ -3561,7 +3561,7 @@ fn inline_editor_preserves_source_font_and_previews_live_bounds() {
     for section in &shape.galley.job.sections {
         assert!(matches!(&section.format.font_id.family,egui::FontFamily::Name(name) if name.starts_with("pdf-source-")));
     }
-    let frame = |h: &Harness<'_, PdfCraftApp>| {
+    let frame = |h: &Harness<'_, NexoPDFApp>| {
         h.output()
             .shapes
             .iter()
@@ -3585,7 +3585,7 @@ fn inline_editor_preserves_source_font_and_previews_live_bounds() {
     assert!(reduced.bottom() < original_frame.bottom() - 20.0, "deleting a row visibly shrinks the block");
     h.state_mut().views[0].line_editor.as_mut().unwrap().text.push_str("\nExtra row that does not fit\nAnother row");
     h.run_steps(3);
-    if let Ok(path) = std::env::var("PDFCRAFT_OVERFLOW_FRAME_SHOT") {
+    if let Ok(path) = std::env::var("NEXOPDF_OVERFLOW_FRAME_SHOT") {
         h.render().unwrap().save(path).unwrap();
     }
     let id = h.state().views[0].id;
@@ -3655,7 +3655,7 @@ fn clipped_artwork_with_labels_drawn(own_clip: bool) -> Vec<u8> {
 #[test]
 fn cropped_images_do_not_intercept_text_and_stay_inside_each_page() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("clipped.pdf", None, clipped_artwork_with_labels()).unwrap();
         app
@@ -3706,7 +3706,7 @@ fn cropped_images_do_not_intercept_text_and_stay_inside_each_page() {
 #[test]
 fn cropped_image_corner_resize_keeps_opposite_corner_and_scales_crop() {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("clipped.pdf", None, clipped_artwork_with_labels_drawn(true)).unwrap();
         app
@@ -3774,11 +3774,11 @@ fn cropped_image_corner_resize_keeps_opposite_corner_and_scales_crop() {
 #[test]
 #[ignore = "requires an explicitly supplied local PDF with cropped artwork"]
 fn private_cropped_image_grips_resize_without_moving_the_opposite_corner() {
-    let path = std::env::var("PDFCRAFT_CLIPPED_ARTWORK_PDF").expect("supply a local PDF path");
+    let path = std::env::var("NEXOPDF_CLIPPED_ARTWORK_PDF").expect("supply a local PDF path");
     let original = std::fs::read(&path).unwrap();
     let bytes = original.clone();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("private.pdf", None, bytes).unwrap();
         app
@@ -3866,11 +3866,11 @@ fn private_cropped_image_grips_resize_without_moving_the_opposite_corner() {
 #[test]
 #[ignore = "requires an explicitly supplied local PDF with cropped artwork"]
 fn private_document_cropped_artwork_does_not_block_text() {
-    let path = std::env::var("PDFCRAFT_CLIPPED_ARTWORK_PDF").expect("supply a local PDF path");
+    let path = std::env::var("NEXOPDF_CLIPPED_ARTWORK_PDF").expect("supply a local PDF path");
     let original = std::fs::read(&path).unwrap();
     let bytes = original.clone();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("private.pdf", None, bytes).unwrap();
         app
@@ -3929,13 +3929,13 @@ fn private_document_cropped_artwork_does_not_block_text() {
 fn private_new_chinese_keyboard_input_preserves_font_layout_and_saved_pixels() {
     use nexopdf_engine::{Edit, Session};
     use std::sync::Arc;
-    let path = std::env::var("PDFCRAFT_CHINESE_TEXT_PDF").expect("supply a local PDF path");
-    let font_path = std::env::var("PDFCRAFT_CHINESE_FULL_FONT").expect("supply the full source face");
+    let path = std::env::var("NEXOPDF_CHINESE_TEXT_PDF").expect("supply a local PDF path");
+    let font_path = std::env::var("NEXOPDF_CHINESE_FULL_FONT").expect("supply the full source face");
     let original = std::fs::read(&path).unwrap();
     let bytes = original.clone();
     let font = Arc::new(std::fs::read(font_path).unwrap());
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 1100.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("private.pdf", None, bytes).unwrap();
         app

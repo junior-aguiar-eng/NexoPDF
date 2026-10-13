@@ -1,9 +1,9 @@
-//! pdfcraft-ui-egui — the first PdfCraft shell (L7).
+//! nexopdf-ui-egui — the first NexoPDF shell (L7).
 //!
 //! Layout grammar follows plan/acrobat/02-ui-ux.md §1: tab strip, mode bar, left tool panel,
 //! floating quick-action bar, document area, right panel + right rail with page navigation.
 //! Everything here is presentation: documents, rendering and the tool catalogue live in
-//! `pdfcraft-engine`.
+//! `nexopdf-engine`.
 
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 
@@ -101,7 +101,7 @@ mod redact_ui;
 pub use redact_ui::{HiddenDraft, PagesDraft as RedactPagesDraft, RedactPrefs, SearchDraft as RedactSearchDraft, SearchMode as RedactSearchMode};
 pub mod i18n;
 
-/// [`PdfCraftApp::date_text`] for callers that already borrow other parts of the app.
+/// [`NexoPDFApp::date_text`] for callers that already borrow other parts of the app.
 pub(crate) fn date_text(session: &Session, fmt: Option<&str>) -> Result<String, String> {
     let lang = session.date_language().unwrap_or(i18n::current().code());
     session.today_text(fmt, Some(lang))
@@ -380,7 +380,7 @@ pub enum OsEvent {
 /// Returns the [`OsEvent`]s that arrived since it was last called (set by the desktop app).
 pub type OsEventsFn = Box<dyn FnMut() -> Vec<OsEvent>>;
 
-/// Hands a saved PDF to the page embedding PdfCraft (web): `(name, bytes, save_as)`. `save_as`
+/// Hands a saved PDF to the page embedding NexoPDF (web): `(name, bytes, save_as)`. `save_as`
 /// is `true` for Save As. Set by the web app when a host page (such as a Nextcloud app) asked
 /// for saves; without it the browser downloads the file.
 pub type HostSaveFn = Box<dyn Fn(&str, &[u8], bool) -> Result<(), String>>;
@@ -431,7 +431,7 @@ pub struct RecentFile {
     pub size: usize,
 }
 
-pub struct PdfCraftApp {
+pub struct NexoPDFApp {
     pub docking: docking::Workspace,
     pub(crate) pending_panel_reveals: Vec<docking::Panel>,
     pub session: Session,
@@ -512,10 +512,10 @@ pub struct PdfCraftApp {
     pub palette_query: String,
     pub all_tools_expanded: bool,
     pub recent: Vec<RecentFile>,
-    /// Preferences: reopen the files that were open when PdfCraft last closed (#442).
+    /// Preferences: reopen the files that were open when NexoPDF last closed (#442).
     pub reopen_last_session: bool,
-    /// The files open when PdfCraft last closed, read from the settings for
-    /// [`PdfCraftApp::reopen_last_files`].
+    /// The files open when NexoPDF last closed, read from the settings for
+    /// [`NexoPDFApp::reopen_last_files`].
     pub last_session: last_session::LastSession,
     /// Quitting closes unsaved tabs one by one: what was open when the quit began.
     quit_session: Option<last_session::LastSession>,
@@ -620,7 +620,7 @@ pub struct PdfCraftApp {
     /// Combine files as thumbnails or as the table (kept in the settings).
     pub combine_view: combine_ui::CombineView,
     /// How large the Combine grid draws its cards (1.0 = the usual; kept in the settings). Set
-    /// with [`PdfCraftApp::set_combine_zoom`].
+    /// with [`NexoPDFApp::set_combine_zoom`].
     pub combine_zoom: f32,
     /// The Combine grid's thumbnails: rendered off the UI thread, a few at a time.
     pub(crate) combine_thumbs: combine_grid::Thumbs,
@@ -765,7 +765,7 @@ pub struct NumberDraft {
     pub start: u32,
 }
 
-impl Default for PdfCraftApp {
+impl Default for NexoPDFApp {
     fn default() -> Self {
         Self::new()
     }
@@ -790,7 +790,7 @@ fn rgb_triple(v: &serde_json::Value) -> Option<[f64; 3]> {
     Some(out)
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     pub fn new() -> Self {
         Self {
             session: Session::new(),
@@ -1485,7 +1485,7 @@ impl PdfCraftApp {
         client
     }
 
-    /// Open a web link in the system browser (a new tab on the web). Only for PdfCraft's own
+    /// Open a web link in the system browser (a new tab on the web). Only for NexoPDF's own
     /// links; an address that came from a document goes through [`Self::request_document_url`].
     pub fn open_url(&mut self, url: &str) {
         if let Some(ctx) = &self.ctx {
@@ -2311,7 +2311,7 @@ pub(crate) fn copy_refused() -> &'static str {
     tl!("The document's security settings don't allow copying text and images")
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Whether text and images may be copied out of document `id`; says why not when they may
     /// not. Reading aloud and accessibility tools don't ask (assistive technology may read
     /// anything, §7.6.4.2).
@@ -2369,7 +2369,7 @@ impl PdfCraftApp {
     }
 }
 
-impl eframe::App for PdfCraftApp {
+impl eframe::App for NexoPDFApp {
     /// While files are dragged over the window the system sends no pointer moves, so egui
     /// would keep the place the pointer entered at: tell it where the pointer really is, so the
     /// page grid can show (and use) the gap under it.
@@ -2609,7 +2609,7 @@ impl eframe::App for PdfCraftApp {
     }
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     fn finish_render_frame(&mut self, ctx: &egui::Context) {
         // The Combine grid's thumbnails, whichever tab shows (renders under way still finish).
         self.combine_thumbs_frame(ctx);

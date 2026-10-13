@@ -1111,7 +1111,7 @@
 	Text alignment:	Teksto lygiuotė:
 	Text in images isn't found; recognise text (OCR) first.	Paveikslėliuose esantis tekstas nerandamas; pirmiausia atpažinkite tekstą (OCR).
 	Text is compared word by word; the differences are shown on the new file.	Tekstas lyginamas žodis po žodžio; skirtumai rodomi naujame faile.
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Teksto atpažinimas neįdiegtas: trūksta modelio failų. Iš naujo įdiekite „NexoPDF“ arba nustatykite NexoPDF_MODELS aplanką, kuriame jie laikomi.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Teksto atpažinimas neįdiegtas: trūksta modelio failų. Iš naujo įdiekite „NexoPDF“ arba nustatykite NEXOPDF_MODELS aplanką, kuriame jie laikomi.
 	Text to find	Ieškomas tekstas
 	Text to insert	Įterpiamas tekstas
 	Text used as a clipping path cannot be moved with this selection.	Teksto, naudojamo kaip iškarpymo kelias, negalima perkelti pasirinkus šį objektą.
@@ -2295,7 +2295,7 @@ comment menu	Edit	Redaguoti
 	Text language is specified	Teksto kalba nurodyta
 	Text must contrast enough with its background for people with low vision. Check the colours by eye or with a contrast tool.	Tekstas turi pakankamai išsiskirti iš fono, kad jį matytų silpnaregiai. Patikrinkite spalvas vizualiai arba kontrasto tikrinimo įrankiu.
 	Text recognition is already running	Teksto atpažinimas jau vykdomas
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	Teksto atpažinimas neįdiegtas: trūksta modelių (vykdykite `cargo xtask models` arba nustatykite NexoPDF_MODELS).
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	Teksto atpažinimas neįdiegtas: trūksta modelių (vykdykite `cargo xtask models` arba nustatykite NEXOPDF_MODELS).
 	That didn't work: an internal error stopped it ({m}).	Veiksmas nepavyko: jį sustabdė vidinė klaida ({m}).
 	That didn't work: an internal error stopped it ({m}). Your documents are unchanged.	Veiksmas nepavyko: jį sustabdė vidinė klaida ({m}). Dokumentai nepakeisti.
 	The Keychain's digital IDs couldn't be listed: {e}	Nepavyko gauti raktinėje esančių skaitmeninių ID sąrašo: {e}
@@ -2386,7 +2386,7 @@ comment menu	Edit	Redaguoti
 	the document is protected by a password	dokumentas apsaugotas slaptažodžiu
 	the image is empty	paveikslėlis tuščias
 	the password is incorrect	slaptažodis netinkamas
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	teksto atpažinimo modeliai neįdiegti (iš naujo įdiekite „NexoPDF“ arba nustatykite NexoPDF_MODELS aplanką, kuriame jie laikomi)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	teksto atpažinimo modeliai neįdiegti (iš naujo įdiekite „NexoPDF“ arba nustatykite NEXOPDF_MODELS aplanką, kuriame jie laikomi)
 	the title must not be empty	pavadinimas negali būti tuščias
 	there are no pages to print	nėra spausdintinų puslapių
 	there are no redaction marks to apply	nėra pritaikytinų konfidencialios informacijos šalinimo žymų
@@ -2582,3 +2582,9 @@ key	Esc	Esc
 key	Home	Home
 key	End	End
 key	Space	Tarpas
+
+	An open-source PDF workbench — local, private, and fast.	Atvirojo kodo PDF darbo aplinka — vietinė, privati ir greita.
+	NexoHub Ecosystem	NexoHub ekosistema
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% natyvus Rust  ·  Be telemetrijos  ·  Visiškas privatumas
+	High-performance document engineering — local, private and ultrafast.	Našus dokumentų apdorojimas — vietinis, privatus ir itin greitas.
+	High-performance document workbench written in native Rust.	Naši dokumentų darbo aplinka, parašyta natyvia Rust kalba.

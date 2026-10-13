@@ -293,9 +293,9 @@ fn overlay_cache_is_bounded_and_new_documents_take_the_fallback() {
 /// Local, read-only corpus diagnostic; intentionally separate from ordinary timing.
 /// The source PDF is never copied into the repository or written by this probe.
 #[test]
-#[ignore = "set PDFCRAFT_SIGNATURE_PROBE_SOURCE to a local PDF; parent coordinates resource use"]
+#[ignore = "set NEXOPDF_SIGNATURE_PROBE_SOURCE to a local PDF; parent coordinates resource use"]
 fn real_file_discovery_cache_diagnostic() {
-    let path = std::env::var_os("PDFCRAFT_SIGNATURE_PROBE_SOURCE").expect("PDFCRAFT_SIGNATURE_PROBE_SOURCE");
+    let path = std::env::var_os("NEXOPDF_SIGNATURE_PROBE_SOURCE").expect("NEXOPDF_SIGNATURE_PROBE_SOURCE");
     let bytes = Arc::new(std::fs::read(path).unwrap());
     let doc = Document::open(bytes.clone()).unwrap();
     let mut objects = 0usize;
@@ -334,7 +334,7 @@ fn real_file_discovery_cache_diagnostic() {
     eprintln!("signature-discovery-unchanged\tfull_scans={}", scans(&cache));
     assert_eq!(scans(&cache), 1);
     let mut edited = doc.clone();
-    edited.update_dict(edited.root().unwrap(), |d| d.set(b"PdfcraftSignatureCacheProbe".to_vec(), Object::Int(1))).unwrap();
+    edited.update_dict(edited.root().unwrap(), |d| d.set(b"NexoPDFSignatureCacheProbe".to_vec(), Object::Int(1))).unwrap();
     assert_eq!(list_cached(&edited, &bytes, &trust, &cache).len(), first.len());
     assert_eq!(list_cached(&doc, &bytes, &trust, &cache).len(), first.len());
     assert_eq!(list_cached(&edited, &bytes, &trust, &cache).len(), first.len());

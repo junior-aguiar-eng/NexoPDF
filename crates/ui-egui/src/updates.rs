@@ -1,15 +1,15 @@
 //! Help ▸ Check for updates (issue #28): ask for the latest release and offer its download page.
 //!
-//! The desktop app supplies how to ask ([`PdfCraftApp::update_source`]), so this crate has no
+//! The desktop app supplies how to ask ([`NexoPDFApp::update_source`]), so this crate has no
 //! network code; without a source (the web build, tests) the command opens the releases page.
-//! PdfCraft never downloads or installs anything itself: the user downloads the new version.
+//! NexoPDF never downloads or installs anything itself: the user downloads the new version.
 //! It asks only when the user does: there is no check at start (the owner's decision).
 
 use std::sync::Arc;
 
 use egui::{Align, Layout};
 
-use crate::{PdfCraftApp, theme, widgets};
+use crate::{NexoPDFApp, theme, widgets};
 
 /// Where every NexoPDF release is listed.
 pub const RELEASES_PAGE: &str = "https://github.com/junior-aguiar-eng/NexoPDF/releases";
@@ -62,7 +62,7 @@ pub(crate) struct Updates {
     pub(crate) open: bool,
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Help ▸ Check for updates: ask for the latest release and show the outcome.
     pub fn check_for_updates(&mut self) {
         let Some(source) = self.update_source.clone() else {
@@ -108,7 +108,7 @@ impl PdfCraftApp {
 }
 
 /// The Updates dialog.
-pub(crate) fn dialog(app: &mut PdfCraftApp, ctx: &egui::Context) {
+pub(crate) fn dialog(app: &mut NexoPDFApp, ctx: &egui::Context) {
     if !app.updates.open {
         return;
     }

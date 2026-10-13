@@ -3,7 +3,7 @@
 
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
-use nexopdf_ui_egui::{LinkOrigin, PdfCraftApp, PendingLink};
+use nexopdf_ui_egui::{LinkOrigin, NexoPDFApp, PendingLink};
 
 /// See `tests/view.rs`: WARP's shader JIT crashes when two devices compile at once on ARM64.
 static GPU: std::sync::Mutex<()> = std::sync::Mutex::new(());
@@ -74,9 +74,9 @@ fn remote_fixture(file: &str, destination: &str) -> Vec<u8> {
     out
 }
 
-fn remote_harness(source_path: Option<String>, file: &str, destination: &str) -> Harness<'static, PdfCraftApp> {
+fn remote_harness(source_path: Option<String>, file: &str, destination: &str) -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("source.pdf", source_path, remote_fixture(file, destination)).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -101,9 +101,9 @@ fn linked_pages(count: usize, password: Option<&str>) -> Vec<u8> {
     session.save_bytes(id).unwrap().as_ref().clone()
 }
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("links.pdf", None, fixture()).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -115,7 +115,7 @@ fn harness() -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn click_at(h: &mut Harness<'static, PdfCraftApp>, at: egui::Pos2) {
+fn click_at(h: &mut Harness<'static, NexoPDFApp>, at: egui::Pos2) {
     h.hover_at(at);
     h.run_steps(2);
     h.drag_at(at);
@@ -124,21 +124,21 @@ fn click_at(h: &mut Harness<'static, PdfCraftApp>, at: egui::Pos2) {
 }
 
 /// Click the link on page 1, at the middle of its rectangle.
-fn click_link_at(h: &mut Harness<'static, PdfCraftApp>, y: f32) {
+fn click_link_at(h: &mut Harness<'static, NexoPDFApp>, y: f32) {
     let r = h.state().views[0].page_screen_rect(0).expect("page 1 on screen");
     let at = egui::pos2(r.min.x + r.width() * (150.0 / 300.0), r.min.y + r.height() * (1.0 - y / 400.0));
     click_at(h, at);
 }
 
-fn click_remote_link(h: &mut Harness<'static, PdfCraftApp>) {
+fn click_remote_link(h: &mut Harness<'static, NexoPDFApp>) {
     click_link(h);
 }
 
-fn click_link(h: &mut Harness<'static, PdfCraftApp>) {
+fn click_link(h: &mut Harness<'static, NexoPDFApp>) {
     click_link_at(h, 325.0);
 }
 
-fn click_field(h: &mut Harness<'static, PdfCraftApp>, name: &str) {
+fn click_field(h: &mut Harness<'static, NexoPDFApp>, name: &str) {
     let at = {
         let s = h.state();
         let doc = s.session.get(s.views[0].id).unwrap();
@@ -170,7 +170,7 @@ fn a_link_asks_first_and_opens_when_allowed() {
 #[test]
 fn a_local_gotor_link_opens_in_a_tab_and_applies_its_destination() {
     let _gpu = gpu();
-    let dir = std::env::temp_dir().join(format!("pdfcraft-ui-gotor-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-ui-gotor-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     std::fs::write(dir.join("target.pdf"), linked_pages(2, None)).unwrap();
     let mut h = remote_harness(Some(dir.join("source.pdf").to_string_lossy().into_owned()), "target.pdf", "[1 /FitH 200]");
@@ -185,7 +185,7 @@ fn a_local_gotor_link_opens_in_a_tab_and_applies_its_destination() {
 #[test]
 fn a_remote_destination_survives_password_retries_and_cancel_opens_no_tab() {
     let _gpu = gpu();
-    let dir = std::env::temp_dir().join(format!("pdfcraft-ui-gotor-password-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-ui-gotor-password-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     std::fs::write(dir.join("target.pdf"), linked_pages(2, Some("test-password"))).unwrap();
 
@@ -209,7 +209,7 @@ fn a_remote_destination_survives_password_retries_and_cancel_opens_no_tab() {
 #[test]
 fn a_gotor_link_to_a_directory_or_device_is_refused_without_reading_it() {
     let _gpu = gpu();
-    let dir = std::env::temp_dir().join(format!("pdfcraft-ui-gotor-not-a-file-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-ui-gotor-not-a-file-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(dir.join("folder.pdf")).unwrap();
     // Only Unix adds a target (a device), so elsewhere the list is never changed.
@@ -353,7 +353,7 @@ fn an_email_link_cannot_attach_a_local_file() {
 }
 
 /// Ask to open `url` from a script and return the harness with the prompt showing.
-fn prompt_for(url: &str) -> Harness<'static, PdfCraftApp> {
+fn prompt_for(url: &str) -> Harness<'static, NexoPDFApp> {
     let mut h = harness();
     let id = h.state().views[0].id;
     let script = format!("app.launchURL({});", serde_json::to_string(url).unwrap());

@@ -1,4 +1,4 @@
-# Every checkout is byte-identical to the repository: no line-ending conversion, ever.
+# Preserve document and asset bytes; Unix scripts explicitly use LF.
 # Windows checkouts default to core.autocrlf=true, which rewrote signed PDFs (breaking their
 # signatures) and assets whose SHA-256 ATTRIBUTION.toml records (cargo xtask assets).
 * -text
@@ -13,3 +13,6 @@
 *.ico binary
 *.png binary
 *.brotli binary
+
+# Shell scripts must remain executable on Unix and pass ShellCheck.
+*.sh text eol=lf

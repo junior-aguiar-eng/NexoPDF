@@ -7,7 +7,7 @@
 //! `--ignored --nocapture`.
 //!
 //! A corpus that is present but **unverified** is a failure, not a skip. `xtask corpus` writes
-//! `corpus/pdfjs/.pdfcraft-corpus.json` only after the checkout matches the pinned commit and
+//! `corpus/pdfjs/.nexopdf-corpus.json` only after the checkout matches the pinned commit and
 //! manifest sha256, so these tests refuse to run against a tree nobody has checked. Without that,
 //! a half-finished or tampered checkout would quietly produce green results.
 
@@ -24,7 +24,7 @@ fn checkout() -> Option<std::path::PathBuf> {
     if !dir.is_dir() {
         return None;
     }
-    let stamp = dir.join(".pdfcraft-corpus.json");
+    let stamp = dir.join(".nexopdf-corpus.json");
     assert!(
         stamp.is_file(),
         "{} exists but {} does not: the corpus has not been verified against the pin. \
@@ -91,14 +91,14 @@ fn corpus_parity() {
                 return Err(format!("page count {:?} vs hayro {expected}", page_count(&doc)));
             }
             let root = doc.root().ok_or("no root")?;
-            doc.update_dict(root, |d| d.set(b"PdfCraftTest".to_vec(), Object::Bool(true))).map_err(|e| e.to_string())?;
+            doc.update_dict(root, |d| d.set(b"NexoPDFTest".to_vec(), Object::Bool(true))).map_err(|e| e.to_string())?;
             let saved = write_incremental(&doc, &SaveOptions::default()).map_err(|e| format!("save: {e}"))?;
             // Reconstructed files are rewritten in full; everything else must keep its bytes.
             if !doc.revisions().is_empty() && saved.get(..bytes.len()) != Some(&bytes[..]) {
                 return Err("prefix modified".into());
             }
             let again = Document::open(Arc::new(saved.clone())).map_err(|e| format!("reopen: {e}"))?;
-            let flag = again.get(again.root().ok_or("no root after save")?).as_dict().and_then(|d| d.get(b"PdfCraftTest").cloned());
+            let flag = again.get(again.root().ok_or("no root after save")?).as_dict().and_then(|d| d.get(b"NexoPDFTest").cloned());
             if flag != Some(Object::Bool(true)) {
                 return Err("edit lost after reopen".into());
             }
@@ -161,7 +161,7 @@ fn corpus_passwords() {
                     continue;
                 }
                 let root = doc.root().unwrap();
-                doc.update_dict(root, |d| d.set(b"PdfCraftTest".to_vec(), Object::Bool(true))).unwrap();
+                doc.update_dict(root, |d| d.set(b"NexoPDFTest".to_vec(), Object::Bool(true))).unwrap();
                 let saved = write_incremental(&doc, &SaveOptions::default()).unwrap();
                 match Document::open_with_password(Arc::new(saved.clone()), Some(pw)) {
                     Ok(again) if page_count(&again) == pages => {}

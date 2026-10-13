@@ -9,9 +9,9 @@
 # at runtime; the freedesktop runtime has all of them, and the GPU driver comes from its
 # org.freedesktop.Platform.GL extension.
 #
-# ai.storyteller.nexopdf.yml (same directory) is the from-source manifest for Flathub. Keep
+# io.nexohub.nexopdf.yml (same directory) is the from-source manifest for Flathub. Keep
 # runtime-version and finish-args identical in both (packaging-lint checks this).
-id: ai.storyteller.nexopdf
+id: io.nexohub.nexopdf
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
@@ -41,10 +41,10 @@ modules:
     build-commands:
       - install -Dm755 bin/nexopdf /app/bin/nexopdf
       - install -Dm755 bin/nexopdf-cli /app/bin/nexopdf-cli
-      - install -Dm644 share/applications/ai.storyteller.nexopdf.desktop /app/share/applications/ai.storyteller.nexopdf.desktop
-      - install -Dm644 share/mime/packages/ai.storyteller.nexopdf.xml /app/share/mime/packages/ai.storyteller.nexopdf.xml
+      - install -Dm644 share/applications/io.nexohub.nexopdf.desktop /app/share/applications/io.nexohub.nexopdf.desktop
+      - install -Dm644 share/mime/packages/io.nexohub.nexopdf.xml /app/share/mime/packages/io.nexohub.nexopdf.xml
       # Already has the release's version and date substituted by package.sh.
-      - install -Dm644 share/metainfo/ai.storyteller.nexopdf.metainfo.xml /app/share/metainfo/ai.storyteller.nexopdf.metainfo.xml
+      - install -Dm644 share/metainfo/io.nexohub.nexopdf.metainfo.xml /app/share/metainfo/io.nexohub.nexopdf.metainfo.xml
       # OCR models (with their licences), found at /app/bin/../share/nexopdf/models.
       - mkdir -p /app/share/nexopdf && cp -R share/nexopdf/models /app/share/nexopdf/
       # Licences, including the embedded craft-fonts' OFL texts.

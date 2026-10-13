@@ -210,7 +210,7 @@ fn qpdf_agrees() {
         eprintln!("qpdf not installed; skipping");
         return;
     }
-    let dir = std::env::temp_dir().join(format!("pdfcraft-enc-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-enc-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     for alg in ALL {
         let path = dir.join(format!("{alg:?}.pdf"));

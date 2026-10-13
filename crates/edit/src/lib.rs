@@ -1,4 +1,4 @@
-//! pdfcraft-edit — page content editing (L4). Today: page marks, Acrobat's Header & footer,
+//! nexopdf-edit — page content editing (L4). Today: page marks, Acrobat's Header & footer,
 //! Watermark, Background and Bates numbering (execution plan M7.6).
 //!
 //! **How marks are stored.** Each mark is one content stream appended to (or, for content behind
@@ -296,8 +296,8 @@ fn add_resources(doc: &mut Document, page: &nexopdf_model::Page, opacity: Option
     Ok(())
 }
 
-const WRAP_OPEN: &[u8] = b"q %PdfCraft\n";
-const WRAP_CLOSE: &[u8] = b"Q %PdfCraft\n";
+const WRAP_OPEN: &[u8] = b"q %NexoPDF\n";
+const WRAP_CLOSE: &[u8] = b"Q %NexoPDF\n";
 
 #[cfg(test)]
 fn stream_bytes(doc: &Document, o: &Object) -> Option<Vec<u8>> {

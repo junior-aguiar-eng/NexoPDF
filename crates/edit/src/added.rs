@@ -200,7 +200,7 @@ pub struct Added {
     pub content: Content,
 }
 
-/// PdfCraft-owned page content discovered in one page/content traversal.
+/// NexoPDF-owned page content discovered in one page/content traversal.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct MarkerScan {
     pub marks: Vec<MarkKind>,
@@ -429,7 +429,7 @@ fn shaped_width(t: &AddedText, s: &str, rtl: bool) -> f64 {
 
 fn arabic_error(e: GlyphError, text: &str) -> EditError {
     EditError::Invalid(match e {
-        GlyphError::NoFont => "Arabic text needs PdfCraft's Arabic font, which this build doesn't include \
+        GlyphError::NoFont => "Arabic text needs NexoPDF's Arabic font, which this build doesn't include \
                                (to build it in, set CRAFT_FONTS_DIR to a craft-fonts checkout that has an Arab face)"
             .into(),
         GlyphError::Missing => format!("the Arabic font can't show \"{text}\""),
@@ -654,7 +654,7 @@ fn type3_shaped(doc: &mut Document, clusters: &[&ShapedCluster], outlines: &Hash
             },
             |f| f.family,
         ),
-        None => "PdfCraft Shaped Text",
+        None => "NexoPDF Shaped Text",
     };
     let mut descriptor = Dict::new();
     descriptor.set(b"Type".to_vec(), Object::name("FontDescriptor"));
@@ -939,8 +939,7 @@ fn validate(c: &Content) -> Result<(), EditError> {
             // Everything else in it is drawn in the standard font, so it still has to fit.
             let undrawable = if t.text.chars().any(shaped_arabic) && nexopdf_fonts::document_arabic_font().is_none() {
                 t.text.split('\n').find_map(|line| {
-                    line.chars()
-                        .find(|c| !(shaped_arabic(*c) || is_thai(*c) && nexopdf_fonts::thai_has(*c) || nexopdf_fonts::win_ansi_encodable(*c)))
+                    line.chars().find(|c| !(shaped_arabic(*c) || is_thai(*c) && nexopdf_fonts::thai_has(*c) || nexopdf_fonts::win_ansi_encodable(*c)))
                 })
             } else {
                 first_undrawable(t)

@@ -1,5 +1,5 @@
-//! `pdfcraft-cli.exe` carries a Windows version resource (`build.rs`), so Explorer, PowerShell's
-//! `VersionInfo` and inventory tools see its version and publisher, as they do for `pdfcraft.exe`.
+//! `nexopdf-cli.exe` carries a Windows version resource (`build.rs`), so Explorer, PowerShell's
+//! `VersionInfo` and inventory tools see its version and publisher, as they do for `nexopdf.exe`.
 
 #![cfg(windows)]
 
@@ -33,11 +33,11 @@ fn the_exe_has_version_info_with_the_package_version() {
     let start = find(&exe, &utf16("VS_VERSION_INFO")).expect("no version resource");
     let resource = &exe[start..];
     for (key, value) in [
-        ("ProductName", "PdfCraft"),
-        ("FileDescription", "PdfCraft command-line tool"),
-        ("LegalCopyright", "Copyright (c) the PdfCraft contributors. MIT OR Apache-2.0."),
-        ("OriginalFilename", "pdfcraft-cli.exe"),
-        ("InternalName", "pdfcraft-cli"),
+        ("ProductName", "NexoPDF"),
+        ("FileDescription", "NexoPDF command-line tool"),
+        ("LegalCopyright", "Copyright (c) the NexoPDF contributors. MIT OR Apache-2.0."),
+        ("OriginalFilename", "nexopdf-cli.exe"),
+        ("InternalName", "nexopdf-cli"),
         ("FileVersion", env!("CARGO_PKG_VERSION")),
         ("ProductVersion", env!("CARGO_PKG_VERSION")),
     ] {

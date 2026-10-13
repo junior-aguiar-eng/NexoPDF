@@ -1228,7 +1228,7 @@
 	Downsample to	Zmniejsz rozdzielczość do
 	Also recognize pages that already have text	Rozpoznaj także strony, które zawierają już tekst
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Obrazy na tych stronach też są rozpoznawane; słowa, które już są w tekście strony, nie są dodawane ponownie
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Rozpoznawanie tekstu nie jest zainstalowane: brakuje plików modeli. Zainstaluj NexoPDF ponownie lub ustaw NexoPDF_MODELS na folder zawierający te pliki.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Rozpoznawanie tekstu nie jest zainstalowane: brakuje plików modeli. Zainstaluj NexoPDF ponownie lub ustaw NEXOPDF_MODELS na folder zawierający te pliki.
 	Settings	Ustawienia
 	Optional	Opcjonalne
 	Planned · {m}	Planowane · {m}
@@ -1816,7 +1816,7 @@
 	there are no pages to print	brak stron do wydrukowania
 	the document has no tags	dokument nie ma tagów
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	modele rozpoznawania tekstu nie są zainstalowane (zainstaluj NexoPDF ponownie lub ustaw NexoPDF_MODELS na folder zawierający modele)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	modele rozpoznawania tekstu nie są zainstalowane (zainstaluj NexoPDF ponownie lub ustaw NEXOPDF_MODELS na folder zawierający modele)
 	the image is empty	obraz jest pusty
 	this file isn't XFDF, FDF, XML or text form data	ten plik nie zawiera danych formularza XFDF, FDF, XML ani tekstowych
 	nothing in the file matches this document	żadne dane w pliku nie pasują do tego dokumentu
@@ -2125,7 +2125,7 @@
 	Squiggly	Faliste podkreślenie
 	Table	Tabela
 	Table rows belong directly in a table or its head, body or foot. Fix the table's tags.	Wiersze tabeli należą bezpośrednio do tabeli lub jej nagłówka, treści albo stopki. Popraw tagi tabeli.
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	Rozpoznawanie tekstu nie jest zainstalowane: brakuje modeli (uruchom `cargo xtask models` lub ustaw NexoPDF_MODELS).
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	Rozpoznawanie tekstu nie jest zainstalowane: brakuje modeli (uruchom `cargo xtask models` lub ustaw NEXOPDF_MODELS).
 	That didn't work: an internal error stopped it ({m}).	Operacja nie powiodła się z powodu błędu wewnętrznego ({m}).
 	The Windows store's digital IDs couldn't be listed: {e}	Nie można wyświetlić identyfikatorów cyfrowych z magazynu Windows: {e}
 	The document changed while you were choosing a file, so nothing was changed.	Dokument zmienił się podczas wybierania pliku, więc nic nie zmieniono.
@@ -2318,3 +2318,9 @@ animation effects	Off	Wyłączone
 	Local cross-PDF links require the desktop app	Lokalne łącza między plikami PDF wymagają aplikacji komputerowej
 	The existing action will be preserved.	Istniejąca akcja zostanie zachowana.
 	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Skrypty tego formularza są wyłączone, ponieważ jeden z nich działał zbyt długo. Otwórz dokument ponownie, aby znów je uruchomić.
+
+	An open-source PDF workbench — local, private, and fast.	Otwarte środowisko pracy z PDF — lokalne, prywatne i szybkie.
+	NexoHub Ecosystem	Ekosystem NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% natywny Rust  ·  Bez telemetrii  ·  Pełna prywatność
+	High-performance document engineering — local, private and ultrafast.	Wydajne przetwarzanie dokumentów — lokalne, prywatne i niezwykle szybkie.
+	High-performance document workbench written in native Rust.	Wydajne środowisko pracy z dokumentami napisane w natywnym Rust.

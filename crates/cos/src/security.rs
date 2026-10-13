@@ -1,4 +1,4 @@
-//! Bridging the COS object model and `pdfcraft-crypt`: reading `/Encrypt` dictionaries and
+//! Bridging the COS object model and `nexopdf-crypt`: reading `/Encrypt` dictionaries and
 //! decrypting / encrypting the strings and streams of an object (§7.6.2).
 //!
 //! Not encrypted, per the spec: the `/Encrypt` dictionary itself, cross-reference streams, the

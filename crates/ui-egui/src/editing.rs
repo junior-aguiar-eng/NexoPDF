@@ -4,7 +4,7 @@
 use nexopdf_engine::Edit;
 use nexopdf_platform::staging::{StagingName, create_staging, staging_suffixes};
 
-use crate::PdfCraftApp;
+use crate::NexoPDFApp;
 
 /// What the user was doing when we asked whether to save.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -27,7 +27,7 @@ pub enum SaveTarget {
     As,
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Apply an edit to the active document. Returns `true` on success; failures are shown.
     pub fn apply_edit(&mut self, edit: Edit) -> bool {
         let Some((i, id)) = self.active_ids() else { return false };
@@ -967,7 +967,7 @@ pub(crate) fn download(name: &str, bytes: &[u8]) -> Result<(), String> {
     Ok(())
 }
 
-impl PdfCraftApp {
+impl NexoPDFApp {
     /// Carry out a Bookmarks-panel action as an undoable edit.
     pub fn bookmark_action(&mut self, action: crate::panels::BmAction) {
         use crate::panels::BmAction as A;
@@ -1033,14 +1033,14 @@ mod tests {
 
     /// A fresh, empty folder for one staging test.
     fn staging_dir(test: &str) -> PathBuf {
-        let dir = std::env::temp_dir().join(format!("pdfcraft-ui-staging-{}-{test}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("nexopdf-ui-staging-{}-{test}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
         dir
     }
 
     fn staged(dir: &Path, suffix: u64) -> PathBuf {
-        dir.join(format!(".out.pdf.pdfcraft-{suffix:016x}.tmp"))
+        dir.join(format!(".out.pdf.nexopdf-{suffix:016x}.tmp"))
     }
 
     fn read(p: &Path) -> String {
@@ -1242,7 +1242,7 @@ mod tests {
         std::fs::write(&attachment, &original).unwrap();
         let kept = dir.join("Quote.pdf");
 
-        let mut app = crate::PdfCraftApp::new();
+        let mut app = crate::NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("Quote.pdf", Some(attachment.to_string_lossy().into_owned()), original.clone()).unwrap();
         assert!(app.apply_edit(nexopdf_engine::Edit::RotatePages { pages: vec![0], degrees: 90 }));
@@ -1280,13 +1280,13 @@ mod revert_draft_tests {
         }
     }
 
-    fn app() -> PdfCraftApp {
-        let mut app = PdfCraftApp::new();
+    fn app() -> NexoPDFApp {
+        let mut app = NexoPDFApp::new();
         app.open_bytes("source.pdf", None, include_bytes!("../tests/data/form.pdf").to_vec()).unwrap();
         app
     }
 
-    fn queue_draft(app: &mut PdfCraftApp, index: usize, text: &str) {
+    fn queue_draft(app: &mut NexoPDFApp, index: usize, text: &str) {
         app.views[index].forms.focus = Some(focus(text));
         let form = app.session.get(app.views[index].id).unwrap().form.clone();
         crate::forms_ui::commit(&mut app.views[index], &form);
@@ -1332,7 +1332,7 @@ mod revert_draft_tests {
     fn a_value_its_font_cannot_draw_is_kept_and_explained() {
         let mut app = app();
         let fill =
-            |app: &mut PdfCraftApp, text: &str| app.apply_edit(Edit::SetFieldValue { name: "name".into(), value: FieldValue::Text(text.into()) });
+            |app: &mut NexoPDFApp, text: &str| app.apply_edit(Edit::SetFieldValue { name: "name".into(), value: FieldValue::Text(text.into()) });
         assert!(fill(&mut app, "张三"));
         let toast = app.toast.as_ref().map(|t| t.0.clone()).expect("a notice");
         assert!(toast.contains("“张” (U+5F20)") && toast.contains("other PDF viewers redraw the field"), "{toast}");

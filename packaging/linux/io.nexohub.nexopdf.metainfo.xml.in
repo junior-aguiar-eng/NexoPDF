@@ -2,13 +2,13 @@
 <!-- AppStream metadata (software centres, Flathub). Template: package.sh and the Flatpak
      manifest substitute @VERSION@ and @DATE@ from Cargo.toml and the build date. -->
 <component type="desktop-application">
-  <id>ai.storyteller.nexopdf</id>
+  <id>io.nexohub.nexopdf</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT OR Apache-2.0</project_license>
   <name>NexoPDF</name>
   <summary>Read, organize, combine, split and secure PDFs</summary>
-  <developer id="ai.storyteller">
-    <name>Learning Machines LLC</name>
+  <developer id="io.nexohub">
+    <name>NexoPDF</name>
   </developer>
   <description>
     <p>
@@ -16,13 +16,13 @@
       organize, combine and split pages; edit, redact, protect and export documents.
     </p>
   </description>
-  <launchable type="desktop-id">ai.storyteller.nexopdf.desktop</launchable>
-  <icon type="stock">ai.storyteller.nexopdf</icon>
+  <launchable type="desktop-id">io.nexohub.nexopdf.desktop</launchable>
+  <icon type="stock">io.nexohub.nexopdf</icon>
   <!-- Only url types known to appstream 0.15 (Ubuntu 22.04, where CI validates): no vcs-browser. -->
-  <url type="homepage">https://getartcraft.com/apps/nexopdf</url>
+  <url type="homepage">https://github.com/junior-aguiar-eng/NexoPDF</url>
   <url type="bugtracker">https://github.com/junior-aguiar-eng/NexoPDF/issues</url>
   <url type="help">https://github.com/junior-aguiar-eng/NexoPDF</url>
-  <url type="contact">https://discord.gg/artcraft</url>
+  <url type="contact">https://github.com/junior-aguiar-eng/NexoPDF/issues</url>
   <categories>
     <category>Office</category>
     <category>Viewer</category>

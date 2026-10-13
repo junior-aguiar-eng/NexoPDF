@@ -24,7 +24,7 @@ pub enum ThemePreference {
 
 impl ThemePreference {
     /// The colours to draw. `system` is what the operating system says, `None` when it says
-    /// nothing; `fallback` is supplied by the caller. PdfCraft uses Light for an unknown desktop.
+    /// nothing; `fallback` is supplied by the caller. NexoPDF uses Light for an unknown desktop.
     pub fn resolve(self, system: Option<bool>, fallback: ThemeKind) -> ThemeKind {
         match self {
             Self::Light => ThemeKind::Light,
@@ -81,7 +81,7 @@ impl Tokens {
                 divider: Color32::from_rgb(0xEE, 0xE9, 0xE0),
                 text: Color32::from_rgb(0x1C, 0x19, 0x17),
                 text_muted: Color32::from_rgb(0x57, 0x53, 0x4E),
-                text_faint: Color32::from_rgb(0x78, 0x71, 0x6C),
+                text_faint: Color32::from_rgb(0x73, 0x6C, 0x67),
                 icon: Color32::from_rgb(0x44, 0x40, 0x3C),
                 hover: Color32::from_rgb(0xFA, 0xF7, 0xF2),
                 pressed: Color32::from_rgb(0xF0, 0xEA, 0xDF),
@@ -105,7 +105,7 @@ impl Tokens {
                 divider: Color32::from_rgb(0x33, 0x2E, 0x2A),
                 text: Color32::from_rgb(0xFA, 0xF7, 0xF2),
                 text_muted: Color32::from_rgb(0xB5, 0xAE, 0xA6),
-                text_faint: Color32::from_rgb(0x8A, 0x83, 0x7A),
+                text_faint: Color32::from_rgb(0x9A, 0x93, 0x8A),
                 icon: Color32::from_rgb(0xDE, 0xD7, 0xCE),
                 hover: Color32::from_rgb(0x2D, 0x29, 0x25),
                 pressed: Color32::from_rgb(0x38, 0x33, 0x2E),
@@ -122,7 +122,7 @@ impl Tokens {
     }
 
     pub fn get(ctx: &egui::Context) -> Self {
-        ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("pdfcraft-theme"))).unwrap_or_else(|| Self::for_kind(ThemeKind::Light))
+        ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("nexopdf-theme"))).unwrap_or_else(|| Self::for_kind(ThemeKind::Light))
     }
 
     pub fn dark(&self) -> bool {
@@ -233,7 +233,7 @@ pub const SYSTEM_DEVANAGARI_FALLBACK: &str = "system-devanagari-fallback";
 /// An installed Devanagari face, when there is one, ends every family just before that one, so
 /// Hindi text draws in a build without a Devanagari face.
 ///
-/// `PDFCRAFT_SYSTEM_FONTS=0` leaves them out.
+/// `NEXOPDF_SYSTEM_FONTS=0` leaves them out.
 pub fn installed_font_definitions(cjk: CjkPreference) -> FontDefinitions {
     #[cfg_attr(target_arch = "wasm32", expect(unused_mut))]
     let mut fonts = font_definitions_for(cjk == CjkPreference::SimplifiedChinese);
@@ -320,7 +320,7 @@ fn font_definitions_for_platform(prefer_hans: bool, platform: FontPolicyPlatform
     add(&mut fonts, "JetBrainsMono", include_bytes!("../../../assets/fonts/JetBrainsMono-Regular.ttf"));
     fonts.families.entry(FontFamily::Proportional).or_default().insert(0, "Inter".to_owned());
     fonts.families.entry(FontFamily::Monospace).or_default().insert(0, "JetBrainsMono".to_owned());
-    // The same static bytes pdfcraft-fonts uses for Japanese/Chinese text in PDFs: one copy, not two.
+    // The same static bytes nexopdf-fonts uses for Japanese/Chinese text in PDFs: one copy, not two.
     for face in nexopdf_fonts::ui_cjk_fonts(prefer_hans) {
         let name = face.name();
         // Japanese and Chinese faces have distinct family names, so no collision here.
@@ -376,7 +376,7 @@ pub fn apply(ctx: &egui::Context, kind: ThemeKind) {
     // Our saved choice owns the palette; both egui branches receive it below.
     ctx.set_theme(egui::ThemePreference::System);
     let t = Tokens::for_kind(kind);
-    ctx.data_mut(|d| d.insert_temp(egui::Id::new("pdfcraft-theme"), t));
+    ctx.data_mut(|d| d.insert_temp(egui::Id::new("nexopdf-theme"), t));
     let mut v = if t.dark() { Visuals::dark() } else { Visuals::light() };
     v.panel_fill = t.panel;
     v.window_fill = t.card;

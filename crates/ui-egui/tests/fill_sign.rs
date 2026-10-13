@@ -4,7 +4,7 @@ use egui::{Pos2, pos2};
 use egui_kittest::Harness;
 use egui_kittest::kittest::Queryable;
 use nexopdf_ui_egui::fill_sign::{FillTool, SavedSig};
-use nexopdf_ui_egui::{Dialog, PdfCraftApp, QuickTool};
+use nexopdf_ui_egui::{Dialog, NexoPDFApp, QuickTool};
 
 const FIXTURE: &[u8] = b"%PDF-1.7
 1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
@@ -23,14 +23,14 @@ fn gpu() -> std::sync::MutexGuard<'static, ()> {
     GPU.lock().unwrap_or_else(std::sync::PoisonError::into_inner)
 }
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     harness_bytes(FIXTURE)
 }
 
-fn harness_bytes(fixture: &[u8]) -> Harness<'static, PdfCraftApp> {
+fn harness_bytes(fixture: &[u8]) -> Harness<'static, NexoPDFApp> {
     let fixture = fixture.to_vec();
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("form.pdf", None, fixture.clone()).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -42,7 +42,7 @@ fn harness_bytes(fixture: &[u8]) -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn at(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32) -> Pos2 {
+fn at(h: &Harness<'static, NexoPDFApp>, x: f32, y: f32) -> Pos2 {
     let s = h.state();
     let page = &s.session.get(s.views[0].id).unwrap().info.pages[0];
     let xf = nexopdf_ui_egui::canvas::PageXform {
@@ -57,7 +57,7 @@ fn at(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32) -> Pos2 {
 
 /// The screen point `dx` points right and `dy` points up, as displayed, from the user-space point
 /// (`x`, `y`): unlike `at`, offsets don't turn with the page's /Rotate.
-fn shown(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32, dx: f32, dy: f32) -> Pos2 {
+fn shown(h: &Harness<'static, NexoPDFApp>, x: f32, y: f32, dx: f32, dy: f32) -> Pos2 {
     let s = h.state();
     let page = &s.session.get(s.views[0].id).unwrap().info.pages[0];
     let xf = nexopdf_ui_egui::canvas::PageXform {
@@ -70,7 +70,7 @@ fn shown(h: &Harness<'static, PdfCraftApp>, x: f32, y: f32, dx: f32, dy: f32) ->
     xf.norm_to_screen((p[0] + dx) / xf.pw, (p[1] - dy) / xf.ph)
 }
 
-fn click(h: &mut Harness<'static, PdfCraftApp>, x: f32, y: f32) {
+fn click(h: &mut Harness<'static, NexoPDFApp>, x: f32, y: f32) {
     let p = at(h, x, y);
     h.hover_at(p);
     h.run_steps(1);
@@ -80,7 +80,7 @@ fn click(h: &mut Harness<'static, PdfCraftApp>, x: f32, y: f32) {
     h.run_steps(3);
 }
 
-fn items(h: &Harness<'static, PdfCraftApp>) -> Vec<(String, Option<String>)> {
+fn items(h: &Harness<'static, NexoPDFApp>) -> Vec<(String, Option<String>)> {
     let s = h.state();
     let mut v: Vec<_> = s.session.get(s.views[0].id).unwrap().info.annotations.iter().map(|a| (a.subtype.clone(), a.contents.clone())).collect();
     v.sort();
@@ -88,7 +88,7 @@ fn items(h: &Harness<'static, PdfCraftApp>) -> Vec<(String, Option<String>)> {
 }
 
 /// Page rasters arrive from the render worker independently of kittest's virtual frames.
-fn rendered_ink(h: &mut Harness<'static, PdfCraftApp>, x: f32, y: f32) -> image::RgbaImage {
+fn rendered_ink(h: &mut Harness<'static, NexoPDFApp>, x: f32, y: f32) -> image::RgbaImage {
     for _ in 0..50 {
         h.run_steps(2);
         let p = at(h, x, y);
@@ -125,7 +125,7 @@ fn text_marks_and_date() {
 }
 
 /// The open type box, found as the focused text input.
-fn type_box_rect(h: &Harness<'static, PdfCraftApp>) -> egui::Rect {
+fn type_box_rect(h: &Harness<'static, NexoPDFApp>) -> egui::Rect {
     h.query_all_by_role(egui::accesskit::Role::TextInput).find(|n| n.is_focused()).expect("an open type box").rect()
 }
 
@@ -161,7 +161,7 @@ fn fill_text_size_controls_new_text_and_survives_settings_restore() {
         h.state().session.get(h.state().views[0].id).unwrap().info.annotations.iter().find(|a| a.contents.as_deref() == Some("Larger text")).unwrap();
     assert!(annotation.rect[3] - annotation.rect[1] > 24.0, "24 pt text has a larger annotation: {annotation:?}");
     let settings = h.state().persist();
-    let mut restored = PdfCraftApp::new();
+    let mut restored = NexoPDFApp::new();
     restored.restore(&settings);
     assert_eq!(restored.fill_text_size, 24.0);
     restored.restore(r#"{"fill_text_size":1000000}"#);
@@ -211,7 +211,7 @@ fn signing_draws_a_signature_once_and_places_it() {
     assert_eq!(h.state().views[0].comments.selected, Some((0, 0)));
     // The signature is remembered (persisted with the app's settings).
     let saved = h.state().persist();
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&saved);
     assert!(again.signature.is_some());
@@ -243,7 +243,7 @@ fn typed_signatures_and_initials() {
     assert_eq!(items(&h).iter().filter(|(t, _)| t == "Stamp").count(), 2);
     // Both are remembered.
     let saved = h.state().persist();
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&saved);
     assert_eq!(again.signature, h.state().signature);
@@ -298,7 +298,7 @@ fn changing_saved_signatures_and_initials_preserves_placed_marks() {
     assert_eq!(h.state().quick_tool, QuickTool::Fill(FillTool::Initials));
     click(&mut h, 40.0, 100.0);
     assert_eq!(items(&h).len(), 3);
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&h.state().persist());
     assert_eq!(again.signature, Some(SavedSig::Typed("Grace Hopper".into())));
@@ -354,7 +354,7 @@ fn saved_signature_cards_remove_and_add_without_changing_the_document() {
     h.run_steps(3);
     assert_eq!(h.state().signature, None);
     assert_eq!(h.state().initials, Some(SavedSig::Typed("AL".into())));
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&h.state().persist());
     assert_eq!(again.signature, None, "removal survives restart");
@@ -408,7 +408,7 @@ fn signature_file(test: &str) -> std::path::PathBuf {
 /// A 120 x 40 signature: a stroke across the middle and a block above it at the columns `mark`
 /// (the rest is transparent), so a turned or flipped picture shows.
 fn signature_file_with_mark(test: &str, mark: std::ops::Range<u32>) -> std::path::PathBuf {
-    let path = std::env::temp_dir().join(format!("pdfcraft-signature-{test}-{}.png", std::process::id()));
+    let path = std::env::temp_dir().join(format!("nexopdf-signature-{test}-{}.png", std::process::id()));
     let image = image::RgbaImage::from_fn(120, 40, |x, y| {
         if (10..110).contains(&x) && (15..25).contains(&y) || mark.contains(&x) && (5..15).contains(&y) {
             image::Rgba([20, 30, 40, 255])
@@ -420,7 +420,7 @@ fn signature_file_with_mark(test: &str, mark: std::ops::Range<u32>) -> std::path
     path
 }
 
-fn browse_image(h: &mut Harness<'static, PdfCraftApp>, path: &std::path::Path) {
+fn browse_image(h: &mut Harness<'static, NexoPDFApp>, path: &std::path::Path) {
     h.state_mut().pick_override = Some(vec![path.to_string_lossy().into_owned()]);
     h.get_by_label("Browse…").click();
     h.run_steps(3);
@@ -439,7 +439,7 @@ fn image_signatures_and_initials_can_be_imported_placed_and_remembered() {
         assert!(h.state().signature_draft.saved().is_none(), "Apply needs an image");
         browse_image(&mut h, &path);
         assert!(h.state().signature_draft.image.is_some());
-        if !initials && let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+        if !initials && let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
             h.render().unwrap().save(format!("{dir}/image-signature-dialog.png")).unwrap();
         }
         assert_eq!(items(&h).len(), usize::from(initials), "importing doesn't edit the PDF");
@@ -460,7 +460,7 @@ fn image_signatures_and_initials_can_be_imported_placed_and_remembered() {
     assert_eq!(doc.can_undo(), Some("Add initials"));
     let settings = state.persist();
     assert!(!settings.contains(&path.to_string_lossy().to_string()), "only the image is saved, never its source path");
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&settings);
     assert_eq!(again.signature, state.signature);
@@ -486,7 +486,7 @@ fn image_signatures_and_initials_can_be_imported_placed_and_remembered() {
     h.run_steps(3);
     h.get_by_label("Use signature");
     h.get_by_label("Use initials");
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         h.render().unwrap().save(format!("{dir}/image-signatures.png")).unwrap();
     }
     std::fs::remove_file(path).unwrap();
@@ -548,7 +548,7 @@ fn image_signature_preview_follows_pointer_at_page_size_with_zoom_and_rotation()
             if document_rotation == 0
                 && view_rotation == 0
                 && y == 250.0
-                && let Ok(dir) = std::env::var("PDFCRAFT_SHOTS")
+                && let Ok(dir) = std::env::var("NEXOPDF_SHOTS")
             {
                 pixels.save(format!("{dir}/image-signature-pointer.png")).unwrap();
             }
@@ -576,7 +576,7 @@ fn image_signature_placement_selects_resize_handles_and_requires_reselecting_to_
     assert_eq!(h.state().quick_tool, QuickTool::Select, "signatures place once even when comment tools are pinned");
     assert_eq!(h.state().views[0].comments.selected, Some((0, 0)));
     let placed = rendered_ink(&mut h, 90.0, 250.0);
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         placed.save(format!("{dir}/image-signature-selected.png")).unwrap();
     }
     // The bottom-right handle is ready without another selection click.
@@ -622,7 +622,7 @@ fn assert_rect(actual: [f32; 4], expected: [f32; 4]) {
     assert!(actual.iter().zip(expected).all(|(a, b)| (*a - b).abs() < 0.001), "{actual:?} != {expected:?}");
 }
 
-fn pixel_at(h: &Harness<'static, PdfCraftApp>, pixels: &image::RgbaImage, x: f32, y: f32) -> [u8; 4] {
+fn pixel_at(h: &Harness<'static, NexoPDFApp>, pixels: &image::RgbaImage, x: f32, y: f32) -> [u8; 4] {
     let p = at(h, x, y);
     pixels.get_pixel(p.x.round() as u32, p.y.round() as u32).0
 }
@@ -670,7 +670,7 @@ fn image_signature_live_resize_and_move_preserve_background_and_hide_moving_hand
     assert_eq!(doc.edit_generation(), generation, "pointer frames never edit the document");
     assert_eq!(doc.can_undo(), Some("Add signature"));
     assert_rect(doc.info.annotations[0].rect, [40.0, 234.0, 136.0, 266.0]);
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         resized.save(format!("{dir}/image-signature-live-resize.png")).unwrap();
     }
     h.drop_at(end);
@@ -701,7 +701,7 @@ fn image_signature_live_resize_and_move_preserve_background_and_hide_moving_hand
         }
         assert_eq!(h.state().session.get(h.state().views[0].id).unwrap().can_undo(), Some("Resize comment"));
         if y == 140.0
-            && let Ok(dir) = std::env::var("PDFCRAFT_SHOTS")
+            && let Ok(dir) = std::env::var("NEXOPDF_SHOTS")
         {
             moving.save(format!("{dir}/image-signature-live-move.png")).unwrap();
         }
@@ -716,7 +716,7 @@ fn image_signature_live_resize_and_move_preserve_background_and_hide_moving_hand
     assert_eq!(doc.edit_generation(), generation + 2, "one edit for each completed gesture");
     assert_rect(doc.info.annotations[0].rect, [60.0, 110.0, 240.0, 170.0]);
     assert_eq!(h.state().views[0].comments.selected, Some((0, 0)));
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         released.save(format!("{dir}/image-signature-move-released.png")).unwrap();
     }
     h.state_mut().undo();
@@ -866,7 +866,7 @@ fn image_signature_corners_restore_original_aspect_after_edge_resize_and_reopen(
         assert_rect(doc.info.annotations[0].rect, [70.0, 170.0, 214.0, 226.0]);
         if hx > 0.0
             && hy < 0.0
-            && let Ok(dir) = std::env::var("PDFCRAFT_SHOTS")
+            && let Ok(dir) = std::env::var("NEXOPDF_SHOTS")
         {
             pixels.save(format!("{dir}/image-signature-aspect-corner.png")).unwrap();
         }
@@ -927,7 +927,7 @@ fn image_import_cancel_clear_and_errors_preserve_saved_signatures() {
     h.run_steps(3);
     assert!(h.state().signature_draft.image.is_none());
     // Malformed settings are ignored while legacy typed/drawn values still restore.
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(r#"{"signature_text":"Ada","signature_image":{"Image":"bm90IGFuIGltYWdl"},"initials":{"Image":"%%%"}}"#);
     assert_eq!(again.signature, Some(SavedSig::Typed("Ada".into())));
@@ -937,15 +937,15 @@ fn image_import_cancel_clear_and_errors_preserve_saved_signatures() {
 
 #[test]
 fn flatten_on_save_is_off_by_default_and_round_trips() {
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     assert!(!app.flatten_fill_sign_on_save);
     app.set_option("flatten-fill-sign", "true").unwrap();
     assert!(app.set_option("flatten-fill-sign", "yes").is_err());
-    let mut restored = PdfCraftApp::new();
+    let mut restored = NexoPDFApp::new();
     restored.restore(&app.persist());
     assert!(restored.flatten_fill_sign_on_save);
     restored.set_option("flatten-fill-sign", "false").unwrap();
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.restore(&restored.persist());
     assert!(!again.flatten_fill_sign_on_save);
 }
@@ -956,7 +956,7 @@ fn saving_flattens_fill_and_sign_only_when_the_preference_is_on() {
     use nexopdf_ui_egui::SaveTarget;
     use nexopdf_ui_egui::fill_sign::TypeBox;
 
-    let dir = std::env::temp_dir().join(format!("pdfcraft-fill-flatten-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-fill-flatten-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(&dir).unwrap();
     let mark = Edit::AddAnnotation(NewAnnotation {
@@ -967,7 +967,7 @@ fn saving_flattens_fill_and_sign_only_when_the_preference_is_on() {
         author: "Ada".into(),
     });
 
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.open_bytes("form.pdf", None, FIXTURE.to_vec()).unwrap();
     let id = app.views[0].id;
     app.session.apply(id, mark).unwrap();
@@ -975,7 +975,7 @@ fn saving_flattens_fill_and_sign_only_when_the_preference_is_on() {
     let kept = dir.join("kept.pdf");
     app.save_override = Some(kept.to_string_lossy().into_owned());
     assert!(app.save_active(SaveTarget::InPlace));
-    let mut reopened = PdfCraftApp::new();
+    let mut reopened = NexoPDFApp::new();
     reopened.open_bytes("kept.pdf", None, std::fs::read(&kept).unwrap()).unwrap();
     let texts: Vec<String> =
         reopened.session.get(reopened.views[0].id).unwrap().info.annotations.iter().map(|a| a.contents.clone().unwrap_or_default()).collect();
@@ -987,7 +987,7 @@ fn saving_flattens_fill_and_sign_only_when_the_preference_is_on() {
     let flat = dir.join("flat.pdf");
     app.save_override = Some(flat.to_string_lossy().into_owned());
     assert!(app.save_active(SaveTarget::InPlace));
-    let mut flattened = PdfCraftApp::new();
+    let mut flattened = NexoPDFApp::new();
     flattened.open_bytes("flat.pdf", None, std::fs::read(&flat).unwrap()).unwrap();
     let left = &flattened.session.get(flattened.views[0].id).unwrap().info.annotations;
     assert!(left.is_empty(), "text and the check mark are page content: {left:?}");
@@ -1075,7 +1075,7 @@ fn drawn_and_typed_signatures_stay_upright_on_rotated_pages() {
 }
 
 /// Press, move in steps and release, from one user-space point to another.
-fn drag(h: &mut Harness<'static, PdfCraftApp>, from: (f32, f32), to: (f32, f32)) {
+fn drag(h: &mut Harness<'static, NexoPDFApp>, from: (f32, f32), to: (f32, f32)) {
     let (a, b) = (at(h, from.0, from.1), at(h, to.0, to.1));
     h.hover_at(a);
     h.run_steps(1);
@@ -1089,7 +1089,7 @@ fn drag(h: &mut Harness<'static, PdfCraftApp>, from: (f32, f32), to: (f32, f32))
     h.run_steps(4);
 }
 
-fn rects(h: &Harness<'static, PdfCraftApp>) -> Vec<[f32; 4]> {
+fn rects(h: &Harness<'static, NexoPDFApp>) -> Vec<[f32; 4]> {
     let s = h.state();
     s.session.get(s.views[0].id).unwrap().info.annotations.iter().map(|a| a.rect).collect()
 }
@@ -1263,7 +1263,7 @@ fn select_tool_picks_up_a_signature_over_a_form_field() {
 /// A synthetic phone photo of a signature on paper: a dark table along the left edge, a sheet
 /// with a lighting gradient and a soft shadow, and a ballpoint-blue signature in two words.
 fn signature_photo(test: &str) -> std::path::PathBuf {
-    let path = std::env::temp_dir().join(format!("pdfcraft-signature-photo-{test}-{}.png", std::process::id()));
+    let path = std::env::temp_dir().join(format!("nexopdf-signature-photo-{test}-{}.png", std::process::id()));
     let image = image::RgbImage::from_fn(800, 600, |x, y| {
         if x < 60 {
             return image::Rgb([70, 55, 45]);
@@ -1282,7 +1282,7 @@ fn signature_photo(test: &str) -> std::path::PathBuf {
     path
 }
 
-fn choose_photo(h: &mut Harness<'static, PdfCraftApp>, path: &std::path::Path) {
+fn choose_photo(h: &mut Harness<'static, NexoPDFApp>, path: &std::path::Path) {
     h.state_mut().pick_override = Some(vec![path.to_string_lossy().into_owned()]);
     h.get_by_label("Choose photo…").click();
     h.run_steps(3);
@@ -1290,7 +1290,7 @@ fn choose_photo(h: &mut Harness<'static, PdfCraftApp>, path: &std::path::Path) {
 }
 
 /// Scans run on a worker thread: step frames until the answer has been picked up.
-fn settle_scan(h: &mut Harness<'static, PdfCraftApp>) {
+fn settle_scan(h: &mut Harness<'static, NexoPDFApp>) {
     for _ in 0..1000 {
         if !h.state().signature_draft.scan.as_ref().is_some_and(|s| s.scanning()) {
             h.run_steps(1);
@@ -1330,7 +1330,7 @@ fn scanned_signatures_are_framed_cleaned_adjusted_placed_and_remembered() {
     let frame = scan.frame;
     assert!(frame.x > 60 && frame.x < 190 && frame.x + frame.width > 630, "the frame holds both words, not the table: {frame:?}");
     assert_clean_signature(h.state().signature_draft.image.as_ref().expect("a cleaned signature"));
-    if let Ok(dir) = std::env::var("PDFCRAFT_SHOTS") {
+    if let Ok(dir) = std::env::var("NEXOPDF_SHOTS") {
         h.render().unwrap().save(format!("{dir}/scan-signature-dialog.png")).unwrap();
     }
 
@@ -1400,7 +1400,7 @@ fn scanned_signatures_are_framed_cleaned_adjusted_placed_and_remembered() {
     let settings = h.state().persist();
     assert!(!settings.contains(&path.to_string_lossy().to_string()));
     assert!(settings.len() < 200_000, "only the trimmed signature is kept: {} bytes", settings.len());
-    let mut again = PdfCraftApp::new();
+    let mut again = NexoPDFApp::new();
     again.set_option("language", "en").unwrap();
     again.restore(&settings);
     assert_eq!(again.signature, h.state().signature);
@@ -1424,7 +1424,7 @@ fn scan_cancel_errors_and_stale_answers_preserve_saved_signatures() {
     choose_photo(&mut h, &path);
     let loaded = h.state().signature_draft.clone();
     assert!(loaded.image.is_some());
-    let broken = std::env::temp_dir().join(format!("pdfcraft-signature-photo-broken-{}.jpg", std::process::id()));
+    let broken = std::env::temp_dir().join(format!("nexopdf-signature-photo-broken-{}.jpg", std::process::id()));
     std::fs::write(&broken, b"\xFF\xD8\xFF not a JPEG").unwrap();
     choose_photo(&mut h, &broken);
     assert_eq!(h.state().signature_draft, loaded, "an invalid photo keeps the previous one");

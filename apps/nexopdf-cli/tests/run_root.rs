@@ -1,4 +1,4 @@
-//! `pdfcraft-cli run --root`: a script's image output stays inside the root (#137).
+//! `nexopdf-cli run --root`: a script's image output stays inside the root (#137).
 
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
@@ -7,7 +7,7 @@ const PNG: &[u8] = b"\x89PNG\r\n\x1a\n";
 
 /// `root/` next to `outside/` (holding `existing.txt`) in a fresh temporary directory.
 fn sandbox(test: &str) -> PathBuf {
-    let base = std::env::temp_dir().join(format!("pdfcraft-cli-{test}-{}", std::process::id()));
+    let base = std::env::temp_dir().join(format!("nexopdf-cli-{test}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&base);
     std::fs::create_dir_all(base.join("root")).unwrap();
     std::fs::create_dir_all(base.join("outside")).unwrap();
@@ -47,7 +47,7 @@ fn script_image_output_is_confined_to_the_root() {
     #[cfg(windows)]
     {
         refused.push(r"..\outside\escaped.png".into());
-        refused.push(r"\\pdfcraft-test.invalid\share\x.png".into());
+        refused.push(r"\\nexopdf-test.invalid\share\x.png".into());
         if let Some(drive) = (b'D'..=b'Z').rev().map(|d| format!("{}:\\", d as char)).find(|d| !Path::new(d).exists()) {
             refused.push(format!("{drive}x.png"));
         }
@@ -63,7 +63,7 @@ fn script_image_output_is_confined_to_the_root() {
 
     // "." is the root itself: refused, without staging a temporary file beside the root. The
     // file at the old fixed staging name and the listing are canaries; staging names are random.
-    std::fs::write(base.join(".root.pdfcraft-tmp"), "SENTINEL\n").unwrap();
+    std::fs::write(base.join(".root.nexopdf-tmp"), "SENTINEL\n").unwrap();
     let listing = || {
         let mut names: Vec<_> = std::fs::read_dir(&base).unwrap().map(|e| e.unwrap().file_name()).collect();
         names.sort();
@@ -72,7 +72,7 @@ fn script_image_output_is_confined_to_the_root() {
     let before = listing();
     let o = render_to(&base, &base, Some(&root), ".");
     assert!(!o.status.success() && String::from_utf8_lossy(&o.stderr).contains("is a folder"), "{}", String::from_utf8_lossy(&o.stderr));
-    assert_eq!(std::fs::read_to_string(base.join(".root.pdfcraft-tmp")).unwrap(), "SENTINEL\n");
+    assert_eq!(std::fs::read_to_string(base.join(".root.nexopdf-tmp")).unwrap(), "SENTINEL\n");
     assert_eq!(listing(), before, "nothing was left beside the root");
 
     // A relative path resolves inside the root, not in the working directory.

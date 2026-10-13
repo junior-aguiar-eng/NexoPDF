@@ -1312,7 +1312,7 @@ key	Space	Mezerník
 	Downsample to	Převzorkovat na
 	Also recognize pages that already have text	Rozpoznat i stránky, které už obsahují text
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Rozpoznají se i obrázky na těchto stránkách; slova, která už jsou v textu stránky, se znovu nepřidají
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	Rozpoznávání textu není nainstalováno: chybí soubory jeho modelů. Přeinstalujte NexoPDF nebo nastavte NexoPDF_MODELS na složku, ve které jsou.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	Rozpoznávání textu není nainstalováno: chybí soubory jeho modelů. Přeinstalujte NexoPDF nebo nastavte NEXOPDF_MODELS na složku, ve které jsou.
 	Settings	Nastavení
 	Optional	Volitelné
 	Planned · {m}	Plánováno · {m}
@@ -1873,7 +1873,7 @@ key	Space	Mezerník
 	there are no pages to print	nejsou žádné stránky k tisku
 	the document has no tags	dokument nemá žádné tagy
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	modely pro rozpoznávání textu nejsou nainstalované (přeinstalujte NexoPDF nebo nastavte NexoPDF_MODELS na složku, ve které jsou)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	modely pro rozpoznávání textu nejsou nainstalované (přeinstalujte NexoPDF nebo nastavte NEXOPDF_MODELS na složku, ve které jsou)
 	the image is empty	obrázek je prázdný
 	this file isn't XFDF, FDF, XML or text form data	tento soubor neobsahuje data formuláře ve formátu XFDF, FDF, XML ani v textovém
 	nothing in the file matches this document	nic v souboru neodpovídá tomuto dokumentu
@@ -2231,7 +2231,7 @@ certificate	Subject	Subjekt
 	The selected fields could not be found. Select them again.	Vybraná pole nebyla nalezena. Vyberte je znovu.
 	The field {name} no longer exists.	Pole {name} už neexistuje.
 	A selected field has no widget on any page, so the fields can't be edited together.	Vybrané pole nemá na žádné stránce widget, takže pole nelze upravit společně.
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	Rozpoznávání textu není nainstalováno: chybí jeho modely (spusťte `cargo xtask models` nebo nastavte NexoPDF_MODELS).
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	Rozpoznávání textu není nainstalováno: chybí jeho modely (spusťte `cargo xtask models` nebo nastavte NEXOPDF_MODELS).
 	 ({n} at {dpi} dpi, the largest size they can be drawn at)	 (stránky: {n}, s rozlišením {dpi} dpi, největším, v jakém je lze vykreslit)
 
 # Labels added upstream since the catalog was completed: the Combine grid, printing, the comment
@@ -2412,3 +2412,9 @@ animation effects	Off	Vypnuto
 	The linked PDF opened, but its named destination was not applied.	Odkazovaný PDF se otevřel, ale jeho pojmenovaný cíl nebyl použit.
 	The linked PDF opened, but its page destination was out of range.	Odkazovaný PDF se otevřel, ale cílová stránka je mimo rozsah.
 	Local cross-PDF links require the desktop app	Místní odkazy mezi soubory PDF vyžadují desktopovou aplikaci
+
+	An open-source PDF workbench — local, private, and fast.	PDF pracovní prostředí s otevřeným zdrojovým kódem — místní, soukromé a rychlé.
+	NexoHub Ecosystem	Ekosystém NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% nativní Rust  ·  Žádná telemetrie  ·  Úplné soukromí
+	High-performance document engineering — local, private and ultrafast.	Vysoce výkonné zpracování dokumentů — místní, soukromé a mimořádně rychlé.
+	High-performance document workbench written in native Rust.	Vysoce výkonné pracovní prostředí pro dokumenty napsané v nativním Rustu.

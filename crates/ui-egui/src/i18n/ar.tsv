@@ -1244,7 +1244,7 @@
 	Downsample to	تقليل العينات إلى
 	Also recognize pages that already have text	التعرف على الصفحات التي تحتوي على نص أيضًا
 	Pictures on those pages are recognized too; words already in the page's text are not added again	يُتعرَّف على الصور في هذه الصفحات أيضًا، ولا تُضاف مرة أخرى الكلمات الموجودة بالفعل في نص الصفحة
-	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them.	التعرف على النص غير مثبت: ملفات نماذجه مفقودة. أعد تثبيت NexoPDF، أو اضبط NexoPDF_MODELS على المجلد الذي يحتويها.
+	Text recognition isn't installed: its model files are missing. Reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them.	التعرف على النص غير مثبت: ملفات نماذجه مفقودة. أعد تثبيت NexoPDF، أو اضبط NEXOPDF_MODELS على المجلد الذي يحتويها.
 	Settings	الإعدادات
 	Optional	اختياري
 	Planned · {m}	مخطط له · {m}
@@ -1824,7 +1824,7 @@
 	there are no pages to print	لا توجد صفحات للطباعة
 	the document has no tags	المستند لا يحتوي على وسوم
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall NexoPDF, or set NexoPDF_MODELS to the folder that holds them)	نماذج التعرف على النص غير مثبتة (أعد تثبيت NexoPDF، أو اضبط NexoPDF_MODELS على المجلد الذي يحتويها)
+	the text recognition models are not installed (reinstall NexoPDF, or set NEXOPDF_MODELS to the folder that holds them)	نماذج التعرف على النص غير مثبتة (أعد تثبيت NexoPDF، أو اضبط NEXOPDF_MODELS على المجلد الذي يحتويها)
 	the image is empty	الصورة فارغة
 	this file isn't XFDF, FDF, XML or text form data	هذا الملف ليس بيانات نموذج بصيغة XFDF أو FDF أو XML أو نص
 	nothing in the file matches this document	لا شيء في الملف يطابق هذا المستند
@@ -2222,7 +2222,7 @@ certificate	Subject	صاحب الشهادة
 	The selected fields could not be found. Select them again.	تعذّر العثور على الحقول المحددة. حددها من جديد.
 	The field {name} no longer exists.	الحقل {name} لم يعد موجودًا.
 	A selected field has no widget on any page, so the fields can't be edited together.	أحد الحقول المحددة ليس له عنصر واجهة في أي صفحة، لذا لا يمكن تحرير الحقول معًا.
-	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NexoPDF_MODELS).	التعرف على النص غير مثبت: نماذجه مفقودة (شغّل `cargo xtask models`، أو اضبط NexoPDF_MODELS).
+	Text recognition isn't installed: its models are missing (run `cargo xtask models`, or set NEXOPDF_MODELS).	التعرف على النص غير مثبت: نماذجه مفقودة (شغّل `cargo xtask models`، أو اضبط NEXOPDF_MODELS).
 	 ({n} at {dpi} dpi, the largest size they can be drawn at)	 ({n} بدقة {dpi} dpi، وهي أكبر دقة يمكن رسمها بها)
 	Margins	الهوامش
 	For page sizes and margins.	لأحجام الصفحات والهوامش.
@@ -2359,3 +2359,9 @@ animation effects	Off	معطّلة
 	The linked PDF opened, but its named destination was not applied.	فُتح ملف PDF المرتبط، لكن لم تُطبَّق وجهته المسماة.
 	The linked PDF opened, but its page destination was out of range.	فُتح ملف PDF المرتبط، لكن وجهة الصفحة خارج النطاق.
 	Local cross-PDF links require the desktop app	تتطلب الروابط المحلية بين ملفات PDF تطبيق سطح المكتب
+
+	An open-source PDF workbench — local, private, and fast.	بيئة عمل PDF مفتوحة المصدر — محلية وخاصة وسريعة.
+	NexoHub Ecosystem	منظومة NexoHub
+	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	Rust أصلي 100%  ·  بلا قياس عن بُعد  ·  خصوصية تامة
+	High-performance document engineering — local, private and ultrafast.	معالجة مستندات عالية الأداء — محلية وخاصة وفائقة السرعة.
+	High-performance document workbench written in native Rust.	بيئة مستندات عالية الأداء مكتوبة بلغة Rust الأصلية.

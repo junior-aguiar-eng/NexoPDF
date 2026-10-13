@@ -12,7 +12,7 @@ if exist "target\debug\nexopdf.exe" (
     exit /b 0
 )
 
-cargo run -p nexopdf
+cargo run -p nexopdf -- %*
 
 if errorlevel 1 (
     echo.

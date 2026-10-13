@@ -4,13 +4,13 @@
 #
 #   curl -fsSLO https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/master/cargo/flatpak-cargo-generator.py
 #   python3 flatpak-cargo-generator.py Cargo.lock -o packaging/linux/flatpak/cargo-sources.json
-#   flatpak-builder --user --install --force-clean build-flatpak packaging/linux/flatpak/ai.storyteller.nexopdf.yml
-#   flatpak run ai.storyteller.nexopdf
+#   flatpak-builder --user --install --force-clean build-flatpak packaging/linux/flatpak/io.nexohub.nexopdf.yml
+#   flatpak run io.nexohub.nexopdf
 #
 # For Flathub, replace the `dir` source with a `git` source pinned to a release tag and commit.
-# The single-file .flatpak attached to each release comes from ai.storyteller.nexopdf.bundle.yml,
+# The single-file .flatpak attached to each release comes from io.nexohub.nexopdf.bundle.yml,
 # which repackages the prebuilt release binaries. Keep runtime-version and finish-args identical.
-id: ai.storyteller.nexopdf
+id: io.nexohub.nexopdf
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
@@ -48,14 +48,14 @@ modules:
     build-commands:
       - cargo --offline build --release --locked -p nexopdf
       - install -Dm755 target/release/nexopdf /app/bin/nexopdf
-      - install -Dm644 packaging/linux/ai.storyteller.nexopdf.desktop /app/share/applications/ai.storyteller.nexopdf.desktop
-      - install -Dm644 packaging/linux/ai.storyteller.nexopdf.mime.xml /app/share/mime/packages/ai.storyteller.nexopdf.xml
+      - install -Dm644 packaging/linux/io.nexohub.nexopdf.desktop /app/share/applications/io.nexohub.nexopdf.desktop
+      - install -Dm644 packaging/linux/io.nexohub.nexopdf.mime.xml /app/share/mime/packages/io.nexohub.nexopdf.xml
       - mkdir -p /app/share/icons && cp -R assets/app-icon/hicolor /app/share/icons/
       - >-
         version=$(awk '/^\[/{p=($0=="[workspace.package]");next} p&&$1=="version"{gsub(/[" ]/,"",$3);print $3;exit}' Cargo.toml);
         install -d /app/share/metainfo;
         sed -e "s/@VERSION@/$version/" -e "s/@DATE@/$(date -u +%Y-%m-%d)/"
-        packaging/linux/ai.storyteller.nexopdf.metainfo.xml.in > /app/share/metainfo/ai.storyteller.nexopdf.metainfo.xml
+        packaging/linux/io.nexohub.nexopdf.metainfo.xml.in > /app/share/metainfo/io.nexohub.nexopdf.metainfo.xml
     sources:
       - type: dir
         path: ../../..

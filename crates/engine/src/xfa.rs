@@ -799,7 +799,7 @@ pub(crate) fn on_event(doc: &mut nexopdf_cos::Document, tpl: &Template, som: &st
     r.finish().map(|_| ())
 }
 
-/// The SOM path of field `name` when PdfCraft generated it from an XFA template and the
+/// The SOM path of field `name` when NexoPDF generated it from an XFA template and the
 /// template has a click script for it (a button with a native action has none).
 pub(crate) fn clickable_som(doc: &nexopdf_cos::Document, tpl: &Template, name: &str) -> Option<String> {
     let som = nexopdf_xfa::fields_by_som(doc).into_iter().find(|(_, f)| f == name).map(|(s, _)| s)?;
@@ -813,7 +813,7 @@ pub(crate) fn template(doc: &nexopdf_cos::Document) -> Option<Arc<Template>> {
     nexopdf_xfa::template_of(doc).ok().filter(nexopdf_xfa::has_scripts).map(Arc::new)
 }
 
-/// Push buttons PdfCraft generated for XFA click scripts carry no PDF action (the script is
+/// Push buttons NexoPDF generated for XFA click scripts carry no PDF action (the script is
 /// XFA's, not Acrobat JavaScript): give them one that runs the script by the field's SOM path.
 pub(crate) fn mark_script_buttons(doc: &nexopdf_cos::Document, fields: &mut [nexopdf_forms::Field]) {
     for f in fields.iter_mut() {

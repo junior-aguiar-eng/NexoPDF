@@ -13,13 +13,13 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package
       Name="NexoPDF"
-      Manufacturer="Learning Machines LLC"
+      Manufacturer="NexoPDF"
       Version="$(var.Version)"
       UpgradeCode="EA00C367-7270-4C50-9D8B-A7A5C88AD27F"
       Scope="perMachine"
       Compressed="yes"
       Language="1033">
-    <SummaryInformation Description="NexoPDF PDF workbench" Manufacturer="Learning Machines LLC" />
+    <SummaryInformation Description="NexoPDF PDF workbench" Manufacturer="NexoPDF" />
     <!-- HKLM registrations must never point into a per-user installation (#305). Allow removal
          of an existing installation even if an older MSI let it install per-user. -->
     <Launch Condition="ALLUSERS = 1 OR (Installed AND REMOVE = &quot;ALL&quot;)"
@@ -32,11 +32,11 @@
 
     <!-- Windows Installer requires an Icon id ending in .ico or .exe, or advertised shortcuts and
          Add/Remove Programs show a blank icon (#57). -->
-    <Icon Id="PdfcraftIcon.ico" SourceFile="$(var.IconPath)" />
-    <Property Id="ARPPRODUCTICON" Value="PdfcraftIcon.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="https://getartcraft.com/apps/nexopdf" />
-    <Property Id="ARPURLUPDATEINFO" Value="https://getartcraft.com/apps/nexopdf" />
-    <Property Id="ARPHELPLINK" Value="https://discord.gg/artcraft" />
+    <Icon Id="NexoPDFIcon.ico" SourceFile="$(var.IconPath)" />
+    <Property Id="ARPPRODUCTICON" Value="NexoPDFIcon.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/junior-aguiar-eng/NexoPDF" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/junior-aguiar-eng/NexoPDF" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/junior-aguiar-eng/NexoPDF/issues" />
     <!-- Desktop shortcut (#143): on by default, a checkbox in the full-UI welcome dialog, and
          INSTALLDESKTOPSHORTCUT=0 on the msiexec command line for unattended installs. Secure, so the
          choice made in the (unelevated) UI reaches the elevated install. -->
@@ -44,7 +44,7 @@
     <!-- "Edit with NexoPDF" on the right-click menu of PDF files in File Explorer (#682): on by
          default, the same way, and INSTALLPDFCONTEXTMENU=0 for unattended installs without it. -->
     <Property Id="INSTALLPDFCONTEXTMENU" Value="1" Secure="yes" />
-    <UIRef Id="PdfcraftInstallerUI" />
+    <UIRef Id="NexoPDFInstallerUI" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
       <Directory Id="INSTALLFOLDER" Name="NexoPDF">
@@ -55,17 +55,17 @@
     <StandardDirectory Id="DesktopFolder" />
 
     <Feature Id="Main" Title="NexoPDF" Level="1">
-      <ComponentGroupRef Id="PdfcraftFiles" />
-      <ComponentGroupRef Id="PdfcraftModels" />
+      <ComponentGroupRef Id="NexoPDFFiles" />
+      <ComponentGroupRef Id="NexoPDFModels" />
     </Feature>
   </Package>
 
   <Fragment>
-    <ComponentGroup Id="PdfcraftFiles" Directory="INSTALLFOLDER">
-      <Component Id="PdfcraftApp" Guid="E724C1C6-091F-4E21-A685-80D089FDBE21">
-        <File Id="PdfcraftExe" Source="$(var.BinDir)\nexopdf.exe" KeyPath="yes" />
+    <ComponentGroup Id="NexoPDFFiles" Directory="INSTALLFOLDER">
+      <Component Id="NexoPDFApp" Guid="E724C1C6-091F-4E21-A685-80D089FDBE21">
+        <File Id="NexoPDFExe" Source="$(var.BinDir)\nexopdf.exe" KeyPath="yes" />
 
-        <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\nexopdf.exe" Value="[#PdfcraftExe]" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\nexopdf.exe" Value="[#NexoPDFExe]" Type="string" />
 
         <!-- PDF files (#107): NexoPDF is offered under "Open with" and in Settings ▸ Default
              apps, through Windows' Default Programs registration (a ProgID, OpenWithProgids,
@@ -76,50 +76,50 @@
         <RegistryValue Root="HKLM" Key="Software\Classes\NexoPDF.Document" Value="PDF Document" Type="string" />
         <!-- A negative index selects the stable icon resource ID, rather than its position.
              Resource 1 is the app's lion; resource 2 is the PDF document (build.rs). -->
-        <RegistryValue Root="HKLM" Key="Software\Classes\NexoPDF.Document\DefaultIcon" Value="&quot;[#PdfcraftExe]&quot;,-2" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\NexoPDF.Document\shell\open\command" Value="&quot;[#PdfcraftExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\NexoPDF.Document\DefaultIcon" Value="&quot;[#NexoPDFExe]&quot;,-2" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\NexoPDF.Document\shell\open\command" Value="&quot;[#NexoPDFExe]&quot; &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\.pdf\OpenWithProgids" Name="NexoPDF.Document" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe" Name="FriendlyAppName" Value="NexoPDF" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe\DefaultIcon" Value="&quot;[#PdfcraftExe]&quot;,-2" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe\DefaultIcon" Value="&quot;[#NexoPDFExe]&quot;,-2" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe\SupportedTypes" Name=".pdf" Value="" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe\shell\open\command" Value="&quot;[#PdfcraftExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\nexopdf.exe\shell\open\command" Value="&quot;[#NexoPDFExe]&quot; &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\NexoPDF\Capabilities" Name="ApplicationName" Value="NexoPDF" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\NexoPDF\Capabilities" Name="ApplicationDescription" Value="Open-source PDF workbench" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\NexoPDF\Capabilities" Name="ApplicationIcon" Value="[#PdfcraftExe],0" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\NexoPDF\Capabilities" Name="ApplicationIcon" Value="[#NexoPDFExe],0" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\NexoPDF\Capabilities\FileAssociations" Name=".pdf" Value="NexoPDF.Document" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\RegisteredApplications" Name="NexoPDF" Value="Software\NexoPDF\Capabilities" Type="string" />
 
         <!-- Image context menu (#190): convert without changing image file defaults. -->
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.png\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.png\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.png\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.png\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpg\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpg\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpg\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpg\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpeg\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpeg\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpeg\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpeg\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tif\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tif\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tif\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tif\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tiff\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tiff\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tiff\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.tiff\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.gif\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.gif\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.gif\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.gif\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.bmp\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.bmp\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.bmp\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.bmp\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jp2\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jp2\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jp2\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jp2\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.j2k\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.j2k\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.j2k\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.j2k\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpx\shell\NexoPDF.CreatePdf" Value="Create PDF with NexoPDF…" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpx\shell\NexoPDF.CreatePdf" Name="MultiSelectModel" Value="Single" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpx\shell\NexoPDF.CreatePdf\command" Value="&quot;[#PdfcraftExe]&quot; --create-images &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.jpx\shell\NexoPDF.CreatePdf\command" Value="&quot;[#NexoPDFExe]&quot; --create-images &quot;%1&quot;" Type="string" />
       </Component>
 
       <!-- Shortcuts (#143) are plain links to nexopdf.exe, not advertised MSI shortcuts: advertised
@@ -127,16 +127,16 @@
            use as a file handler (#107), and 0.2.1's advertised one went missing from the Start menu
            (#143). Each has its own component with an HKLM key path, so Windows Installer removes it
            on uninstall; in this per-machine package both folders are the all-users ones. -->
-      <Component Id="PdfcraftStartMenuShortcut" Directory="ProgramMenuFolder" Guid="DC028192-C233-4F99-9A77-ED458C60DF26">
+      <Component Id="NexoPDFStartMenuShortcut" Directory="ProgramMenuFolder" Guid="DC028192-C233-4F99-9A77-ED458C60DF26">
         <Shortcut Id="StartMenuShortcut" Name="NexoPDF" Description="NexoPDF PDF workbench"
-            Target="[#PdfcraftExe]" WorkingDirectory="INSTALLFOLDER" Icon="PdfcraftIcon.ico" IconIndex="0" />
+            Target="[#NexoPDFExe]" WorkingDirectory="INSTALLFOLDER" Icon="NexoPDFIcon.ico" IconIndex="0" />
         <RegistryValue Root="HKLM" Key="Software\NexoPDF\Shortcuts" Name="StartMenu" Type="integer" Value="1" KeyPath="yes" />
       </Component>
 
-      <Component Id="PdfcraftDesktopShortcut" Directory="DesktopFolder" Guid="F6948627-32AB-4D78-8865-0FDF417CE442"
+      <Component Id="NexoPDFDesktopShortcut" Directory="DesktopFolder" Guid="F6948627-32AB-4D78-8865-0FDF417CE442"
           Condition="INSTALLDESKTOPSHORTCUT = 1">
         <Shortcut Id="DesktopShortcut" Name="NexoPDF" Description="NexoPDF PDF workbench"
-            Target="[#PdfcraftExe]" WorkingDirectory="INSTALLFOLDER" Icon="PdfcraftIcon.ico" IconIndex="0" />
+            Target="[#NexoPDFExe]" WorkingDirectory="INSTALLFOLDER" Icon="NexoPDFIcon.ico" IconIndex="0" />
         <RegistryValue Root="HKLM" Key="Software\NexoPDF\Shortcuts" Name="Desktop" Type="integer" Value="1" KeyPath="yes" />
       </Component>
 
@@ -147,36 +147,36 @@
            Windows 11 the entry is under "Show more options": the first-level menu only takes
            packaged apps' (IExplorerCommand) entries. Its own component with an HKLM key path, so
            INSTALLPDFCONTEXTMENU=0 leaves it out and uninstall removes it. -->
-      <Component Id="PdfcraftPdfContextMenu" Guid="439F084F-657D-4AC2-A4CC-F099C518D71F"
+      <Component Id="NexoPDFPdfContextMenu" Guid="439F084F-657D-4AC2-A4CC-F099C518D71F"
           Condition="INSTALLPDFCONTEXTMENU = 1">
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit" Value="Edit with NexoPDF" Type="string" KeyPath="yes" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit" Name="Icon" Value="&quot;[#PdfcraftExe]&quot;,0" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit" Name="Icon" Value="&quot;[#NexoPDFExe]&quot;,0" Type="string" />
         <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit" Name="MultiSelectModel" Value="Document" Type="string" />
-        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit\command" Value="&quot;[#PdfcraftExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\SystemFileAssociations\.pdf\shell\NexoPDF.Edit\command" Value="&quot;[#NexoPDFExe]&quot; &quot;%1&quot;" Type="string" />
       </Component>
 
-      <Component Id="PdfcraftCli">
-        <File Id="PdfcraftCliExe" Source="$(var.BinDir)\nexopdf-cli.exe" KeyPath="yes" />
+      <Component Id="NexoPDFCli">
+        <File Id="NexoPDFCliExe" Source="$(var.BinDir)\nexopdf-cli.exe" KeyPath="yes" />
       </Component>
       <!-- The embedded PDF icon's ISC notice and project licences travel with the binaries. -->
-      <Component Id="PdfcraftDocumentIconLicense">
-        <File Id="PdfcraftDocumentIconLicenseFile" Source="$(var.BinDir)\LICENSE-document.txt" KeyPath="yes" />
+      <Component Id="NexoPDFDocumentIconLicense">
+        <File Id="NexoPDFDocumentIconLicenseFile" Source="$(var.BinDir)\LICENSE-document.txt" KeyPath="yes" />
       </Component>
-      <Component Id="PdfcraftMitLicense">
-        <File Id="PdfcraftMitLicenseFile" Source="$(var.BinDir)\LICENSE-MIT" KeyPath="yes" />
+      <Component Id="NexoPDFMitLicense">
+        <File Id="NexoPDFMitLicenseFile" Source="$(var.BinDir)\LICENSE-MIT" KeyPath="yes" />
       </Component>
-      <Component Id="PdfcraftApacheLicense">
-        <File Id="PdfcraftApacheLicenseFile" Source="$(var.BinDir)\LICENSE-APACHE" KeyPath="yes" />
+      <Component Id="NexoPDFApacheLicense">
+        <File Id="NexoPDFApacheLicenseFile" Source="$(var.BinDir)\LICENSE-APACHE" KeyPath="yes" />
       </Component>
-      <Component Id="PdfcraftNotice">
-        <File Id="PdfcraftNoticeFile" Source="$(var.BinDir)\NOTICE" KeyPath="yes" />
+      <Component Id="NexoPDFNotice">
+        <File Id="NexoPDFNoticeFile" Source="$(var.BinDir)\NOTICE" KeyPath="yes" />
       </Component>
     </ComponentGroup>
 
     <!-- OCR models (#103), with their licences and ATTRIBUTION.txt, in models\ beside nexopdf.exe
          where the app looks for them: every file `cargo xtask models` fetched (package.ps1), one
          component each, so new models ship without naming them here. -->
-    <ComponentGroup Id="PdfcraftModels" Directory="ModelsFolder">
+    <ComponentGroup Id="NexoPDFModels" Directory="ModelsFolder">
       <Files Include="$(var.ModelsDir)\*" />
     </ComponentGroup>
   </Fragment>

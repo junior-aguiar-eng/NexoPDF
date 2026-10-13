@@ -42,7 +42,7 @@ pub(crate) fn undrawable_message(c: char) -> String {
     )
 }
 
-/// The warning after an edit that saved text its font can't draw: PdfCraft drew `?` for it (a form
+/// The warning after an edit that saved text its font can't draw: NexoPDF drew `?` for it (a form
 /// field, which other viewers redraw from its value, or a comment, where the `?` shows everywhere).
 pub(crate) fn undrawn_message(n: &nexopdf_engine::TextNotice) -> String {
     let template = if n.redrawn_elsewhere {
@@ -482,7 +482,7 @@ pub(crate) fn hint(ui: &mut egui::Ui, t: &Tokens) {
     ui.add_space(4.0);
 }
 
-impl crate::PdfCraftApp {
+impl crate::NexoPDFApp {
     /// Pick an image file for the active document, read it, and call `then` with its name and
     /// bytes: now when `save_override` answers (tests and automation never see a native dialog),
     /// otherwise on a later frame, and only if that document is still the active one.

@@ -7,7 +7,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Greek UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "e04ab5246125efae2bad439e62c150fc10649c4b6796b30565615f5bd7509ec6"
+sha256 = "58ff9e1b80290a025e23f3af4479f2a326fde0692833461aa9db9dec0dfb5b69"
 
 # ATTRIBUTION.toml: one entry per asset (AGENTS.md §1). The source of truth for provenance and licences.
 # ATTRIBUTION.md is generated from this file: `cargo xtask assets --write`. Checked by `cargo xtask assets` (part of `xtask ci`).
@@ -30,7 +30,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Simplified Chinese UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "7f600eaa47f23fac4f9f0fece1454e59756c8dc57c7c697502cb02ee21410ac0"
+sha256 = "aebb37e95e317d148d921edd658091e32e400b3f77ca3e13d5603c64413cceab"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/zh-hant.tsv"
@@ -41,7 +41,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Traditional Chinese UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "37733adc79d7d32a057811b4dc5eb31251ef8ec91f1dac430253c69faac1c33f"
+sha256 = "75cbbd02aafacbd1852be3bdc3c70c4a9b6c71d41604745f6a09f189fcbed549"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/cs.tsv"
@@ -52,7 +52,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Czech UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "285b689b5224a66079738ab39d5a27e5f9ba72e1ab42e148f263b7ea320c4729"
+sha256 = "b98c94911449620f04fb5d767e8b6711328fe655eda2bc9aa777f18c87d5f7bb"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/pt-br.tsv"
@@ -63,7 +63,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Brazilian Portuguese UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "e8154a154129ca158396de84d2d432ce1c587477795a6a14985f7834db255744"
+sha256 = "3f9d96eefe74584aa1a82f2f751aeb32bf9ca39d3de0757a34f19f2793ff0918"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/es.tsv"
@@ -74,7 +74,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Spanish UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "50d4e66209e8b56707bcd148d4644eb0ad9f49dfc195287cfbd851ffbe5c3830"
+sha256 = "ab4733fa2e0b16bf5dd42dcb4868d961e7b2c1743c16cf4968bff14fcdf11d50"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/fr.tsv"
@@ -85,7 +85,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "French UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "13e677d44d5224e60af28fcc89d8f8af552368ca3c11f0a871498c60fefa7ee2"
+sha256 = "4e7808bc76a37d26e2222e7bb469643b3e6ba6ca7457b102e56b85734cc07bd4"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/de.tsv"
@@ -96,7 +96,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "German UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "e81112d69acc2e1bbb44c5252f8f323b1d637059b5ac5f4c9fcd3eb985a53442"
+sha256 = "76f78c01e6d0e417c7c2dbe8b7cc70de31d88bbbb2efe01c35528a884863d32f"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/te.tsv"
@@ -107,7 +107,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Telugu UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "df3d3650af984251372bf22b859ba6aca47f26eeff790e834d57a5a4071a1b48"
+sha256 = "790aee56dfb0a0129b4d0ac1a9b4d56020059a93b3fa07a575583a6c60e4e479"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/it.tsv"
@@ -118,7 +118,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Italian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "c9e453382d9d5c83f7b0f986befc6113a62b4736a6b94a6462805cead406753b"
+sha256 = "9f60b1e7fc96c08ea4580c37fcad83ae08af26c69201c1f5c1a151f35f3fcac9"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/pl.tsv"
@@ -129,7 +129,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Polish UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "2a205868b13f719dbc91fdc50f1133f5f317aa2245143bfeaa048190bc9c7d8c"
+sha256 = "746cdeca19450a73d43c72f5a02c6b61f4cb1721de9c577054f14324104c9f38"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/ru.tsv"
@@ -140,7 +140,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Russian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "3053aff461c289404bf3009c611037870b945692c65ce8d7c14ad26ac477660c"
+sha256 = "3abd9f7bafbf65d56c4ff20d57845987a56abf925e0af8929fee46b1fd362f35"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/hu.tsv"
@@ -151,7 +151,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Hungarian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "882b3937802bbbd5afe0087264ee4118161351e8828cb02b608488ccfe39bfe9"
+sha256 = "6129e6fa933e767b09a7c246710ce87bef2fd284736cb8624731206092b0dd2a"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/bg.tsv"
@@ -162,7 +162,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Bulgarian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "8cca054e167995ca6d95bc45fc0f75385a15a78852e4b173bd4c5b7b651c5a9d"
+sha256 = "9d208db9081468119b58ee248951754d2c637ee6ae0626946ade1e392f028d6f"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/kk.tsv"
@@ -173,7 +173,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Kazakh UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "2f4a6429c0c290a53268733dac08da221085992036a4d304d7663d7947d806d3"
+sha256 = "4612d52b33b3fbc8bee7adf169a59857604d6af07a7a1261d70fca979009c870"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/ja.tsv"
@@ -184,7 +184,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Japanese UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "2792f38b1699269b5886fa99a17c7773c3934df95dc4e2db3ba6a475dd652ba0"
+sha256 = "a44399f9df3c8893557c2fab7b79a6a0fab81f53fb10dfca6871b44824d5eab8"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/uk.tsv"
@@ -195,7 +195,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Ukrainian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "937ac7eac4230c9a1d26d6bd7ef4f08f8d8c9d391a091682e8758fba3ca9678e"
+sha256 = "04acf4d87f5493f1350578e5fab4cff379ccc78840d83a478bf02dcd89344d5a"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/ar.tsv"
@@ -206,7 +206,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Arabic UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "7ced08c3485c5eddf92767e6deb009d72351d70cefe60be654cfdac441f40f4b"
+sha256 = "8ace11ab6a63cd18dbeab6538a79bde7c674b079e19e777ee0f13cfdf1ad6964"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/tr.tsv"
@@ -217,7 +217,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Turkish UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "4e70c6db374db37bf70a17e251675b94128fb11b4d6d20ef669b36fd4ae14ff1"
+sha256 = "19ab9ab6f58f418f923aee7011146b12e564d77336cb730c7ff68939a0ade89f"
 
 [[asset]]
 path = "crates/ui-egui/src/i18n/lt.tsv"
@@ -228,7 +228,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Lithuanian UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "d2e6be7cf74525310a203bed7434e7f69d2288d337ee696de2882df8da31a746"
+sha256 = "5728a10b578ae72af8a2edf35ecf6c29a2d443f2e8b811be931be99531a122a5"
 
 [[asset]]
 path = "assets/icons/accessibility.svg"
@@ -2784,7 +2784,7 @@ licence = "LicenseRef-Storyteller-Trademark"
 licence_file = "docs/brand/LICENSE-brand.txt"
 kind = "logo"
 usage = "ArtCraft branding next to the community links (About dialog, Help menu, home screen) and in docs. ArtCraft Team trademark, not open source; may be used only unmodified within NexoPDF; forks and modified versions must remove it."
-sha256 = "f87af81b6fa411da8820eed2bfdcc54c0ee9cd453b4e868c64f56c69db142d0e"
+sha256 = "b1632bbababbb7a86940bfbaef6dbc6e13c557fca4141b421b250ae187458415"
 
 [[asset]]
 path = "assets/app-icon/nexopdf.svg"
@@ -2817,7 +2817,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
 usage = "Runtime window/Dock icon on macOS (apps/nexopdf/src/main.rs)"
-sha256 = "da577d3f21fbcf5c739067787a9e683be2b064d76813b5d5fec9074a7a106538"
+sha256 = "d59b50e7e463b7a0809c680e75fe2bcd8f260208599d7bda27b65c9608336e15"
 
 [[asset]]
 path = "assets/app-icon/nexopdf.icns"
@@ -2839,7 +2839,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
 usage = "Embedded in nexopdf.exe by apps/nexopdf/build.rs (Explorer, taskbar, Start menu, Alt-Tab)"
-sha256 = "56daaaae9ae5389794909570885809adf5e1d9183bef2d9669ed2f9bba3ed6f5"
+sha256 = "8f62035f62a4521cfbe6e8e35587817b32037fca84e9a067a7b0a0356d897e24"
 
 [[asset]]
 path = "assets/app-icon/nexopdf-document.svg"
@@ -2850,7 +2850,7 @@ licence = "ISC AND (MIT OR Apache-2.0)"
 licence_file = "assets/app-icon/LICENSE-document.txt"
 kind = "icon"
 usage = "Master artwork for the Windows PDF file type icon; rendered by packaging/icons.sh, without fonts or external images"
-sha256 = "8da8278c2b89362be0a960879d453ff879d7544d6d58e47d5389574e8dfff77b"
+sha256 = "118984a779d9732ebd4746cd0223f98c2988d1d136362cac56ff831636d03b60"
 
 [[asset]]
 path = "assets/app-icon/nexopdf-document.ico"
@@ -2864,102 +2864,102 @@ usage = "Embedded in nexopdf.exe as resource 2; the Windows installer uses it fo
 sha256 = "ba3f9128b368fc6d17d376cf62dbdbc22455451c5c8c4779210d7a2a7409b9e6"
 
 [[asset]]
-path = "assets/app-icon/hicolor/16x16/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/16x16/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 16 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "9b77095cbe75dcba6b74a1fdcd4064812850efaf7a12edebefc9ded5eabb49da"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "af10de8f668cab6aca6cf231bdcbf08f09612f54c2ae7e5c060b718c7b352656"
 
 [[asset]]
-path = "assets/app-icon/hicolor/24x24/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/24x24/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 24 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "a4cd466687f6c5cb59eef3fc564bdba1c8f0d9e324754eeebab82f18823efae7"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "5c8c0bc44cb99d9dbd74c94438dc4643d99855abc0072260fedff17c91daf96c"
 
 [[asset]]
-path = "assets/app-icon/hicolor/32x32/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/32x32/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 32 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "e22279013a5ed5c02571e1e4e9bc4cef9aa0847fcb733a285b2916fabd16bf78"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "a5775c266cc0d7c862a815b18704c974cdab2f27d77a8fb7028e3f5d9ffe8b56"
 
 [[asset]]
-path = "assets/app-icon/hicolor/48x48/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/48x48/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 48 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "55daf2d5575f6c4e4c4975c9f1c74231178f1801963a8b19f68dfa9bc50cb22f"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "00a949c9286a8b5ef7f45cbfbd1efd84849211e1578facf6c348ebfb65e728ad"
 
 [[asset]]
-path = "assets/app-icon/hicolor/64x64/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/64x64/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 64 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "2975c200f341e247b5fa18f568fb27d390e3fa01e9b2ad37acb48d0e1cc8a124"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "7e650b966cb62768ca25828bac996892a0341a00556a8b5dfc439109166571fa"
 
 [[asset]]
-path = "assets/app-icon/hicolor/128x128/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/128x128/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 128 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "6ef927ca252b40bc9b5d8843d84137334362f8aa1acbb1bf8c15a02affd25b2b"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "ad08a1ff7ea9ee832b0af30ea2f26027bd4ec599993a7a914a4abeebe95382dc"
 
 [[asset]]
-path = "assets/app-icon/hicolor/256x256/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/256x256/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 256 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop); runtime window icon on Windows and Linux (apps/nexopdf/src/main.rs)"
-sha256 = "cde7ee8c5ee38f9fc40a429fd9e6d99a035bcd321701fce331bb13bac126614d"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop); runtime window icon on Windows and Linux (apps/nexopdf/src/main.rs)"
+sha256 = "163386468fb15af43cf0256f3af8176413e10e694b1c8c3af66be2c9660969d1"
 
 [[asset]]
-path = "assets/app-icon/hicolor/512x512/apps/ai.storyteller.nexopdf.png"
+path = "assets/app-icon/hicolor/512x512/apps/io.nexohub.nexopdf.png"
 title = "NexoPDF app icon, 512 px"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
-sha256 = "5ede733e93b96f4eb8d94299232cf2f9605fa19b0d913f95fe9828c316a2d066"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
+sha256 = "cfca22af50161fce90c9b117d8092a0d89902b166c5bd6f894408ab7416b2189"
 
 [[asset]]
-path = "assets/app-icon/hicolor/scalable/apps/ai.storyteller.nexopdf.svg"
+path = "assets/app-icon/hicolor/scalable/apps/io.nexohub.nexopdf.svg"
 title = "NexoPDF app icon (Linux scalable)"
 author = "NexoPDF contributors (drawn by the project owner in ArtCraft; vectorised with craftrules vectorize_tile.py)"
 source = "Contributor-original (see assets/app-icon/README.md)"
 licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "icon"
-usage = "Linux hicolor theme icon (packaging/linux/ai.storyteller.nexopdf.desktop)"
+usage = "Linux hicolor theme icon (packaging/linux/io.nexohub.nexopdf.desktop)"
 sha256 = "52b384a10a2a7fdd3145d9822972cfd568ef0cb7312549bd4399addd89d45a6d"
 
 [[asset]]
@@ -3257,7 +3257,7 @@ licence = "MIT OR Apache-2.0"
 licence_file = "assets/app-icon/LICENSE.txt"
 kind = "image"
 usage = "Finder window of the macOS DMG; rendered to background.tiff by packaging/macos/dmg/generate.py"
-sha256 = "e8b9ea9d5e64b7b741c977543c1693825e77d5c4c579eeb674bf5dcd3764cd8a"
+sha256 = "a7d90db496d989208eb6b3c3fe7927bf99e4f5329854661abbc8cd8db45c8d42"
 
 
 [[asset]]
@@ -3339,4 +3339,15 @@ licence = "MIT OR Apache-2.0"
 licence_file = "LICENSE-MIT"
 kind = "translation"
 usage = "Slovene UI strings, compiled in by crates/ui-egui/src/i18n/mod.rs"
-sha256 = "6c01a439220415b83acab79c014286e5871ba7946a9c3b9a4776be797d55a086"
+sha256 = "203a923b0705bdab6331fa2cf9cc118dc300a9fa28829a16f8b4f425579d1334"
+
+[[asset]]
+path = "docs/brand/nexopdf-mark.svg"
+title = "NexoPDF golden pen mark"
+author = "NexoPDF contributors"
+source = "Original NexoPDF artwork already included in this repository"
+licence = "MIT OR Apache-2.0"
+licence_file = "LICENSE-MIT"
+kind = "logo"
+usage = "NexoPDF title bar, Home and About"
+sha256 = "b1632bbababbb7a86940bfbaef6dbc6e13c557fca4141b421b250ae187458415"

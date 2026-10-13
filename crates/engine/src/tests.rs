@@ -1694,13 +1694,7 @@ fn create_and_reduce() {
     let src = Arc::new(fixture(1));
     s2.apply(
         id2,
-        Edit::InsertPagesFrom {
-            name: "x".into(),
-            bytes: src.clone(),
-            pages: None,
-            at: 1,
-            field_conflicts: nexopdf_organize::FieldConflicts::Rename,
-        },
+        Edit::InsertPagesFrom { name: "x".into(), bytes: src.clone(), pages: None, at: 1, field_conflicts: nexopdf_organize::FieldConflicts::Rename },
     )
     .unwrap();
     let full = s2.save_full_bytes(id2).unwrap();
@@ -2609,7 +2603,7 @@ fn exporting_office_files_keeps_images() {
     assert!(docx.windows(16).any(|w| w == b"word/media/image"));
     let pptx = d.export_office(compare::OfficeFormat::Pptx);
     assert!(pptx.windows(15).any(|w| w == b"ppt/media/image"));
-    if let Ok(dir) = std::env::var("PDFCRAFT_EXPORT_DIR") {
+    if let Ok(dir) = std::env::var("NEXOPDF_EXPORT_DIR") {
         std::fs::write(format!("{dir}/pic.docx"), &docx).unwrap();
     }
     assert!(String::from_utf8(d.export_office(compare::OfficeFormat::Html)).unwrap().contains("data:image/png;base64,"));
@@ -3743,7 +3737,7 @@ fn group_moves_preserve_rotated_added_content_raster_geometry() {
 #[test]
 fn legacy_passwords_with_turkish_characters_open() {
     // RC4-128 (R3): user "ılık€" in PDFDocEncoding (ı = 0x9A, € = 0xA0), owner "Çağlar"
-    // (PDFDocEncoding has no ğ: written without it, as pdfcraft-crypt writes R2–R4 passwords).
+    // (PDFDocEncoding has no ğ: written without it, as nexopdf-crypt writes R2–R4 passwords).
     let mut cos = nexopdf_cos::Document::open(Arc::new(fixture(1))).unwrap();
     let params = nexopdf_cos::NewEncryption {
         algorithm: nexopdf_cos::Algorithm::Rc4_128,
@@ -3807,7 +3801,7 @@ fn aes256_files_whose_passwords_saslprep_changes_open_as_typed() {
     // A fullwidth Ｏ: SASLprep makes the owner password "Owner".
     let (owner, owner_prepared) = ("\u{FF2F}wner", "Owner");
     for (typed, prepared) in SASLPREP_CHANGES {
-        // pdfcraft-cos keys the file on the SASLprep forms, as ISO 32000-2 asks.
+        // nexopdf-cos keys the file on the SASLprep forms, as ISO 32000-2 asks.
         let mut cos = nexopdf_cos::Document::open(Arc::new(fixture(1))).unwrap();
         let params = nexopdf_cos::NewEncryption {
             algorithm: nexopdf_cos::Algorithm::Aes256,
@@ -3820,7 +3814,7 @@ fn aes256_files_whose_passwords_saslprep_changes_open_as_typed() {
         cos.set_encryption(&params).unwrap();
         let bytes = Arc::new(nexopdf_cos::write_full(&cos, &nexopdf_cos::SaveOptions::default()).unwrap());
         let mut s = Session::new();
-        // pdfcraft-cos accepts the password as typed (it applies SASLprep); the renderer used to
+        // nexopdf-cos accepts the password as typed (it applies SASLprep); the renderer used to
         // refuse it, so the session called it a wrong password.
         for pw in [typed, prepared, owner, owner_prepared] {
             let id = s.open("x.pdf", None, bytes.clone(), Some(pw)).unwrap_or_else(|e| panic!("{typed:?} as {pw:?}: {e:?}"));

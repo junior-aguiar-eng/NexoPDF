@@ -13,7 +13,7 @@
 //! Acrobat keeps a value its field font can't show: the value itself is stored as typed,
 //! [`field_appearance_drawn`] returns the first such character, and the caller marks the widget
 //! (`nexopdf_fonts::UNDRAWN_MARK`) and asks other viewers to redraw the field
-//! (`/NeedAppearances`). Widths use the approximate metrics of `pdfcraft-fonts` (Helvetica, or one
+//! (`/NeedAppearances`). Widths use the approximate metrics of `nexopdf-fonts` (Helvetica, or one
 //! em per full-width character in composite fonts).
 //!
 //! `/MK /R` (0, 90, 180, 270, counterclockwise) lays the content out in the upright box and sets
@@ -298,7 +298,7 @@ pub fn field_appearance_as(doc: &Document, f: &Field, w: &Widget, values: &[Stri
 }
 
 /// [`field_appearance_as`] with the first character it drew as `?` because the field's font can't
-/// hold it: the form's font is a simple (WinAnsi) font, Helvetica stands in for one PdfCraft can't
+/// hold it: the form's font is a simple (WinAnsi) font, Helvetica stands in for one NexoPDF can't
 /// write with (an embedded subset, `Identity-H`), or a UCS-2 CMap meets a character beyond U+FFFF.
 pub fn field_appearance_drawn(doc: &Document, f: &Field, w: &Widget, values: &[String], format: bool) -> (Stream, Option<char>) {
     // The Format event: what is shown, not what is stored.

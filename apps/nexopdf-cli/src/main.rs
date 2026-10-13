@@ -1,8 +1,8 @@
-//! pdfcraft-cli — headless PdfCraft.
+//! nexopdf-cli — headless NexoPDF.
 //!
-//! Usage: `pdfcraft-cli --help`, which prints `USAGE` below.
+//! Usage: `nexopdf-cli --help`, which prints `USAGE` below.
 //!
-//! `run` and `mcp` drive the same tool table (`pdfcraft-automation`). In `run`, values parse as
+//! `run` and `mcp` drive the same tool table (`nexopdf-automation`). In `run`, values parse as
 //! JSON when they can (`pages=[1,3]`, `degrees=90`) and are strings otherwise. A script runs its
 //! steps in one session, so `doc_open` returns id 1, the next document id 2, and so on. A step's
 //! `"out"` (like `--out`) saves its image there. With `--root DIR`, every path a tool or step
@@ -31,7 +31,7 @@ use nexopdf_render::{PageRenderer, RenderConfig, RenderRequest, RequestKind, ins
 macro_rules! mcp_usage {
     () => {
         "\
-pdfcraft-cli mcp    [--root DIR] [--compact]              MCP server on stdin/stdout (opt-in)
+nexopdf-cli mcp    [--root DIR] [--compact]              MCP server on stdin/stdout (opt-in)
                                                            --compact lists a core set of tools plus tool_search and tool_call
 "
     };
@@ -46,25 +46,25 @@ macro_rules! mcp_usage {
 /// The full usage, printed by `--help` (also after a command, e.g. `render --help`).
 const USAGE: &str = concat!(
     "\
-pdfcraft-cli info   <file.pdf> [--password PW]            document summary as JSON
-pdfcraft-cli render <file.pdf> --page N [--dpi 96] --out x.png   (.png, .jpg, .tif or .pam)
-pdfcraft-cli text   <file.pdf> [--page N]                  extracted text (pages separated by form feeds)
-pdfcraft-cli edit   <in.pdf> --out out.pdf [--rotate 1,3:90] [--delete 2,4] [--move 5:1]
+nexopdf-cli info   <file.pdf> [--password PW]            document summary as JSON
+nexopdf-cli render <file.pdf> --page N [--dpi 96] --out x.png   (.png, .jpg, .tif or .pam)
+nexopdf-cli text   <file.pdf> [--page N]                  extracted text (pages separated by form feeds)
+nexopdf-cli edit   <in.pdf> --out out.pdf [--rotate 1,3:90] [--delete 2,4] [--move 5:1]
                       [--insert-blank 1] [--title T] [--author A] [--full]
-pdfcraft-cli combine <a.pdf> <b.pdf> … --out combined.pdf
-pdfcraft-cli extract <in.pdf> --pages 1,3,5 --out out.pdf
-pdfcraft-cli split   <in.pdf> (--every N | --before 3,7) [--out-dir DIR]
-pdfcraft-cli check  <files or dirs…> [--timeout 20] [--dpi 36] [--json out.json]
-pdfcraft-cli audit  <file.pdf> [--password PW]            find faux redactions (fails when found)
-pdfcraft-cli tools                                       automation tools and their JSON Schemas
-pdfcraft-cli run    <tool> [key=value …] [--root DIR] [--out image.png]
-pdfcraft-cli run    --script steps.json [--root DIR]      [{\"tool\": \"doc_open\", \"args\": {…}}, …]
+nexopdf-cli combine <a.pdf> <b.pdf> … --out combined.pdf
+nexopdf-cli extract <in.pdf> --pages 1,3,5 --out out.pdf
+nexopdf-cli split   <in.pdf> (--every N | --before 3,7) [--out-dir DIR]
+nexopdf-cli check  <files or dirs…> [--timeout 20] [--dpi 36] [--json out.json]
+nexopdf-cli audit  <file.pdf> [--password PW]            find faux redactions (fails when found)
+nexopdf-cli tools                                       automation tools and their JSON Schemas
+nexopdf-cli run    <tool> [key=value …] [--root DIR] [--out image.png]
+nexopdf-cli run    --script steps.json [--root DIR]      [{\"tool\": \"doc_open\", \"args\": {…}}, …]
 ",
     mcp_usage!(),
     "\
-pdfcraft-cli ui     --control FILE <method> [key=value …] [--out shot.png]
+nexopdf-cli ui     --control FILE <method> [key=value …] [--out shot.png]
                                                            drive a running app started with --control FILE
-help and feedback: https://discord.gg/artcraft"
+help and feedback: https://github.com/junior-aguiar-eng/NexoPDF/issues"
 );
 
 fn main() -> ExitCode {
@@ -95,13 +95,13 @@ fn main() -> ExitCode {
         #[cfg(not(feature = "mcp"))]
         Some("mcp") => Err("mcp: this build leaves out the MCP server (built without the `mcp` feature)".into()),
         Some("--version") => version(),
-        Some(other) => Err(format!("unknown command '{other}'; see pdfcraft-cli --help").into()),
+        Some(other) => Err(format!("unknown command '{other}'; see nexopdf-cli --help").into()),
     };
     match result {
         Ok(()) => ExitCode::SUCCESS,
         Err(CliError::Stdout(e)) if e.kind() == std::io::ErrorKind::BrokenPipe => ExitCode::SUCCESS,
         Err(e) => {
-            let _ = writeln!(std::io::stderr().lock(), "pdfcraft-cli: {e}");
+            let _ = writeln!(std::io::stderr().lock(), "nexopdf-cli: {e}");
             ExitCode::FAILURE
         }
     }
@@ -141,8 +141,8 @@ fn stdout_line(line: std::fmt::Arguments<'_>) -> Result<(), CliError> {
 }
 
 fn version() -> Result<(), CliError> {
-    stdout_line(format_args!("pdfcraft-cli {}", env!("CARGO_PKG_VERSION")))?;
-    stdout_line(format_args!("Discord: {}  (help and feedback)", nexopdf_engine::links::DISCORD))?;
+    stdout_line(format_args!("nexopdf-cli {}", env!("CARGO_PKG_VERSION")))?;
+    stdout_line(format_args!("Help and feedback: {}/issues", nexopdf_engine::links::GITHUB))?;
     stdout_line(format_args!("Web:     {}", nexopdf_engine::links::APP_PAGE))?;
     stdout_line(format_args!("Source:  {}", nexopdf_engine::links::GITHUB))?;
     Ok(())
@@ -590,7 +590,7 @@ fn edit_round_trip(bytes: &[u8]) {
         }
     }
     if let Some(root) = doc.root() {
-        let _ = doc.update_dict(root, |d| d.set(b"PdfCraftFuzz".to_vec(), Object::Bool(true)));
+        let _ = doc.update_dict(root, |d| d.set(b"NexoPDFFuzz".to_vec(), Object::Bool(true)));
     }
     let classic = SaveOptions { object_streams: false, ..SaveOptions::default() };
     for out in [write_incremental(&doc, &SaveOptions::default()), write_full(&doc, &SaveOptions::default()), write_full(&doc, &classic)]
@@ -744,7 +744,7 @@ fn run(args: &[String]) -> Result<(), CliError> {
         }
         return Ok(());
     }
-    let tool = *positional(args).first().ok_or("run: missing tool name (see `pdfcraft-cli tools`)")?;
+    let tool = *positional(args).first().ok_or("run: missing tool name (see `nexopdf-cli tools`)")?;
     let mut obj = serde_json::Map::new();
     for kv in positional(args).iter().skip(1) {
         let (k, v) = kv.split_once('=').ok_or(format!("run: expected key=value, got {kv:?}"))?;
@@ -762,7 +762,7 @@ fn mcp(args: &[String]) -> Result<(), CliError> {
     let mut server = nexopdf_automation::mcp::McpServer::new(automation(args)?).with_compact(compact);
     let _ = writeln!(
         std::io::stderr().lock(),
-        "pdfcraft-cli: MCP server on stdio (protocol {}{}); close stdin to stop",
+        "nexopdf-cli: MCP server on stdio (protocol {}{}); close stdin to stop",
         nexopdf_automation::mcp::PROTOCOL_VERSIONS[0],
         if compact { ", compact tool list" } else { "" }
     );
@@ -771,11 +771,11 @@ fn mcp(args: &[String]) -> Result<(), CliError> {
 
 // ---- UI control channel client -----------------------------------------------------------------
 
-/// One request to a running app's control channel (`pdfcraft --control FILE`).
+/// One request to a running app's control channel (`nexopdf --control FILE`).
 fn ui(args: &[String]) -> Result<(), CliError> {
     validate_options("ui", args, UI_OPTIONS)?;
     use std::io::{BufRead, BufReader, Write as _};
-    let file = flag(args, "--control").ok_or("ui: missing --control FILE (start the app with `pdfcraft --control FILE`)")?;
+    let file = flag(args, "--control").ok_or("ui: missing --control FILE (start the app with `nexopdf --control FILE`)")?;
     let info = read_control_file(file)?;
     let port = info["port"].as_u64().ok_or(format!("{file}: no port"))?;
     // Refused rather than truncated, which would quietly reach some other port.
@@ -819,9 +819,9 @@ fn ui(args: &[String]) -> Result<(), CliError> {
 const CONTROL_FILE_MAX: u64 = 64 * 1024;
 
 const CONTROL_FILE_ADVICE: &str =
-    "Start the app with a control file in a folder only you can write, such as `pdfcraft --control ~/.pdfcraft-control.json`";
+    "Start the app with a control file in a folder only you can write, such as `nexopdf --control ~/.nexopdf-control.json`";
 
-/// Read the file written by `pdfcraft --control FILE`.
+/// Read the file written by `nexopdf --control FILE`.
 ///
 /// It names the port that receives the token and every command, typed text included, so it must
 /// be the user's own. In a shared folder such as `/tmp`, another local user can create the file

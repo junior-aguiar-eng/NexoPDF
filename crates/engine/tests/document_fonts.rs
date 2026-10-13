@@ -84,7 +84,7 @@ fn opentype_cff_document_font_preserves_program_codes_and_rendering_after_reopen
 }
 #[test]
 fn contextual_arabic_marks_ligatures_and_mixed_bidi_keep_logical_text_after_reopen() {
-    if let Some(path) = std::env::var_os("PDFCRAFT_TEST_ARABIC_FONT") {
+    if let Some(path) = std::env::var_os("NEXOPDF_TEST_ARABIC_FONT") {
         exercise(std::fs::read(path).unwrap(), "سَلَام 123", "NotoSansArabic-Regular");
         return;
     }
@@ -93,7 +93,7 @@ fn contextual_arabic_marks_ligatures_and_mixed_bidi_keep_logical_text_after_reop
         return;
     };
     if nexopdf_fonts::embedding::validate(font.bytes).is_err() {
-        eprintln!("set PDFCRAFT_TEST_ARABIC_FONT to an openly licensed static Noto Sans Arabic face");
+        eprintln!("set NEXOPDF_TEST_ARABIC_FONT to an openly licensed static Noto Sans Arabic face");
         return;
     }
     exercise(font.bytes.to_vec(), "سَلَام 123", "NotoSansArabic-Regular");

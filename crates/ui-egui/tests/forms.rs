@@ -1,11 +1,11 @@
 //! Filling in a form in the real shell (egui_kittest): typing, Tab, check boxes, radios, choices.
 
 use egui_kittest::Harness;
-use nexopdf_ui_egui::PdfCraftApp;
+use nexopdf_ui_egui::NexoPDFApp;
 
-fn harness() -> Harness<'static, PdfCraftApp> {
+fn harness() -> Harness<'static, NexoPDFApp> {
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("form.pdf", None, include_bytes!("data/form.pdf").to_vec()).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -23,13 +23,13 @@ fn harness() -> Harness<'static, PdfCraftApp> {
     h
 }
 
-fn value(h: &Harness<'static, PdfCraftApp>, name: &str) -> Vec<String> {
+fn value(h: &Harness<'static, NexoPDFApp>, name: &str) -> Vec<String> {
     let s = h.state();
     s.session.get(s.views[0].id).unwrap().form.iter().find(|f| f.name == name).unwrap().value.clone()
 }
 
 /// Click the centre of a field's widget.
-fn click_field(h: &mut Harness<'static, PdfCraftApp>, name: &str, widget: usize) {
+fn click_field(h: &mut Harness<'static, NexoPDFApp>, name: &str, widget: usize) {
     let p = {
         let s = h.state();
         let doc = s.session.get(s.views[0].id).unwrap();
@@ -176,14 +176,14 @@ fn lithuanian_calendar_localizes_months_and_weekdays_without_changing_field_valu
 
 /// The value of `name` in a saved PDF, read back by opening it in a fresh app.
 fn saved_value(path: &std::path::Path, name: &str) -> Vec<String> {
-    let mut app = PdfCraftApp::new();
+    let mut app = NexoPDFApp::new();
     app.set_option("language", "en").unwrap();
     app.open_bytes("saved.pdf", None, std::fs::read(path).unwrap()).unwrap();
     app.session.get(app.views[0].id).unwrap().form.iter().find(|f| f.name == name).unwrap().value.clone()
 }
 
 fn scratch(name: &str) -> std::path::PathBuf {
-    let dir = std::env::temp_dir().join(format!("pdfcraft-forms-{name}-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nexopdf-forms-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(&dir).unwrap();
     dir
@@ -236,7 +236,7 @@ fn tabbing_back_to_the_same_field_then_saving_keeps_the_committed_value() {
             validated_form()
         };
         let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-            let mut app = PdfCraftApp::new();
+            let mut app = NexoPDFApp::new();
             app.set_option("language", "en").unwrap();
             app.open_bytes("tab.pdf", None, bytes).unwrap();
             app.set_option("left", "closed").unwrap();
@@ -308,13 +308,13 @@ fn key(key: egui::Key, modifiers: egui::Modifiers) -> egui::Event {
 }
 
 /// Deliver `events` together, in one frame.
-fn one_frame(h: &mut Harness<'static, PdfCraftApp>, events: Vec<egui::Event>) {
+fn one_frame(h: &mut Harness<'static, NexoPDFApp>, events: Vec<egui::Event>) {
     h.input_mut().events.extend(events);
     h.run_steps(1);
 }
 
 /// Type `text` into field `name`, then press ⌘S in the same frame as `last` (more input).
-fn type_then_save_in_one_frame(h: &mut Harness<'static, PdfCraftApp>, name: &str, text: &str, last: egui::Event, out: &std::path::Path) {
+fn type_then_save_in_one_frame(h: &mut Harness<'static, NexoPDFApp>, name: &str, text: &str, last: egui::Event, out: &std::path::Path) {
     click_field(h, name, 0);
     h.event(egui::Event::Text(text.into()));
     h.run_steps(2);
@@ -404,7 +404,7 @@ fn a_rejected_value_keeps_the_typing_and_stops_the_save() {
     let dir = scratch("rejected");
     let out = dir.join("saved.pdf");
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("order.pdf", None, validated_form()).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -460,7 +460,7 @@ fn refused_value_stops_save(commit_key: egui::Key, case: &str) {
     let dir = scratch(case);
     let out = dir.join("saved.pdf");
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("order.pdf", None, validated_form()).unwrap();
         app.set_option("left", "closed").unwrap();
@@ -516,7 +516,7 @@ mod revert_tests {
         fn new() -> Self {
             static NEXT: AtomicU64 = AtomicU64::new(0);
             for _ in 0..128 {
-                let path = std::env::temp_dir().join(format!("pdfcraft-revert-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
+                let path = std::env::temp_dir().join(format!("nexopdf-revert-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
                 match std::fs::create_dir(&path) {
                     Ok(()) => return Self(path),
                     Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => continue,
@@ -691,7 +691,7 @@ fn the_fields_panel_lists_a_field_on_a_missing_page_as_unplaced() {
         "<< /Type /Annot /Subtype /Widget /FT /Tx /T (orphan) /Rect [10 10 100 30] /P 99 /F 4 >>",
     ]);
     let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = PdfCraftApp::new();
+        let mut app = NexoPDFApp::new();
         app.set_option("language", "en").unwrap();
         app.open_bytes("orphan.pdf", None, bytes).unwrap();
         app.set_option("panel", "fields").unwrap();

@@ -774,8 +774,7 @@ pub(crate) fn install_source_fonts(ctx: &egui::Context, doc: &nexopdf_engine::Do
             programs
                 .iter()
                 .filter(|p| {
-                    nexopdf_fonts::embedding::face_key(&p.face) == nexopdf_fonts::embedding::face_key(&program.face)
-                        && p.resource != program.resource
+                    nexopdf_fonts::embedding::face_key(&p.face) == nexopdf_fonts::embedding::face_key(&program.face) && p.resource != program.resource
                 })
                 .filter_map(|p| families.get(&p.resource).cloned()),
         );
@@ -1071,7 +1070,7 @@ mod tests {
 
     #[test]
     fn text_background_is_cached_without_editing_and_released_on_cancel() {
-        let mut app = crate::PdfCraftApp::new();
+        let mut app = crate::NexoPDFApp::new();
         let bytes = app.session.create_from_text("Preview", "Preview text").unwrap();
         app.open_bytes("preview.pdf", None, bytes.as_ref().clone()).unwrap();
         let doc = app.session.get(app.views[0].id).unwrap();

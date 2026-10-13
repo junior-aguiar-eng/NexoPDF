@@ -22,7 +22,7 @@ set -euo pipefail
 # shellcheck source=../env.sh
 . "$(dirname "${BASH_SOURCE[0]}")/../env.sh"
 HERE="$ROOT/packaging/linux"
-APP_ID=ai.storyteller.nexopdf
+APP_ID=io.nexohub.nexopdf
 
 SKIP_BUILD=0
 FORMATS="appimage deb rpm tar cli"
@@ -42,7 +42,7 @@ case "$ARCH" in
   aarch64 | arm64) ARCH=aarch64; DEB_ARCH=arm64 ;;
   *) echo "unsupported architecture $ARCH" >&2; exit 2 ;;
 esac
-export NEXOPDF_MAINTAINER="${NEXOPDF_MAINTAINER:-NexoPDF maintainers <nexopdf@storyteller.ai>}"
+export NEXOPDF_MAINTAINER="${NEXOPDF_MAINTAINER:-NexoPDF maintainers <junior-aguiar-eng@users.noreply.github.com>}"
 BASENAME="nexopdf-$VERSION-linux-$ARCH"
 
 echo "==> NexoPDF $VERSION for Linux $ARCH ($FORMATS)"

@@ -473,8 +473,8 @@ fn printer_option_defaults_and_job_arguments() {
 mod cups_options {
     use crate::spool;
 
-    const RECORD: &str = "PDFCRAFT_LPOPTIONS_TEST_RECORD";
-    const ANSWER: &str = "PDFCRAFT_LPOPTIONS_TEST_ANSWER";
+    const RECORD: &str = "NEXOPDF_LPOPTIONS_TEST_RECORD";
+    const ANSWER: &str = "NEXOPDF_LPOPTIONS_TEST_ANSWER";
 
     /// The child process stands in for lpoptions, recording its real arguments.
     #[test]
@@ -498,7 +498,7 @@ mod cups_options {
         for _ in 0..32 {
             let mut nonce = [0; 16];
             random.read_exact(&mut nonce).unwrap();
-            let path = std::env::temp_dir().join(format!("pdfcraft-cups-options-{:032x}", u128::from_be_bytes(nonce)));
+            let path = std::env::temp_dir().join(format!("nexopdf-cups-options-{:032x}", u128::from_be_bytes(nonce)));
             // Atomic creation, private permissions from the outset; never reuse an existing
             // path (including a symlink) in the shared temporary directory.
             match std::fs::DirBuilder::new().mode(0o700).create(&path) {

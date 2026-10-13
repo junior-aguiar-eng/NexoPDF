@@ -474,20 +474,11 @@ fn sibling_tags_move_in_reading_order_without_changing_content() {
     move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::Before).unwrap();
     assert_eq!(tags(&doc).into_iter().map(|tag| tag.object.num).collect::<Vec<_>>(), [6, 8, 7]);
     assert_eq!(doc.get(nexopdf_cos::ObjRef::new(4, 0)), content, "page content stays unchanged");
-    assert_eq!(
-        move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::Before),
-        Err(TagError::AlreadyThere)
-    );
+    assert_eq!(move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::Before), Err(TagError::AlreadyThere));
     move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::After).unwrap();
     assert_eq!(tags(&doc).into_iter().map(|tag| tag.object.num).collect::<Vec<_>>(), [6, 7, 8]);
-    assert_eq!(
-        move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(6, 0), TagPlacement::Before),
-        Err(TagError::NotSiblings)
-    );
-    assert_eq!(
-        move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 1), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::Before),
-        Err(TagError::NotSiblings)
-    );
+    assert_eq!(move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 0), nexopdf_cos::ObjRef::new(6, 0), TagPlacement::Before), Err(TagError::NotSiblings));
+    assert_eq!(move_tag(&mut doc, nexopdf_cos::ObjRef::new(8, 1), nexopdf_cos::ObjRef::new(7, 0), TagPlacement::Before), Err(TagError::NotSiblings));
     doc.update_dict(nexopdf_cos::ObjRef::new(6, 0), |d| {
         d.set(
             b"K".to_vec(),
