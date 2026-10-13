@@ -1,9 +1,9 @@
-//! Windows only: embed the app icon and version info (VERSIONINFO) into `pdfcraft.exe`, so it
+//! Windows only: embed the app icon and version info (VERSIONINFO) into `nexopdf.exe`, so it
 //! shows in Explorer, the taskbar, the Start menu and Alt-Tab. A separate PDF document icon
-//! uses resource ID 2; the installer references it as `pdfcraft.exe,-2`.
+//! uses resource ID 2; the installer references it as `nexopdf.exe,-2`.
 //!
 //! On every other target this does nothing. A missing resource compiler is a warning, so a
-//! cross-compile from macOS or Linux still links, unless `PDFCRAFT_REQUIRE_WINRES=1` turns it
+//! cross-compile from macOS or Linux still links, unless `NEXOPDF_REQUIRE_WINRES=1` turns it
 //! into an error (for release builds).
 
 #[path = "src/windows_manifest.rs"]
@@ -12,15 +12,15 @@ mod windows_manifest;
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=../../assets/app-icon/nexopdf.ico");
-    println!("cargo:rerun-if-changed=../../assets/app-icon/pdfcraft-document.ico");
+    println!("cargo:rerun-if-changed=../../assets/app-icon/nexopdf-document.ico");
     println!("cargo:rerun-if-changed=src/windows_manifest.rs");
-    println!("cargo:rerun-if-env-changed=PDFCRAFT_REQUIRE_WINRES");
+    println!("cargo:rerun-if-env-changed=NEXOPDF_REQUIRE_WINRES");
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
         return;
     }
     let mut res = winresource::WindowsResource::new();
     res.set_icon("../../assets/app-icon/nexopdf.ico")
-        .set_icon_with_id("../../assets/app-icon/pdfcraft-document.ico", "2")
+        .set_icon_with_id("../../assets/app-icon/nexopdf-document.ico", "2")
         .set_manifest(windows_manifest::WINDOWS_MANIFEST)
         .set("ProductName", "NexoPDF")
         .set("FileDescription", "NexoPDF - Document Workbench")

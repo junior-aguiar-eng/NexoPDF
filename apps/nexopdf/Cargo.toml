@@ -19,7 +19,7 @@ ureq = { version = "3.4", default-features = false, features = ["rustls-no-provi
 rustls-native-certs = "0.8"
 nexopdf-ui-egui = { workspace = true }
 # wgpu draws; OpenGL (glow) is the fallback when wgpu can't start on an old or unusual GPU or
-# driver (#461, #435, #392), and can be chosen with PDFCRAFT_RENDERER=gl.
+# driver (#461, #435, #392), and can be chosen with NEXOPDF_RENDERER=gl.
 eframe = { workspace = true, features = ["default_fonts", "wgpu", "glow", "accesskit", "wayland", "x11", "persistence", "links"] }
 egui = { workspace = true }
 serde_json = { workspace = true }
@@ -56,5 +56,5 @@ windows = { version = "0.62", default-features = false, features = ["std", "UI_V
 uds_windows = "=1.2.1"
 
 [build-dependencies]
-# Icon + VERSIONINFO for pdfcraft.exe; build.rs only uses it when targeting Windows.
+# Icon + VERSIONINFO for nexopdf.exe; build.rs only uses it when targeting Windows.
 winresource = "0.1"

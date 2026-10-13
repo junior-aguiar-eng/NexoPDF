@@ -1,4 +1,4 @@
-# Where PdfCraft falls short of Acrobat Pro
+# Where NexoPDF falls short of Acrobat Pro
 
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-12 · **Change:** gap 4 closed: the web build prints through the browser's print dialog; exclusive image-crop resize follow-up; minor (Word invoice regression coverage, #773; Office fidelity still partial; gap 2: hayro patch counts after the native-gradient backport) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-12 · **Change:** minor (gap 13: large-file memory measured, edits keep two copies instead of three, file-backed input blocked on gap 2) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
@@ -56,11 +56,11 @@ update the numbers.
 - **Evidence:** pages are drawn by vendored `hayro` 0.7 with 26 local patches to `hayro-interpret`,
   15 to `hayro`, 3 to `hayro-jbig2` and 17 to `hayro-syntax` (`vendor/README.md`); `lopdf` still
   backs document inspection. All 7 rendering P0 features are `partial`. User reports: TikZ pattern
-  fills drawn wrong ([#794](https://github.com/storytold/pdfcraft/issues/794)), blurry text at
-  1080p/1440p ([#730](https://github.com/storytold/pdfcraft/issues/730)), fixed zoom sizes differ
-  from Acrobat ([#739](https://github.com/storytold/pdfcraft/issues/739)). An outside author
+  fills drawn wrong ([#794](https://github.com/junior-aguiar-eng/NexoPDF/issues/794)), blurry text at
+  1080p/1440p ([#730](https://github.com/junior-aguiar-eng/NexoPDF/issues/730)), fixed zoom sizes differ
+  from Acrobat ([#739](https://github.com/junior-aguiar-eng/NexoPDF/issues/739)). An outside author
   proposes his MIT/Apache renderer as the bridge
-  ([#841](https://github.com/storytold/pdfcraft/issues/841)).
+  ([#841](https://github.com/junior-aguiar-eng/NexoPDF/issues/841)).
 - **Impact:** every page a user sees. Wrong glyphs, shadings or blend modes erode trust faster than
   any missing feature.
 - **Fix:** first a fidelity harness (gap 12), then the renderer: own devices (150–250 h in the old
@@ -89,17 +89,17 @@ update the numbers.
   Legacy non-SFNT previews, mixed-font/style contextual runs, structure-tree fidelity and reliable
   semantic grouping on every untagged PDF remain open. Estimates are unchanged.
 
-- **Missing:** robust in-place editing of text PdfCraft didn't write: subset fonts without the
+- **Missing:** robust in-place editing of text NexoPDF didn't write: subset fonts without the
   needed glyphs, CJK and right-to-left text, rotated text, lists, superscript/subscript, keeping
   structure tags, find and replace in edit mode; vector and object editing; arrange and align.
 - **Evidence:** `edit.text-edit` is partial (font reused or Helvetica substituted);
   `edit.rtl-cjk-editing`, `edit.rotated-text-editing`, `edit.keep-tags-on-edit`,
   `edit.vector-edit`, `edit.edit-object-tool` are planned. Users:
-  [#766](https://github.com/storytold/pdfcraft/issues/766) (editing Arabic text),
-  [#844](https://github.com/storytold/pdfcraft/issues/844) (several elements now move together on
+  [#766](https://github.com/junior-aguiar-eng/NexoPDF/issues/766) (editing Arabic text),
+  [#844](https://github.com/junior-aguiar-eng/NexoPDF/issues/844) (several elements now move together on
   one page, not across pages),
-  [#787](https://github.com/storytold/pdfcraft/issues/787) (move images between pages),
-  [#791](https://github.com/storytold/pdfcraft/issues/791).
+  [#787](https://github.com/junior-aguiar-eng/NexoPDF/issues/787) (move images between pages),
+  [#791](https://github.com/junior-aguiar-eng/NexoPDF/issues/791).
 - **Impact:** "Edit PDF" is one of Acrobat Pro's top reasons to buy. Substituting Helvetica changes
   how a document looks.
 - **Estimate:** 100–180 h (the longest feature pole, M7). **Doc:** [target-app-parity.md](target-app-parity.md).
@@ -107,11 +107,11 @@ update the numbers.
 ### 5. Chinese UI shows missing-glyph boxes in releases
 
 - **Missing:** a Simplified Chinese (`Hans`) UI face in release builds and a working fallback.
-- **Evidence:** [#826](https://github.com/storytold/pdfcraft/issues/826),
-  [#688](https://github.com/storytold/pdfcraft/issues/688),
-  [#728](https://github.com/storytold/pdfcraft/issues/728),
-  [#758](https://github.com/storytold/pdfcraft/issues/758),
-  [#689](https://github.com/storytold/pdfcraft/issues/689) (Flatpak). `AGENTS.md` §1.1 bars Noto
+- **Evidence:** [#826](https://github.com/junior-aguiar-eng/NexoPDF/issues/826),
+  [#688](https://github.com/junior-aguiar-eng/NexoPDF/issues/688),
+  [#728](https://github.com/junior-aguiar-eng/NexoPDF/issues/728),
+  [#758](https://github.com/junior-aguiar-eng/NexoPDF/issues/758),
+  [#689](https://github.com/junior-aguiar-eng/NexoPDF/issues/689) (Flatpak). `AGENTS.md` §1.1 bars Noto
   CJK (Source Han rebranded), so craft-fonts needs another openly licensed Hans face.
 - **Impact:** the second-largest language group sees a broken interface although the catalog is 97%
   translated.
@@ -135,7 +135,7 @@ update the numbers.
   despeckle, background and camera clean-up; MRC compression; pluggable engines; OCR in the
   browser; scanner input.
 - **Evidence:** `ocr.ocr-languages` partial ("the models read only the Latin alphabet without
-  accents"); 19 of 26 OCR features planned; [#744](https://github.com/storytold/pdfcraft/issues/744)
+  accents"); 19 of 26 OCR features planned; [#744](https://github.com/junior-aguiar-eng/NexoPDF/issues/744)
   (Dutch). Acrobat ships on-device recognition for dozens of languages.
 - **Impact:** scanned documents are a core Pro workflow outside English.
 - **Estimate:** 40–75 h, partly blocked on openly licensed models. **Doc:**
@@ -146,7 +146,7 @@ update the numbers.
 - **Missing:** Word export that keeps layout; Excel and PowerPoint export; creating PDFs from Office,
   HTML, web pages and PostScript; SVG/XML/EPS/PS/JPEG 2000 export.
 - **Evidence:** `create.export-docx` partial; the synthetic invoice regression for
-  [#773](https://github.com/storytold/pdfcraft/issues/773) now covers absent inferred borders,
+  [#773](https://github.com/junior-aguiar-eng/NexoPDF/issues/773) now covers absent inferred borders,
   floating watermark text and per-page section sizes. Exact font matching, vector rules and
   broader layout fidelity remain incomplete;
   `create.export-xlsx`, `create.export-pptx`, `create.from-office`, `create.from-html` planned.
@@ -176,9 +176,9 @@ update the numbers.
 - **Evidence:** `sign.pkcs11`, `sign.timestamp-servers`, `sign.field-mdp`, `sign.os-trust`,
   `sign.eutl` planned; `sign.pades-bt`, `sign.ltv`, `sign.ocsp-crl` partial (caller-supplied
   evidence). Users ask for Acrobat-like validation
-  ([#824](https://github.com/storytold/pdfcraft/issues/824),
-  [#775](https://github.com/storytold/pdfcraft/issues/775),
-  [#718](https://github.com/storytold/pdfcraft/issues/718)).
+  ([#824](https://github.com/junior-aguiar-eng/NexoPDF/issues/824),
+  [#775](https://github.com/junior-aguiar-eng/NexoPDF/issues/775),
+  [#718](https://github.com/junior-aguiar-eng/NexoPDF/issues/718)).
 - **Impact:** government and legal users sign with tokens and need B-LT/B-LTA.
 - **Estimate:** 40–70 h; tokens need hardware to test. **Doc:** [pdf-spec-parity.md](pdf-spec-parity.md).
 
@@ -186,11 +186,11 @@ update the numbers.
 
 - **Missing:** apply auto-tag proposals to marked content and a valid parent tree, autotag fields,
   visual Tags, Order and Content panels, Reading Order tool, table editor, Make Accessible action,
-  Read Out Loud; full keyboard operation of PdfCraft itself and a screen-reader audit.
+  Read Out Loud; full keyboard operation of NexoPDF itself and a screen-reader audit.
 - **Evidence:** all 32 checker rules, figure alt text, tag property and sibling order edits, and
   a bounded text-only auto-tag preview exist. The preview does not write PDF structure;
   `a11y.keyboard-only` (P0) planned, `a11y.app-screen-reader` partial.
-- **Impact:** untagged files still need another editor to build their structure; PdfCraft itself is
+- **Impact:** untagged files still need another editor to build their structure; NexoPDF itself is
   not yet usable without a mouse.
 - **Estimate:** 40–70 h. **Doc:** [target-app-parity.md](target-app-parity.md).
 
@@ -314,7 +314,7 @@ update the numbers.
 |---|---|---|
 | 2026-10-12 | minor | Exclusive image crops resize with their pixels across nested states, intervening operators and content streams; shared clips remain fixed. Synthetic engine/tool regressions and private image save/reopen checks; estimates unchanged. |
 | 2026-10-12 | minor | Gap 13: measured large-file memory; edits no longer keep the previous working file while writing the next (peak 3 → 2 copies); file-backed input recorded as blocked on gap 2 |
-| 2026-10-11 | minor | Closed gap 4: the web build prints through the browser's print dialog (sheets drawn by PdfCraft at 150–300 dpi, one per printed page); number kept |
+| 2026-10-11 | minor | Closed gap 4: the web build prints through the browser's print dialog (sheets drawn by NexoPDF at 150–300 dpi, one per printed page); number kept |
 | 2026-10-11 | minor | Word invoice failure #773 has synthetic regression coverage; broader Office conversion remains gap 8. |
 | 2026-10-11 | minor | Contributor fork: mixed-style visual regions, source-font space reuse and a read-only textless background. Embedded sfnt source faces and Mac subset Unicode mappings keep edit baselines stable; live frames follow Apply/Save geometry as text grows or shrinks. Engine/tool/UI regressions and private all-page checks cover the changes; full matching font import, CFF, range styles, shaping and private Chinese typing checks added; legacy programs and general fidelity remain open; estimates unchanged |
 | 2026-10-11 | patch | Gap 2: 23 hayro-interpret and 10 hayro patches after axial and radial shadings became native gradients (backport of hayro 0.8) |
