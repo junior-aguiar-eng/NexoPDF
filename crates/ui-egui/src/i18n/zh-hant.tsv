@@ -1299,7 +1299,6 @@
 	Delete selected pages (Organize)	刪除所選頁面（整理頁面）
 	Select all pages (Organize)	選取所有頁面（整理頁面）
 	Version {v}	版本{v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	用 Rust 從零編寫的開源 PDF 應用。MIT OR Apache-2.0 許可。
 	Part of	隸屬於
 	Summarize Options	彙總選項
 	Choose a layout:	選擇佈局：
@@ -1729,7 +1728,6 @@
 	Convert	轉換
 	E-Sign	電子簽署
 	Welcome to NexoPDF	歡迎使用 NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	開源 PDF 工作台，在本機處理、保護隱私，並支援指令碼。
 	Recommended tools	推薦工具
 	Use now	立即使用
 	Recent	最近使用
@@ -1763,10 +1761,6 @@
 	Split document…	分割文件…
 	Number pages…	編訂頁碼…
 	Keyboard shortcuts	鍵盤快速鍵
-	Join the NexoHub Discord	加入 NexoHub Discord
-	Join the NexoHub community	加入 NexoHub 社群
-	Get help, share feedback and follow development on Discord.	在 Discord 取得協助、提供意見並追蹤開發進度。
-	Join our Discord	加入 Discord 社群
 	NexoPDF web page	NexoPDF 網頁
 	NexoPDF on GitHub	GitHub 上的 NexoPDF
 	NexoHub website	NexoHub 網站
@@ -2213,7 +2207,6 @@ animation effects	Off	關
 	Local cross-PDF links require the desktop app	PDF 之間的本機連結需要桌面應用程式
 	The existing action will be preserved.	將保留現有動作。
 
-	An open-source PDF workbench — local, private, and fast.	開源 PDF 工作台——本機、私密、快速。
 	NexoHub Ecosystem	NexoHub 生態系統
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% 原生 Rust  ·  零遙測  ·  完整隱私
 	High-performance document engineering — local, private and ultrafast.	高效能文件處理——本機、私密、極速。

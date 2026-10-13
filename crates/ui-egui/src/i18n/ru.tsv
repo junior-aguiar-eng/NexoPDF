@@ -86,7 +86,6 @@
 	Flatten Fill & Sign when saving	Расплющить «Заполнить и подписать» при сохранении
 	Text, marks and signatures become part of the page. Other comments stay editable.	Текст, пометки и подписи становятся частью страницы. Остальные комментарии можно по-прежнему править.
 	OK	OK
-	Join our Discord	Присоединяйтесь к нашему Discord
 	Close	Закрыть
 	Next / previous match	Следующее / предыдущее совпадение
 	Copy selected text	Копировать выделенный текст
@@ -153,9 +152,6 @@
 	Previous page	Предыдущая страница
 	Current page — type a page number or label (such as iv) and press Enter	Текущая страница — введите номер или метку страницы (например, iv) и нажмите Enter
 	Welcome to NexoPDF	Добро пожаловать в NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Открытый PDF-редактор — локальный, приватный и программируемый.
-	Join the NexoHub community	Присоединяйтесь к сообществу NexoHub
-	Get help, share feedback and follow development on Discord.	Получайте помощь, делитесь отзывами и следите за разработкой в Discord.
 	Recommended tools	Рекомендуемые инструменты
 	Use now	Использовать сейчас
 	Open file	Открыть файл
@@ -300,7 +296,6 @@
 	Split document…	Разделить документ…
 	Number pages…	Пронумеровать страницы…
 	Keyboard shortcuts	Горячие клавиши
-	Join the NexoHub Discord	Присоединяйтесь к Discord NexoHub
 	NexoPDF web page	Веб-страница NexoPDF
 	NexoPDF on GitHub	NexoPDF на GitHub
 	NexoHub website	Веб-сайт NexoHub
@@ -1397,7 +1392,6 @@
 	Recover	Восстановить
 	Discard	Отклонить
 	Version {v}	Версия {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Открытое PDF-приложение с чистой комнатой, написанное на Rust. MIT OR Apache-2.0.
 	Part of	Часть
 	Summarize Options	Параметры суммирования
 	Choose a layout:	Выберите макет:
@@ -2252,7 +2246,6 @@ animation effects	Off	Выкл
 	The linked PDF opened, but its page destination was out of range.	Связанный PDF открыт, но страница назначения вне допустимого диапазона.
 	Local cross-PDF links require the desktop app	Локальные ссылки между PDF работают только в настольном приложении
 
-	An open-source PDF workbench — local, private, and fast.	Рабочая среда PDF с открытым кодом — локальная, приватная и быстрая.
 	NexoHub Ecosystem	Экосистема NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% нативный Rust  ·  Без телеметрии  ·  Полная конфиденциальность
 	High-performance document engineering — local, private and ultrafast.	Высокопроизводительная обработка документов — локально, приватно и очень быстро.

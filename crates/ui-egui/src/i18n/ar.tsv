@@ -93,7 +93,6 @@
 	Side panels	اللوحات الجانبية
 	Enable Acrobat JavaScript	تفعيل Acrobat JavaScript
 	OK	موافق
-	Join our Discord	انضم إلى خادمنا على Discord
 	Close	إغلاق
 	Next / previous match	التطابق التالي / السابق
 	Copy selected text	نسخ النص المحدد
@@ -160,9 +159,6 @@
 	Previous page	الصفحة السابقة
 	Current page — type a page number or label (such as iv) and press Enter	الصفحة الحالية — اكتب رقم صفحة أو تسميتها (مثل iv) ثم اضغط Enter
 	Welcome to NexoPDF	مرحبًا بك في NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	منضدة عمل مفتوحة المصدر لملفات PDF — محلية وخاصة وقابلة للبرمجة.
-	Join the NexoHub community	انضم إلى مجتمع NexoHub
-	Get help, share feedback and follow development on Discord.	احصل على المساعدة وشارك ملاحظاتك وتابع التطوير على Discord.
 	Recommended tools	أدوات مقترحة
 	Use now	استخدم الآن
 	Open file	فتح ملف
@@ -307,7 +303,6 @@
 	Split document…	تقسيم المستند…
 	Number pages…	ترقيم الصفحات…
 	Keyboard shortcuts	اختصارات لوحة المفاتيح
-	Join the NexoHub Discord	انضم إلى خادم NexoHub على Discord
 	NexoPDF web page	صفحة NexoPDF على الويب
 	NexoPDF on GitHub	NexoPDF على GitHub
 	NexoHub website	موقع NexoHub
@@ -1396,7 +1391,6 @@
 	Recover	استعادة
 	Discard	تجاهل
 	Version {v}	الإصدار {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	تطبيق PDF مفتوح المصدر مكتوب بلغة Rust بأسلوب الغرفة النظيفة. MIT OR Apache-2.0.
 	Part of	جزء من
 	Summarize Options	خيارات التلخيص
 	Choose a layout:	اختر تخطيطًا:
@@ -2078,40 +2072,18 @@
 	Show	إظهار
 	Sort	فرز
 	Reverse the order	عكس الترتيب
-	Grab bag	متفرقات
 	Table	جدول
 	Username	اسم المستخدم
 	Display name	الاسم المعروض
 	Real name	الاسم الحقيقي
 	Name (A–Z)	الاسم (أ–ي)
-	Merged PRs	طلبات السحب المدموجة
-	PRs	طلبات السحب
-	Commits	الإيداعات
-	Lines added	الأسطر المضافة
-	+LOC	+LOC
-	Lines deleted	الأسطر المحذوفة
-	−LOC	−LOC
-	Line delta	فرق الأسطر
-	ΔLOC	ΔLOC
-	Binary assets added	الأصول الثنائية المضافة
-	+Bin	+Bin
-	Binary assets removed	الأصول الثنائية المُزالة
-	−Bin	−Bin
-	First commit	أول إيداع
 	First	الأول
-	Last commit	آخر إيداع
 	Last	الأخير
-	No contributor data was built into this copy.	لم تُضمَّن بيانات المساهمين في هذه النسخة.
-	No model credits were built into this copy.	لم يُضمَّن ذكر النماذج في هذه النسخة.
-	{n} contributors · {c} commits	{n} مساهمين · {c} إيداعات
 	Company	الشركة
 	Model	النموذج
-	% of all commits	% من كل الإيداعات
 	Lines +/−	الأسطر +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} طلبات سحب، {commits} إيداعات، +{added} / −{deleted} أسطر (Δ {delta})، +{bin_added} / −{bin_deleted} أصول ثنائية، {first} – {last}
 	None of those files can be made into a PDF; use PDFs, images or .txt files	لا يمكن تحويل أي من هذه الملفات إلى PDF؛ استخدم ملفات PDF أو صورًا أو ملفات .txt
 	About	حول
-	Contributors	المساهمون
 	Models	النماذج
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	تابع فقط إن كنت تثق بهذا المستند. العنوان قد يحمل معلومات من المستند، مثل ما كتبته في نموذجه.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	اطبع على وجه واحد. أبقِ الأوراق بترتيبها، وقص عند العلامات، ثم كدّس الرزم من اليسار إلى اليمين ومن الأعلى إلى الأسفل.
@@ -2360,7 +2332,6 @@ animation effects	Off	معطّلة
 	The linked PDF opened, but its page destination was out of range.	فُتح ملف PDF المرتبط، لكن وجهة الصفحة خارج النطاق.
 	Local cross-PDF links require the desktop app	تتطلب الروابط المحلية بين ملفات PDF تطبيق سطح المكتب
 
-	An open-source PDF workbench — local, private, and fast.	بيئة عمل PDF مفتوحة المصدر — محلية وخاصة وسريعة.
 	NexoHub Ecosystem	منظومة NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	Rust أصلي 100%  ·  بلا قياس عن بُعد  ·  خصوصية تامة
 	High-performance document engineering — local, private and ultrafast.	معالجة مستندات عالية الأداء — محلية وخاصة وفائقة السرعة.

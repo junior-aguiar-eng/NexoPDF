@@ -2651,7 +2651,7 @@ fn dragging_a_paragraph_moves_it_and_its_edge_rewraps_it() {
     assert!(h.state().views[0].line_editor.is_none());
 }
 
-/// Contributor-original text, with an off-origin CropBox. Keep the moving paragraph last in
+/// Project-original text, with an off-origin CropBox. Keep the moving paragraph last in
 /// source order so an ordinary hit picks it again when two independent boxes fully overlap.
 fn paragraph_drag_fixture(content: &str, rotation: i64, unit: i64) -> Vec<u8> {
     use nexopdf_cos::{Dict, Document, Object, Stream};

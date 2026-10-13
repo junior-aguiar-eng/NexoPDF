@@ -66,7 +66,6 @@
 	Flatten Fill & Sign when saving	Ausfüllen und unterschreiben beim Speichern reduzieren
 	Text, marks and signatures become part of the page. Other comments stay editable.	Text, Markierungen und Unterschriften werden Teil der Seite. Andere Kommentare bleiben bearbeitbar.
 	OK	OK
-	Join our Discord	Unserem Discord beitreten
 	Close	Schließen
 	Next / previous match	Nächster / vorheriger Treffer
 	Copy selected text	Ausgewählten Text kopieren
@@ -133,9 +132,6 @@
 	Previous page	Vorherige Seite
 	Current page — type a page number or label (such as iv) and press Enter	Aktuelle Seite – gib eine Seitenzahl oder -beschriftung ein (z. B. iv) und drücke die Eingabetaste
 	Welcome to NexoPDF	Willkommen bei NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Eine Open-Source-PDF-Werkbank – lokal, privat und skriptfähig.
-	Join the NexoHub community	Tritt der NexoHub-Community bei
-	Get help, share feedback and follow development on Discord.	Hol dir Hilfe, gib Feedback und verfolge die Entwicklung auf Discord.
 	Recommended tools	Empfohlene Werkzeuge
 	Use now	Jetzt verwenden
 	Open file	Datei öffnen
@@ -280,7 +276,6 @@
 	Split document…	Dokument teilen…
 	Number pages…	Seiten nummerieren…
 	Keyboard shortcuts	Tastenkürzel
-	Join the NexoHub Discord	Dem NexoHub-Discord beitreten
 	NexoPDF web page	NexoPDF-Webseite
 	NexoPDF on GitHub	NexoPDF auf GitHub
 	NexoHub website	NexoHub-Website
@@ -1381,7 +1376,6 @@
 	Recover	Wiederherstellen
 	Discard	Verwerfen
 	Version {v}	Version {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Eine in Clean-Room-Entwicklung entstandene Open-Source-PDF-Anwendung, geschrieben in Rust. MIT OR Apache-2.0.
 	Part of	Teil von
 	Summarize Options	Zusammenfassungsoptionen
 	Choose a layout:	Layout wählen:
@@ -1988,37 +1982,16 @@
 	Show	Anzeigen
 	Sort	Sortieren
 	Reverse the order	Reihenfolge umkehren
-	Grab bag	Bunt gemischt
 	Table	Tabelle
 	Username	Benutzername
 	Display name	Anzeigename
 	Real name	Echter Name
 	Name (A–Z)	Name (A–Z)
-	Merged PRs	Gemergte PRs
-	PRs	PRs
-	Commits	Commits
-	Lines added	Hinzugefügte Zeilen
-	+LOC	+LOC
-	Lines deleted	Gelöschte Zeilen
-	−LOC	−LOC
-	Line delta	Zeilendifferenz
-	ΔLOC	ΔLOC
-	Binary assets added	Hinzugefügte Binärdateien
-	+Bin	+Bin
-	Binary assets removed	Entfernte Binärdateien
-	−Bin	−Bin
-	First commit	Erster Commit
 	First	Erster
-	Last commit	Letzter Commit
 	Last	Letzter
-	No contributor data was built into this copy.	In diese Version wurden keine Mitwirkendendaten eingebaut.
-	No model credits were built into this copy.	In diese Version wurden keine Modellnachweise eingebaut.
-	{n} contributors · {c} commits	{n} Mitwirkende · {c} Commits
 	Company	Unternehmen
 	Model	Modell
-	% of all commits	% aller Commits
 	Lines +/−	Zeilen +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PRs, {commits} Commits, +{added} / −{deleted} Zeilen (Δ {delta}), +{bin_added} / −{bin_deleted} Binärdateien, {first} – {last}
 	Set layer visibility	Sichtbarkeit der Ebene festlegen
 	Created a PDF from {n} files	PDF aus {n} Dateien erstellt
 	PDF, images and text	PDF, Bilder und Text
@@ -2112,7 +2085,6 @@
 	No recent files	Keine zuletzt geöffneten Dateien
 	Go to page…	Gehe zu Seite…
 	About	Über
-	Contributors	Mitwirkende
 	Models	Modelle
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Fahre nur fort, wenn du diesem Dokument vertraust. Eine Adresse kann Informationen aus dem Dokument übermitteln, etwa was du in sein Formular eingegeben hast.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Einseitig drucken. Halte die Blätter in Reihenfolge, schneide an den Marken und lege die Stapel dann von links nach rechts, von oben nach unten aufeinander.
@@ -2340,7 +2312,6 @@ animation effects	Off	Aus
 	The linked PDF opened, but its page destination was out of range.	Die verknüpfte PDF wurde geöffnet, aber ihr Seitenziel liegt außerhalb des Bereichs.
 	Local cross-PDF links require the desktop app	Lokale Verknüpfungen zwischen PDFs erfordern die Desktop-App
 
-	An open-source PDF workbench — local, private, and fast.	Eine quelloffene PDF-Arbeitsumgebung – lokal, privat und schnell.
 	NexoHub Ecosystem	NexoHub-Ökosystem
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100 % natives Rust  ·  Keine Telemetrie  ·  Absolute Privatsphäre
 	High-performance document engineering — local, private and ultrafast.	Leistungsstarke Dokumentenverarbeitung – lokal, privat und ultraschnell.

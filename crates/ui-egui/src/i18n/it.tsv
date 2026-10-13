@@ -90,7 +90,6 @@
 	Side panels	Pannelli laterali
 	Enable Acrobat JavaScript	Abilita JavaScript di Acrobat
 	OK	OK
-	Join our Discord	Unisciti al nostro Discord
 	Close	Chiudi
 	Next / previous match	Risultato successivo/precedente
 	Copy selected text	Copia testo selezionato
@@ -157,9 +156,6 @@
 	Previous page	Pagina precedente
 	Current page — type a page number or label (such as iv) and press Enter	Pagina corrente: digita un numero o un'etichetta di pagina (ad esempio iv) e premi Invio
 	Welcome to NexoPDF	Benvenuto in NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Un banco di lavoro PDF open source: locale, riservato e programmabile.
-	Join the NexoHub community	Unisciti alla community di NexoHub
-	Get help, share feedback and follow development on Discord.	Chiedi aiuto, condividi commenti e segui lo sviluppo su Discord.
 	Recommended tools	Strumenti consigliati
 	Use now	Usa ora
 	Open file	Apri file
@@ -304,7 +300,6 @@
 	Split document…	Dividi documento…
 	Number pages…	Numera pagine…
 	Keyboard shortcuts	Scorciatoie da tastiera
-	Join the NexoHub Discord	Unisciti al Discord di NexoHub
 	NexoPDF web page	Pagina web di NexoPDF
 	NexoPDF on GitHub	NexoPDF su GitHub
 	NexoHub website	Sito web di NexoHub
@@ -1392,7 +1387,6 @@
 	Recover	Recupera
 	Discard	Scarta
 	Version {v}	Versione {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Un'applicazione PDF clean-room e open source scritta in Rust. MIT OR Apache-2.0.
 	Part of	Parte di
 	Summarize Options	Opzioni di riepilogo
 	Choose a layout:	Scegli un layout:
@@ -2069,37 +2063,16 @@
 	Show	Mostra
 	Sort	Ordina
 	Reverse the order	Inverti l'ordine
-	Grab bag	Alla rinfusa
 	Table	Tabella
 	Username	Nome utente
 	Display name	Nome visualizzato
 	Real name	Nome reale
 	Name (A–Z)	Nome (A–Z)
-	Merged PRs	PR unite
-	PRs	PR
-	Commits	Commit
-	Lines added	Righe aggiunte
-	+LOC	+LOC
-	Lines deleted	Righe eliminate
-	−LOC	−LOC
-	Line delta	Differenza righe
-	ΔLOC	ΔLOC
-	Binary assets added	Risorse binarie aggiunte
-	+Bin	+Bin
-	Binary assets removed	Risorse binarie rimosse
-	−Bin	−Bin
-	First commit	Primo commit
 	First	Primo
-	Last commit	Ultimo commit
 	Last	Ultimo
-	No contributor data was built into this copy.	Questa copia non include dati sui contributori.
-	No model credits were built into this copy.	Questa copia non include riconoscimenti per i modelli.
-	{n} contributors · {c} commits	{n} contributori · {c} commit
 	Company	Azienda
 	Model	Modello
-	% of all commits	% di tutti i commit
 	Lines +/−	Righe +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PR, {commits} commit, +{added} / −{deleted} righe (Δ {delta}), +{bin_added} / −{bin_deleted} risorse binarie, {first} – {last}
 @plural	{n} page|{n} pages	{n} pagina|{n} pagine
 @plural	{n} field|{n} fields	{n} campo|{n} campi
 @plural	{n} field name collides with earlier files and will be renamed: {list}|{n} field names collide with earlier files and will be renamed: {list}	{n} nome di campo è in conflitto con i file precedenti e verrà rinominato: {list}|{n} nomi di campo sono in conflitto con i file precedenti e verranno rinominati: {list}
@@ -2117,7 +2090,6 @@
 	Change document properties	Modifica le proprietà del documento
 	Clear Recent Files	Svuota elenco recenti
 	Closed arrow	Freccia chiusa
-	Contributors	Contributori
 	Couldn't open the printer's preferences: {e}	Impossibile aprire le preferenze della stampante: {e}
 	Couldn't show the file picker. Please try again.	Impossibile mostrare la finestra di selezione file. Riprova.
 	Date format	Formato data
@@ -2348,7 +2320,6 @@ animation effects	Off	Disattivati
 	The linked PDF opened, but its page destination was out of range.	Il PDF collegato è stato aperto, ma la pagina di destinazione è fuori intervallo.
 	Local cross-PDF links require the desktop app	I collegamenti locali tra PDF richiedono l'app desktop
 
-	An open-source PDF workbench — local, private, and fast.	Un ambiente PDF open source: locale, privato e veloce.
 	NexoHub Ecosystem	Ecosistema NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% Rust nativo  ·  Nessuna telemetria  ·  Privacy assoluta
 	High-performance document engineering — local, private and ultrafast.	Elaborazione documentale ad alte prestazioni: locale, privata e ultrarapida.

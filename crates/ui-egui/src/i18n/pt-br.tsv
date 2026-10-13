@@ -1291,7 +1291,6 @@
 	Delete selected pages (Organize)	Excluir páginas selecionadas (Organizar)
 	Select all pages (Organize)	Selecionar todas as páginas (Organizar)
 	Version {v}	Versão {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Um aplicativo PDF de código aberto e clean-room escrito em Rust. MIT OU Apache-2.0.
 	Part of	Parte de
 	Summarize Options	Opções de resumo
 	Choose a layout:	Escolha um layout:
@@ -1650,8 +1649,6 @@
 	Convert	Converter
 	E-Sign	Assinatura eletrônica
 	Welcome to NexoPDF	Bem-vindo ao NexoPDF
-	An open-source PDF workbench — local, private, and fast.	Bancada documental em PDF de alta performance — local, privada e rápida.
-	An open-source PDF workbench — local, private, and scriptable.	Uma bancada de trabalho de PDF de código aberto — local, privada e programável.
 	NexoHub Ecosystem	Ecossistema NexoHub
 	Recommended tools	Ferramentas recomendadas
 	Use now	Usar agora
@@ -1686,10 +1683,6 @@
 	Split document…	Dividir documento…
 	Number pages…	Numerar páginas…
 	Keyboard shortcuts	Atalhos de teclado
-	Join the NexoHub Discord	Entrar no Discord do NexoHub
-	Join the NexoHub community	Entrar na comunidade NexoHub
-	Get help, share feedback and follow development on Discord.	Obtenha ajuda, compartilhe comentários e acompanhe o desenvolvimento no Discord.
-	Join our Discord	Entrar em nosso Discord
 	NexoPDF web page	Página da Web do NexoPDF
 	NexoPDF on GitHub	NexoPDF no GitHub
 	NexoHub website	Site do NexoHub
@@ -2069,12 +2062,7 @@
 	Show	Mostrar
 	Sort	Classificar
 	Reverse the order	Inverter a ordem
-	Grab bag	Miscelânea
 	Table	Tabela
-	{n} contributors · {c} commits	{n} contribuidores · {c} commits
-	No contributor data was built into this copy.	Nenhum dado de contribuidores foi embutido nesta cópia.
-	No model credits were built into this copy.	Nenhum crédito de modelos foi embutido nesta cópia.
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} linhas (Δ {delta}), +{bin_added} / −{bin_deleted} recursos binários, {first} – {last}
 signature pad	Type	Digitar
 certificate	Subject	Titular
 action wizard	Start	Iniciar
@@ -2088,9 +2076,6 @@ action wizard	Start	Iniciar
 	Scroll tabs right	Rolar as abas para a direita
 
 # Labels added on main while this catalog was being completed (merged 2026-10-09)
-	% of all commits	% de todos os commits
-	+Bin	+Bin
-	+LOC	+LOC
 	A button	Um botão
 	A link	Um link
 	A script	Um script
@@ -2100,14 +2085,10 @@ action wizard	Start	Iniciar
 	Align fields	Alinhar campos
 	Another file dialog is still open. Finish with it first.	Outra janela de arquivos ainda está aberta. Conclua-a primeiro.
 	Basic constraints	Restrições básicas
-	Binary assets added	Arquivos binários adicionados
-	Binary assets removed	Arquivos binários removidos
 	Certificate authority	Autoridade certificadora
 	Change document properties	Alterar as propriedades do documento
 	Choose a folder on this computer to pin	Escolha uma pasta deste computador para fixar
-	Commits	Commits
 	Company	Empresa
-	Contributors	Colaboradores
 	Couldn't open the printer's preferences: {e}	Não foi possível abrir as preferências da impressora: {e}
 	Couldn't optimize the file	Não foi possível otimizar o arquivo
 	Couldn't show the file picker. Please try again.	Não foi possível mostrar o seletor de arquivos. Tente novamente.
@@ -2117,23 +2098,17 @@ action wizard	Start	Iniciar
 	End entity	Entidade final
 	Fill & Sign dates	Datas de Preencher e assinar
 	First	Primeiro
-	First commit	Primeiro commit
 	Flatten Fill & Sign when saving	Nivelar Preencher e assinar ao salvar
 	H / Space (hold)	H / Espaço (manter pressionado)
 	Home / End	Home / End
 	Inserted text	Texto inserido
 	Larger pages	Páginas maiores
 	Last	Último
-	Last commit	Último commit
-	Line delta	Saldo de linhas
 	Lines +/−	Linhas +/−
-	Lines added	Linhas adicionadas
-	Lines deleted	Linhas removidas
 	Mark differences	Marcar as diferenças
 	Mark for redaction	Marcar para ocultar dados
 	Mark pages for redaction	Marcar páginas para ocultar dados
 	Match field sizes	Igualar o tamanho dos campos
-	Merged PRs	PRs mesclados
 	Model	Modelo
 	Models	Modelos
 	Name (A–Z)	Nome (A–Z)
@@ -2142,7 +2117,6 @@ action wizard	Start	Iniciar
 	Opens the printer driver's preferences. They are saved for every print from this computer; the copies, two-sided, grayscale and paper chosen here still apply.	Abre as preferências do driver da impressora. Elas valem para toda impressão deste computador; as cópias, frente e verso, escala de cinza e papel escolhidos aqui continuam valendo.
 	Optimization cancelled	Otimização cancelada
 	Optimization is already running	A otimização já está em execução
-	PRs	PRs
 	Pattern	Padrão
 	Pinned folders need the desktop app	As pastas fixadas precisam do aplicativo para desktop
 	Pinned {folder} to Home	{folder} fixada no Início
@@ -2182,9 +2156,6 @@ action wizard	Start	Iniciar
 	{folder} is already pinned to Home	{folder} já está fixada no Início
 	{who} in this document tried to open an address NexoPDF won't open: {e}.	{who} neste documento tentou abrir um endereço que o NexoPDF não abre: {e}.
 	{who} in this document tried to open an address NexoPDF won't open: {e}. Only web (http, https) and email (mailto) links open from documents.	{who} neste documento tentou abrir um endereço que o NexoPDF não abre: {e}. Só links da web (http, https) e de e-mail (mailto) abrem a partir de documentos.
-	ΔLOC	ΔLOC
-	−Bin	−Bin
-	−LOC	−LOC
 comment menu	Edit	Editar
 
 # Shared field properties (Prepare a form).

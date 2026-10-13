@@ -64,7 +64,6 @@
 	Side panels	Oldalsó panelek
 	Enable Acrobat JavaScript	Acrobat JavaScript engedélyezése
 	OK	OK
-	Join our Discord	Csatlakozás a Discordhoz
 	Close	Bezárás
 	Next / previous match	Következő / előző találat
 	Copy selected text	Kijelölt szöveg másolása
@@ -131,9 +130,6 @@
 	Previous page	Előző oldal
 	Current page — type a page number or label (such as iv) and press Enter	Aktuális oldal — írj be egy oldalszámot vagy címkét (például iv), majd nyomd meg az Entert
 	Welcome to NexoPDF	Üdvözöljük a NexoPDFban
-	An open-source PDF workbench — local, private, and scriptable.	Nyílt forráskódú PDF-munkapad — helyi, privát és parancsfájlokkal vezérelhető.
-	Join the NexoHub community	Csatlakozz az NexoHub közösséghez
-	Get help, share feedback and follow development on Discord.	Kérj segítséget, oszd meg a véleményed, és kövesd a fejlesztést a Discordon.
 	Recommended tools	Ajánlott eszközök
 	Use now	Használat most
 	Open file	Fájl megnyitása
@@ -278,7 +274,6 @@
 	Split document…	Dokumentum felosztása…
 	Number pages…	Oldalak számozása…
 	Keyboard shortcuts	Billentyűparancsok
-	Join the NexoHub Discord	Csatlakozás az NexoHub Discordhoz
 	NexoPDF web page	A NexoPDF weblapja
 	NexoPDF on GitHub	NexoPDF a GitHubon
 	NexoHub website	Az NexoHub webhelye
@@ -1366,7 +1361,6 @@
 	Recover	Visszaállítás
 	Discard	Elvetés
 	Version {v}	{v} verzió
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Tiszta szobás, nyílt forráskódú PDF-alkalmazás, Rustban írva. MIT OR Apache-2.0.
 	Part of	Része
 	Summarize Options	Összefoglaló beállításai
 	Choose a layout:	Válassz elrendezést:
@@ -1973,37 +1967,16 @@
 	Show	Megjelenítés
 	Sort	Rendezés
 	Reverse the order	Sorrend megfordítása
-	Grab bag	Vegyes
 	Table	Táblázat
 	Username	Felhasználónév
 	Display name	Megjelenített név
 	Real name	Valódi név
 	Name (A–Z)	Név (A–Z)
-	Merged PRs	Beolvasztott PR-ek
-	PRs	PR-ek
-	Commits	Commitok
-	Lines added	Hozzáadott sorok
-	+LOC	+LOC
-	Lines deleted	Törölt sorok
-	−LOC	−LOC
-	Line delta	Sorok különbsége
-	ΔLOC	ΔLOC
-	Binary assets added	Hozzáadott bináris fájlok
-	+Bin	+Bin
-	Binary assets removed	Eltávolított bináris fájlok
-	−Bin	−Bin
-	First commit	Első commit
 	First	Első
-	Last commit	Utolsó commit
 	Last	Utolsó
-	No contributor data was built into this copy.	Ebben a példányban nincsenek beépített közreműködői adatok.
-	No model credits were built into this copy.	Ebben a példányban nincsenek beépített modelladatok.
-	{n} contributors · {c} commits	{n} közreműködő · {c} commit
 	Company	Cég
 	Model	Modell
-	% of all commits	Az összes commit %-a
 	Lines +/−	Sorok +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PR, {commits} commit, +{added} / −{deleted} sor (Δ {delta}), +{bin_added} / −{bin_deleted} bináris fájl, {first} – {last}
 	Set layer visibility	Réteg láthatóságának beállítása
 	Created a PDF from {n} files	PDF létrehozva {n} fájlból
 	PDF, images and text	PDF, képek és szöveg
@@ -2097,7 +2070,6 @@
 	No recent files	Nincs legutóbbi fájl
 	Go to page…	Ugrás oldalra…
 	About	Névjegy
-	Contributors	Közreműködők
 	Models	Modellek
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Csak akkor folytasd, ha megbízol ebben a dokumentumban. Egy cím adatokat vihet a dokumentumból, például azt, amit az űrlapjába írtál.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Nyomtass egyoldalasan. Tartsd a lapokat sorrendben, vágd el a jeleknél, majd rakd a kötegeket balról jobbra, fentről lefelé egymásra.
@@ -2338,7 +2310,6 @@ animation effects	Off	Ki
 	The linked PDF opened, but its page destination was out of range.	A hivatkozott PDF megnyílt, de a céloldal a tartományon kívül esik.
 	Local cross-PDF links require the desktop app	A PDF-ek közötti helyi hivatkozásokhoz az asztali alkalmazás szükséges
 
-	An open-source PDF workbench — local, private, and fast.	Nyílt forráskódú PDF-munkakörnyezet — helyi, privát és gyors.
 	NexoHub Ecosystem	NexoHub-ökoszisztéma
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% natív Rust  ·  Nincs telemetria  ·  Teljes adatvédelem
 	High-performance document engineering — local, private and ultrafast.	Nagy teljesítményű dokumentumfeldolgozás — helyi, privát és rendkívül gyors.

@@ -70,7 +70,6 @@ comment menu	Edit	సవరించు
 	Side panels	సైడ్ ప్యానెల్‌లు
 	Enable Acrobat JavaScript	Acrobat JavaScriptను ప్రారంభించు
 	OK	సరే
-	Join our Discord	మా Discordలో చేరండి
 	Close	మూసివేయి
 	Next / previous match	తదుపరి / మునుపటి సరిపోలిక
 	Copy selected text	ఎంచుకున్న టెక్స్ట్‌ను కాపీ చేయి
@@ -137,9 +136,6 @@ comment menu	Edit	సవరించు
 	Previous page	మునుపటి పేజీ
 	Current page — type a page number or label (such as iv) and press Enter	ప్రస్తుత పేజీ — పేజీ సంఖ్యను లేదా లేబుల్‌ను (iv వంటిది) టైప్ చేసి Enter నొక్కండి
 	Welcome to NexoPDF	NexoPDFకు స్వాగతం
-	An open-source PDF workbench — local, private, and scriptable.	ఓపెన్-సోర్స్ PDF వర్క్‌బెంచ్ — మీ కంప్యూటర్‌లోనే నడుస్తుంది, గోప్యంగా ఉంటుంది, స్క్రిప్ట్‌లతో ఆటోమేట్ చేయవచ్చు.
-	Join the NexoHub community	NexoHub కమ్యూనిటీలో చేరండి
-	Get help, share feedback and follow development on Discord.	Discordలో సహాయం పొందండి, మీ అభిప్రాయాన్ని పంచుకోండి, అభివృద్ధిని అనుసరించండి.
 	Recommended tools	సిఫార్సు చేసిన సాధనాలు
 	Use now	ఇప్పుడే ఉపయోగించు
 	Open file	ఫైల్‌ను తెరువు
@@ -284,7 +280,6 @@ comment menu	Edit	సవరించు
 	Split document…	పత్రాన్ని విభజించు…
 	Number pages…	పేజీలకు సంఖ్యలు వేయి…
 	Keyboard shortcuts	కీబోర్డ్ షార్ట్‌కట్‌లు
-	Join the NexoHub Discord	NexoHub Discordలో చేరండి
 	NexoPDF web page	NexoPDF వెబ్ పేజీ
 	NexoPDF on GitHub	GitHubలో NexoPDF
 	NexoHub website	NexoHub వెబ్‌సైట్
@@ -1366,7 +1361,6 @@ signature pad	Type	టైప్ చేయి
 	Recover	పునరుద్ధరించు
 	Discard	విస్మరించు
 	Version {v}	వెర్షన్ {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Rustలో రాసిన క్లీన్-రూమ్, ఓపెన్-సోర్స్ PDF అప్లికేషన్. MIT OR Apache-2.0.
 	Part of	దీనిలో భాగం:
 	Summarize Options	సారాంశ ఎంపికలు
 	Choose a layout:	లేఅవుట్‌ను ఎంచుకోండి:
@@ -1972,7 +1966,6 @@ action wizard	Start	ప్రారంభించు
 	Reload	మళ్లీ లోడ్ చేయి
 	Couldn't reload {name}: {e}	{name}ను మళ్లీ లోడ్ చేయడం సాధ్యం కాలేదు: {e}
 	About	పరిచయం
-	Contributors	సహకారులు
 	Models	మోడల్‌లు
 	Show	చూపించు
 	Username	వినియోగదారు పేరు
@@ -1980,33 +1973,12 @@ action wizard	Start	ప్రారంభించు
 	Real name	అసలు పేరు
 	Sort	క్రమపరిచే విధానం
 	Name (A–Z)	పేరు (A–Z)
-	Merged PRs	విలీనం చేసిన PRలు
-	PRs	PRలు
-	Commits	కమిట్‌లు
-	Lines added	జోడించిన పంక్తులు
-	Lines deleted	తొలగించిన పంక్తులు
-	Line delta	పంక్తుల నికర మార్పు
-	Binary assets added	జోడించిన బైనరీ ఫైల్‌లు
-	Binary assets removed	తీసివేసిన బైనరీ ఫైల్‌లు
-	First commit	మొదటి కమిట్
-	Last commit	చివరి కమిట్
-	+LOC	+పంక్తులు
-	−LOC	−పంక్తులు
-	ΔLOC	Δపంక్తులు
-	+Bin	+బైనరీ
-	−Bin	−బైనరీ
 	First	మొదటి
 	Last	చివరి
 	Reverse the order	వ్యతిరేక క్రమానికి మార్చు
-	Grab bag	జాబితా
 	Table	పట్టిక
-	{n} contributors · {c} commits	సహకారులు: {n} · కమిట్‌లు: {c}
-	No contributor data was built into this copy.	ఈ కాపీలో సహకారుల డేటా ఏదీ చేర్చబడలేదు.
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: PRలు {prs}, కమిట్‌లు {commits}, పంక్తులు +{added} / −{deleted} (Δ {delta}), బైనరీ ఫైల్‌లు +{bin_added} / −{bin_deleted}, {first} – {last}
-	No model credits were built into this copy.	ఈ కాపీలో మోడల్‌ల సహకార వివరాలు ఏవీ చేర్చబడలేదు.
 	Company	సంస్థ
 	Model	మోడల్
-	% of all commits	మొత్తం కమిట్‌లలో %
 	Lines +/−	పంక్తులు +/−
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	ఈ పత్రాన్ని మీరు విశ్వసిస్తేనే కొనసాగించండి. ఒక చిరునామా పత్రంలోని సమాచారాన్ని, ఉదాహరణకు దాని ఫారంలో మీరు టైప్ చేసినదాన్ని, తనతో పాటు తీసుకెళ్లగలదు.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	ఒక వైపు మాత్రమే ముద్రించండి. షీట్‌ల క్రమం మారకుండా ఉంచి, గుర్తుల వద్ద కత్తిరించండి, ఆపై కుప్పలను ఎడమ నుండి కుడికి, పై నుండి కిందికి ఒకదానిపై ఒకటి పేర్చండి.
@@ -2252,7 +2224,6 @@ animation effects	Off	ఆఫ్
 	The existing action will be preserved.	ఉన్న చర్య అలాగే ఉంచబడుతుంది.
 	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	ఒక స్క్రిప్ట్ చాలా సేపు నడిచినందున ఈ ఫారమ్ స్క్రిప్ట్‌లు ఆపివేయబడ్డాయి. వాటిని మళ్లీ నడపడానికి పత్రాన్ని మళ్లీ తెరవండి.
 
-	An open-source PDF workbench — local, private, and fast.	ఓపెన్ సోర్స్ PDF పని వాతావరణం — స్థానికం, వ్యక్తిగతం, వేగవంతం.
 	NexoHub Ecosystem	NexoHub వ్యవస్థ
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% స్థానిక Rust  ·  టెలిమెట్రీ లేదు  ·  పూర్తి గోప్యత
 	High-performance document engineering — local, private and ultrafast.	అధిక పనితీరు గల పత్రాల నిర్వహణ — స్థానికం, వ్యక్తిగతం, అత్యంత వేగవంతం.

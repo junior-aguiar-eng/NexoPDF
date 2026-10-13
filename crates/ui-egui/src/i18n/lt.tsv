@@ -211,7 +211,6 @@
 	; failed: {list}	; nepavyko: {list}
 	; {n} pages already had text	; {n} puslapiuose tekstas jau buvo
 	? of {n}	? iš {n}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Švarių patalpų principu kuriama atvirojo kodo PDF programa, parašyta „Rust“ kalba. MIT OR Apache-2.0.
 	Accessibility Checker	Prieinamumo tikrintuvas
 	Accessibility Checker Options	Prieinamumo tikrintuvo parinktys
 	Acrobat 3.0 and later (40-bit RC4)	„Acrobat 3.0“ ir naujesnės versijos (40 bitų RC4)
@@ -263,7 +262,6 @@
 	Also recognize pages that already have text	Taip pat atpažinti puslapius, kuriuose jau yra teksto
 	Alternate text	Alternatyvusis tekstas
 	An action with this name already exists.	Veiksmas tokiu pavadinimu jau yra.
-	An open-source PDF workbench — local, private, and scriptable.	Atvirojo kodo PDF aplinka — vietinė, privati ir valdoma scenarijais.
 	Angle	Kampas
 	Animation effects	Animacijos efektai
 	Annotations, form fill-in, and digital signatures	Anotacijos, formų pildymas ir skaitmeniniai parašai
@@ -602,7 +600,6 @@
 	From {file}	Iš {file}
 	From:	Nuo:
 	Front side only	Tik priekinė pusė
-	Get help, share feedback and follow development on Discord.	Gaukite pagalbos, pateikite atsiliepimų ir sekite naujienas „Discord“.
 	Go to a page view	Pereiti į puslapio rodinį
 	Go to page {p}	Pereiti į puslapį {p}
 	Go to the page	Pereiti į puslapį
@@ -654,8 +651,6 @@
 	JavaScript Console	JavaScript konsolė
 	JavaScript is turned off (Preferences ▸ JavaScript).	JavaScript išjungtas (Nuostatos > JavaScript).
 	JavaScript, e.g. getField("total").value	JavaScript, pvz., getField("total").value
-	Join our Discord	Prisijunkite prie mūsų „Discord“ serverio
-	Join the NexoHub community	Prisijunkite prie „NexoHub“ bendruomenės
 	Justify	Abipusė lygiuotė
 	Keep source fonts	Išsaugoti šaltinio šriftus
 	Keep tool selected	Palikti įrankį pasirinktą
@@ -1458,7 +1453,6 @@
 	Insert text	Įterpti tekstą
 	JavaScript	JavaScript
 	JavaScript console…	JavaScript konsolė…
-	Join the NexoHub Discord	Prisijungti prie „NexoHub“ „Discord“ serverio
 	Light gray	Šviesiai pilka
 	Line	Linija
 	Link	Saitas
@@ -1911,7 +1905,6 @@ comment menu	Edit	Redaguoti
 	Content Streams	Turinio srautai
 	Content copying	Turinio kopijavimas
 	Content copying for accessibility	Turinio kopijavimas prieinamumui
-	Contributors	Bendraautoriai
 	Copied {what}	Nukopijuota: {what}
 	Copy or cut pages first	Pirmiausia nukopijuokite arba iškirpkite puslapius
 	Could not save: {e}	Nepavyko įrašyti: {e}
@@ -2472,42 +2465,21 @@ certificate	SHA-256 digest	SHA-256 santrauka
 	Panels	Skydeliai
 	Resize panel window	Keisti skydelio lango dydį
 	Resize panels	Keisti skydelių dydį
-	Grab bag	Vardų rinkinys
-	No contributor data was built into this copy.	Šioje programos kopijoje nėra duomenų apie bendraautorius.
-	No model credits were built into this copy.	Šioje programos kopijoje nėra naudotų modelių sąrašo.
 	Reverse the order	Apversti tvarką
 	Show	Rodyti
 	Sort	Rūšiuoti
 	Table	Lentelė
 	The field {name} no longer exists.	Lauko {name} nebėra.
-	{n} contributors · {c} commits	Bendraautorių: {n} · pakeitimų įrašų: {c}
 	Username	Naudotojo vardas
 	Display name	Rodomas vardas
 	Real name	Tikras vardas
 	Name (A–Z)	Vardas (A–Z)
-	Merged PRs	Sujungtos pakeitimų užklausos
-	PRs	Pakeitimų užklausos
-	Commits	Pakeitimų įrašai
-	Lines added	Pridėtos eilutės
-	+LOC	+Eil.
-	Lines deleted	Pašalintos eilutės
-	−LOC	−Eil.
-	Line delta	Eilučių pokytis
-	ΔLOC	ΔEil.
-	Binary assets added	Pridėti dvejetainiai ištekliai
-	+Bin	+Dvej.
-	Binary assets removed	Pašalinti dvejetainiai ištekliai
-	−Bin	−Dvej.
-	First commit	Pirmas pakeitimų įrašas
 	First	Pirmas
-	Last commit	Paskutinis pakeitimų įrašas
 	Last	Paskutinis
 	Company	Įmonė
 	Model	Modelis
 	Version	Versija
-	% of all commits	Visų pakeitimų įrašų dalis (%)
 	Lines +/−	Eilutės +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: pakeitimų užklausų: {prs}, pakeitimų įrašų: {commits}, eilučių: +{added} / −{deleted} (Δ {delta}), dvejetainių išteklių: +{bin_added} / −{bin_deleted}, {first} – {last}
 	of {name}	iš {name}
 	of {pages}	iš {pages}
 	on page {label}	puslapyje {label}
@@ -2583,7 +2555,6 @@ key	Home	Home
 key	End	End
 key	Space	Tarpas
 
-	An open-source PDF workbench — local, private, and fast.	Atvirojo kodo PDF darbo aplinka — vietinė, privati ir greita.
 	NexoHub Ecosystem	NexoHub ekosistema
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% natyvus Rust  ·  Be telemetrijos  ·  Visiškas privatumas
 	High-performance document engineering — local, private and ultrafast.	Našus dokumentų apdorojimas — vietinis, privatus ir itin greitas.

@@ -27,6 +27,8 @@ fn github_command_opens_the_nexopdf_repository() {
 fn home_screen_shows_nexopdf_identity() {
     let h = harness(|_| {});
     h.get_by_label("Welcome to NexoPDF");
+    assert_eq!(h.query_all_by_label("Contributors").count(), 0);
+    assert_eq!(h.query_all_by_label("Join our Discord").count(), 0);
     assert!(h.query_all_by_label("NexoPDF").count() >= 1, "the NexoPDF mark is exposed to accessibility");
 }
 
@@ -40,6 +42,8 @@ fn about_dialog_shows_nexopdf_identity() {
     });
     assert!(h.query_all_by_label("NexoPDF").count() >= 2, "About shows the NexoPDF mark and name");
     h.get_by_label(&format!("Version {}", env!("CARGO_PKG_VERSION")));
+    assert_eq!(h.query_all_by_label("Contributors").count(), 0);
+    assert_eq!(h.query_all_by_label("Join our Discord").count(), 0);
 }
 
 #[test]

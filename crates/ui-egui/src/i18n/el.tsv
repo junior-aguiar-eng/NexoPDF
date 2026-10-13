@@ -1,5 +1,4 @@
 # Greek (el) interface catalog. Columns: context <TAB> English source <TAB> Greek translation.
-# Partial, clean-room initial contribution. Entries not yet translated fall back to English.
 # Translate from English meanings; retain placeholders and trailing ellipses.
 # Greek plural forms: one (1) | other (0, 2+).
 	Menu	Μενού
@@ -78,7 +77,6 @@
 	Side panels	Πλευρικοί πίνακες
 	Enable Acrobat JavaScript	Ενεργοποίηση Acrobat JavaScript
 	OK	Εντάξει
-	Join our Discord	Ελάτε στο Discord μας
 	Close	Κλείσιμο
 	Next / previous match	Επόμενο / προηγούμενο αποτέλεσμα
 	Copy selected text	Αντιγραφή επιλεγμένου κειμένου
@@ -138,9 +136,6 @@
 	Next page	Επόμενη σελίδα
 	Previous page	Προηγούμενη σελίδα
 	Welcome to NexoPDF	Καλώς ορίσατε στο NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Ένα εργαλείο PDF ανοιχτού κώδικα — τοπικό, ιδιωτικό και αυτοματοποιήσιμο.
-	Join the NexoHub community	Γίνετε μέλος της κοινότητας NexoHub
-	Get help, share feedback and follow development on Discord.	Βρείτε βοήθεια, μοιραστείτε σχόλια και παρακολουθήστε την ανάπτυξη στο Discord.
 	Recommended tools	Προτεινόμενα εργαλεία
 	Use now	Χρήση τώρα
 	Open file	Άνοιγμα αρχείου
@@ -375,7 +370,6 @@
 	Rotate counterclockwise	Αριστερόστροφη περιστροφή
 	Open link	Άνοιγμα συνδέσμου
 	Add link	Προσθήκη συνδέσμου
-	Contributors	Συντελεστές
 	Auto	Αυτόματα
 	Don't save	Να μην αποθηκευτεί
 	Ready	Έτοιμο
@@ -932,7 +926,6 @@
 	 · password-protected	 · προστατευμένο με κωδικό
 	Recover	Ανάκτηση
 	Version {v}	Έκδοση {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Μια εφαρμογή PDF ανοικτού κώδικα, αναπτυγμένη ανεξάρτητα σε Rust. Άδεια MIT ή Apache-2.0.
 	Part of	Μέρος του
 	Summarize Options	Επιλογές σύνοψης
 	Choose a layout:	Επιλέξτε διάταξη:
@@ -1465,10 +1458,6 @@
 	Printer properties	Ιδιότητες εκτυπωτή
 	Reset to printer defaults	Επαναφορά προεπιλογών εκτυπωτή
 	This printer offers no settings of its own.	Αυτός ο εκτυπωτής δεν διαθέτει πρόσθετες ρυθμίσεις.
-	% of all commits	% όλων των καταχωρίσεων
-	+Bin	+Δυαδ.
-	+LOC	+Γραμμές
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} αιτήματα συγχώνευσης, {commits} καταχωρίσεις, +{added} / −{deleted} γραμμές (Δ {delta}), +{bin_added} / −{bin_deleted} δυαδικά στοιχεία, {first} – {last}
 	A button	Ένα κουμπί
 	A link	Ένας σύνδεσμος
 	A script	Μια δέσμη ενεργειών
@@ -1476,11 +1465,8 @@
 	Align fields	Στοίχιση πεδίων
 	Another file dialog is still open. Finish with it first.	Ένα άλλο παράθυρο επιλογής αρχείου παραμένει ανοιχτό. Ολοκληρώστε πρώτα τη διαδικασία εκεί.
 	Basic constraints	Βασικοί περιορισμοί
-	Binary assets added	Δυαδικά στοιχεία που προστέθηκαν
-	Binary assets removed	Δυαδικά στοιχεία που αφαιρέθηκαν
 	Change document properties	Αλλαγή ιδιοτήτων εγγράφου
 	Change {what}	Αλλαγή {what}
-	Commits	Καταχωρίσεις
 	Company	Εταιρεία
 	Couldn't show the file picker. Please try again.	Δεν ήταν δυνατή η εμφάνιση του παραθύρου επιλογής αρχείου. Δοκιμάστε ξανά.
 	Create PDF from images	Δημιουργία PDF από εικόνες
@@ -1495,31 +1481,21 @@
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Δυναμική φόρμα XFA με διάταξη από το πρότυπό της: {pages}, {fields}.
 	Files are combined in this order. Leave Pages empty to take every page.	Τα αρχεία συνδυάζονται με αυτή τη σειρά. Αφήστε κενό το πεδίο «Σελίδες» για να συμπεριληφθούν όλες.
 	First	Πρώτο
-	First commit	Πρώτη καταχώριση
-	Grab bag	Διάφορα
 	H / Space (hold)	H / Διάστημα (κρατήστε πατημένο)
 	Home / End	Home / End
 	Last	Τελευταίο
-	Last commit	Τελευταία καταχώριση
-	Line delta	Μεταβολή γραμμών
 	Line ending	Τέλος γραμμής
 	Lines +/−	Γραμμές +/−
-	Lines added	Γραμμές που προστέθηκαν
-	Lines deleted	Γραμμές που διαγράφηκαν
 	Mark differences	Επισήμανση διαφορών
 	Mark for redaction	Σήμανση για οριστική απόκρυψη
 	Mark pages for redaction	Σήμανση σελίδων για οριστική απόκρυψη
 	Match field sizes	Εξίσωση μεγεθών πεδίων
-	Merged PRs	Συγχωνευμένα αιτήματα αλλαγών
 	Model	Μοντέλο
 	Models	Μοντέλα
 	Name (A–Z)	Όνομα (Α–Ω)
-	No contributor data was built into this copy.	Αυτή η έκδοση δεν περιλαμβάνει δεδομένα συντελεστών.
-	No model credits were built into this copy.	Αυτή η έκδοση δεν περιλαμβάνει πληροφορίες αναγνώρισης συνεισφορών μοντέλων.
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Συνεχίστε μόνο αν εμπιστεύεστε αυτό το έγγραφο. Μια διεύθυνση μπορεί να μεταφέρει πληροφορίες από το έγγραφο, όπως όσα πληκτρολογήσατε στη φόρμα του.
 	Open email app	Άνοιγμα εφαρμογής ηλεκτρονικού ταχυδρομείου
 	Open this web page?	Άνοιγμα αυτής της ιστοσελίδας;
-	PRs	Αιτήματα αλλαγών
 	Place saved {what}	Τοποθέτηση αποθηκευμένου στοιχείου: {what}
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Εκτυπώστε στη μία όψη. Κρατήστε τα φύλλα με τη σωστή σειρά, κόψτε στις ενδείξεις και στοιβάξτε τις ομάδες από αριστερά προς τα δεξιά και από πάνω προς τα κάτω.
 	Real name	Πραγματικό όνομα
@@ -1553,14 +1529,10 @@
 	Username	Όνομα χρήστη
 	Write this email?	Σύνταξη αυτού του email;
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Φόρμα XFA: τα πεδία και τα δεδομένα XFA συγχρονίζονται, ώστε άλλα προγράμματα προβολής να εμφανίζουν όσα συμπληρώνετε.
-	{n} contributors · {c} commits	{n} συντελεστές · {c} καταχωρίσεις
 	{who} in this document tried to open an address NexoPDF won't open: {e}.	Το στοιχείο {who} σε αυτό το έγγραφο προσπάθησε να ανοίξει διεύθυνση που το NexoPDF δεν επιτρέπει: {e}.
 	{who} in this document tried to open an address NexoPDF won't open: {e}. Only web (http, https) and email (mailto) links open from documents.	Το στοιχείο {who} σε αυτό το έγγραφο προσπάθησε να ανοίξει μη επιτρεπόμενη διεύθυνση: {e}. Από τα έγγραφα ανοίγουν μόνο σύνδεσμοι ιστού (http, https) και ηλεκτρονικού ταχυδρομείου (mailto).
 	{who} in this document wants to open this address in your browser:	Το στοιχείο {who} σε αυτό το έγγραφο θέλει να ανοίξει αυτή τη διεύθυνση στο πρόγραμμα περιήγησης:
 	{who} in this document wants to open your email app with this address:	Το στοιχείο {who} σε αυτό το έγγραφο θέλει να ανοίξει την εφαρμογή ηλεκτρονικού ταχυδρομείου με αυτή τη διεύθυνση:
-	ΔLOC	Δγραμμές
-	−Bin	−Δυαδ.
-	−LOC	−Γραμμές
 	Scroll tabs left	Κύλιση καρτελών προς τα αριστερά
 	Scroll tabs right	Κύλιση καρτελών προς τα δεξιά
 	Shared Field Properties	Κοινές ιδιότητες πεδίων
@@ -1661,7 +1633,6 @@
 	Extract pages…	Εξαγωγή σελίδων…
 	Split document…	Διαχωρισμός εγγράφου…
 	Number pages…	Αρίθμηση σελίδων…
-	Join the NexoHub Discord	Συμμετοχή στο Discord του NexoHub
 	NexoPDF web page	Ιστότοπος του NexoPDF
 	NexoPDF on GitHub	NexoPDF στο GitHub
 	NexoHub website	Ιστότοπος NexoHub
@@ -2349,7 +2320,6 @@ animation effects	Off	Ανενεργά
 	The existing action will be preserved.	Η υπάρχουσα ενέργεια θα διατηρηθεί.
 	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Τα σενάρια αυτής της φόρμας είναι απενεργοποιημένα, επειδή ένα από αυτά εκτελούνταν για πολύ ώρα. Ανοίξτε ξανά το έγγραφο για να εκτελεστούν ξανά.
 
-	An open-source PDF workbench — local, private, and fast.	Περιβάλλον PDF ανοικτού κώδικα — τοπικό, ιδιωτικό και γρήγορο.
 	NexoHub Ecosystem	Οικοσύστημα NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% εγγενές Rust  ·  Χωρίς τηλεμετρία  ·  Απόλυτη ιδιωτικότητα
 	High-performance document engineering — local, private and ultrafast.	Επεξεργασία εγγράφων υψηλών επιδόσεων — τοπική, ιδιωτική και εξαιρετικά γρήγορη.

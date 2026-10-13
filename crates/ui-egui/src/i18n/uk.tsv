@@ -91,7 +91,6 @@
 	Side panels	Бічні панелі
 	Enable Acrobat JavaScript	Увімкнути Acrobat JavaScript
 	OK	OK
-	Join our Discord	Приєднатися до нашого Discord
 	Close	Закрити
 	Next / previous match	Наступний / попередній збіг
 	Copy selected text	Копіювати виділений текст
@@ -158,9 +157,6 @@
 	Previous page	Попередня сторінка
 	Current page — type a page number or label (such as iv) and press Enter	Поточна сторінка — введіть номер або позначку сторінки (наприклад iv) і натисніть Enter
 	Welcome to NexoPDF	Вітаємо в NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Відкритий інструментарій для PDF — локальний, приватний і з підтримкою сценаріїв.
-	Join the NexoHub community	Приєднатися до спільноти NexoHub
-	Get help, share feedback and follow development on Discord.	Отримуйте допомогу, діліться відгуками й стежте за розробкою в Discord.
 	Recommended tools	Рекомендовані інструменти
 	Use now	Використати зараз
 	Open file	Відкрити файл
@@ -305,7 +301,6 @@
 	Split document…	Розділити документ…
 	Number pages…	Пронумерувати сторінки…
 	Keyboard shortcuts	Клавіатурні скорочення
-	Join the NexoHub Discord	Приєднатися до Discord NexoHub
 	NexoPDF web page	Вебсторінка NexoPDF
 	NexoPDF on GitHub	NexoPDF на GitHub
 	NexoHub website	Вебсайт NexoHub
@@ -1394,7 +1389,6 @@
 	Recover	Відновити
 	Discard	Відкинути
 	Version {v}	Версія {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Відкритий застосунок для PDF, написаний на Rust за принципом незалежної розробки. MIT OR Apache-2.0.
 	Part of	Частина
 	Summarize Options	Параметри зведення
 	Choose a layout:	Виберіть макет:
@@ -2076,40 +2070,18 @@
 	Show	Показувати
 	Sort	Сортувати
 	Reverse the order	Зворотний порядок
-	Grab bag	Добірка
 	Table	Таблиця
 	Username	Ім’я користувача
 	Display name	Відображуване ім’я
 	Real name	Справжнє ім’я
 	Name (A–Z)	Ім’я (А–Я)
-	Merged PRs	Злиті PR
-	PRs	PR
-	Commits	Коміти
-	Lines added	Додано рядків
-	+LOC	+LOC
-	Lines deleted	Видалено рядків
-	−LOC	−LOC
-	Line delta	Зміна кількості рядків
-	ΔLOC	ΔLOC
-	Binary assets added	Додано бінарних ресурсів
-	+Bin	+Bin
-	Binary assets removed	Видалено бінарних ресурсів
-	−Bin	−Bin
-	First commit	Перший коміт
 	First	Перший
-	Last commit	Останній коміт
 	Last	Останній
-	No contributor data was built into this copy.	У цю копію не вбудовано даних про учасників.
-	No model credits were built into this copy.	У цю копію не вбудовано відомостей про моделі.
-	{n} contributors · {c} commits	Учасників: {n} · Комітів: {c}
 	Company	Компанія
 	Model	Модель
-	% of all commits	% усіх комітів
 	Lines +/−	Рядків +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: PR: {prs}, комітів: {commits}, +{added} / −{deleted} рядків (Δ {delta}), +{bin_added} / −{bin_deleted} бінарних ресурсів, {first} – {last}
 	None of those files can be made into a PDF; use PDFs, images or .txt files	Жоден із цих файлів неможливо перетворити на PDF; використовуйте PDF, зображення або файли .txt
 	About	Про застосунок
-	Contributors	Учасники
 	Models	Моделі
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Продовжуйте лише якщо довіряєте цьому документу. Адреса може містити інформацію з документа, наприклад дані, введені у форму.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Друкуйте з одного боку. Зберігайте порядок аркушів, розріжте за мітками, а потім складіть стоси зліва направо, згори донизу.
@@ -2361,7 +2333,6 @@ animation effects	Off	Вимкнено
 	The linked PDF opened, but its page destination was out of range.	Пов’язаний PDF відкрито, але сторінка призначення поза межами діапазону.
 	Local cross-PDF links require the desktop app	Локальні посилання між PDF працюють лише в настільному застосунку
 
-	An open-source PDF workbench — local, private, and fast.	Робоче середовище PDF з відкритим кодом — локальне, приватне й швидке.
 	NexoHub Ecosystem	Екосистема NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% нативний Rust  ·  Без телеметрії  ·  Повна конфіденційність
 	High-performance document engineering — local, private and ultrafast.	Високопродуктивна обробка документів — локально, приватно й надшвидко.

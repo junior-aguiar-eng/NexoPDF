@@ -57,7 +57,6 @@
 	Flatten Fill & Sign when saving	Kaydederken Doldur ve İmzala'yı düzleştir
 	Text, marks and signatures become part of the page. Other comments stay editable.	Metin, işaretler ve imzalar sayfanın bir parçası olur. Diğer yorumlar düzenlenebilir kalır.
 	OK	Tamam
-	Join our Discord	Discord'umuza katılın
 	Close	Kapat
 	Next / previous match	Sonraki / önceki eşleşme
 	Copy selected text	Seçilen metni kopyala
@@ -118,9 +117,6 @@
 	Previous page	Önceki sayfa
 	Current page — type a page number or label (such as iv) and press Enter	Geçerli sayfa — bir sayfa numarası veya etiketi (örneğin iv) yazıp Enter'a basın
 	Welcome to NexoPDF	NexoPDF'a Hoş Geldiniz
-	An open-source PDF workbench — local, private, and scriptable.	Açık kaynaklı bir PDF çalışma alanı — yerel, gizli ve komut dosyalarıyla yönetilebilir.
-	Join the NexoHub community	NexoHub topluluğuna katılın
-	Get help, share feedback and follow development on Discord.	Discord'da yardım alın, geri bildirim paylaşın ve geliştirmeyi takip edin.
 	Recommended tools	Önerilen araçlar
 	Use now	Şimdi kullan
 	Open file	Dosya aç
@@ -265,7 +261,6 @@
 	Split document…	Belgeyi böl…
 	Number pages…	Sayfaları numaralandır…
 	Keyboard shortcuts	Klavye kısayolları
-	Join the NexoHub Discord	NexoHub Discord'una katıl
 	NexoPDF web page	NexoPDF web sayfası
 	NexoPDF on GitHub	GitHub'da NexoPDF
 	NexoHub website	NexoHub web sitesi
@@ -1353,7 +1348,6 @@
 	Recover	Kurtar
 	Discard	Yoksay
 	Version {v}	Sürüm {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Rust ile yazılmış, temiz oda tekniğiyle geliştirilmiş açık kaynaklı bir PDF uygulaması. MIT VEYA Apache-2.0.
 	Part of	Şunun parçası:
 	Summarize Options	Özetleme Seçenekleri
 	Choose a layout:	Bir düzen seçin:
@@ -1949,37 +1943,16 @@
 	Show	Göster
 	Sort	Sırala
 	Reverse the order	Sırayı tersine çevir
-	Grab bag	Karışık
 	Table	Tablo
 	Username	Kullanıcı adı
 	Display name	Görünen ad
 	Real name	Gerçek ad
 	Name (A–Z)	Ad (A–Z)
-	Merged PRs	Birleştirilen PR'lar
-	PRs	PR'lar
-	Commits	İşlemeler
-	Lines added	Eklenen satırlar
-	+LOC	+LOC
-	Lines deleted	Silinen satırlar
-	−LOC	−LOC
-	Line delta	Satır farkı
-	ΔLOC	ΔLOC
-	Binary assets added	Eklenen ikili varlıklar
-	+Bin	+Bin
-	Binary assets removed	Kaldırılan ikili varlıklar
-	−Bin	−Bin
-	First commit	İlk işleme
 	First	İlk
-	Last commit	Son işleme
 	Last	Son
-	No contributor data was built into this copy.	Bu kopyaya hiçbir katkıda bulunan verisi dahil edilmedi.
-	No model credits were built into this copy.	Bu kopyaya hiçbir model kredisi dahil edilmedi.
-	{n} contributors · {c} commits	{n} katkıda bulunan · {c} işleme
 	Company	Şirket
 	Model	Model
-	% of all commits	Tüm işlemelerin %'si
 	Lines +/−	Satırlar +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PR, {commits} işleme, +{added} / −{deleted} satır (Δ {delta}), +{bin_added} / −{bin_deleted} ikili varlık, {first} – {last}
 	Set layer visibility	Katman görünürlüğünü ayarla
 	Created a PDF from {n} files	{n} dosyadan bir PDF oluşturuldu
 	PDF, images and text	PDF, resimler ve metin
@@ -2069,7 +2042,6 @@
 	No recent files	Son kullanılan dosya yok
 	Go to page…	Sayfaya git…
 	About	Hakkında
-	Contributors	Katkıda Bulunanlar
 	Models	Modeller
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Yalnızca bu belgeye güveniyorsanız devam edin. Bir adres, formuna yazdıklarınız gibi belgeden bilgi taşıyabilir.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Tek taraflı yazdırın. Sayfaları sırayla tutun, işaretlerden kesin, ardından desteleri soldan sağa, yukarıdan aşağıya istifleyin.
@@ -2335,7 +2307,6 @@ animation effects	Off	Kapalı
 	The linked PDF opened, but its page destination was out of range.	Bağlantılı PDF açıldı, ancak sayfa hedefi aralık dışında.
 	Local cross-PDF links require the desktop app	PDF'ler arası yerel bağlantılar masaüstü uygulamasını gerektirir
 
-	An open-source PDF workbench — local, private, and fast.	Açık kaynaklı PDF çalışma ortamı — yerel, özel ve hızlı.
 	NexoHub Ecosystem	NexoHub ekosistemi
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	%100 yerel Rust  ·  Telemetri yok  ·  Tam gizlilik
 	High-performance document engineering — local, private and ultrafast.	Yüksek performanslı belge işleme — yerel, özel ve çok hızlı.

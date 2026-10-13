@@ -8,7 +8,6 @@
 # the trailing "…" of dialog commands is kept.
 
 	About	За програмата
-	Contributors	Сътрудници
 	Models	Модели
 	Show	Покажи
 	Username	Потребителско име
@@ -16,33 +15,12 @@
 	Real name	Истинско име
 	Sort	Сортиране
 	Name (A–Z)	Име (А–Я)
-	Merged PRs	Обединени PR
-	PRs	PR
-	Commits	Къмитове
-	Lines added	Добавени редове
-	Lines deleted	Изтрити редове
-	Line delta	Разлика в редовете
-	Binary assets added	Добавени двоични ресурси
-	Binary assets removed	Премахнати двоични ресурси
-	First commit	Първи къмит
-	Last commit	Последен къмит
-	+LOC	+LOC
-	−LOC	−LOC
-	ΔLOC	ΔLOC
-	+Bin	+Bin
-	−Bin	−Bin
 	First	Първи
 	Last	Последен
 	Reverse the order	Обърни реда
-	Grab bag	Смесица
 	Table	Таблица
-	{n} contributors · {c} commits	{n} сътрудници · {c} къмита
-	No contributor data was built into this copy.	В това копие няма вградени данни за сътрудниците.
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PR, {commits} къмита, +{added} / −{deleted} реда (Δ {delta}), +{bin_added} / −{bin_deleted} двоични ресурса, {first} – {last}
-	No model credits were built into this copy.	В това копие няма вградени данни за моделите.
 	Company	Компания
 	Model	Модел
-	% of all commits	% от всички къмитове
 	Lines +/−	Редове +/−
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Продължете само ако имате доверие на този документ. Адресът може да пренася информация от документа, например въведеното във формуляра му.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Отпечатайте едностранно. Запазете реда на листовете, изрежете по маркировките, след което подредете купчините отляво надясно и отгоре надолу.
@@ -1348,7 +1326,6 @@
 	Delete selected pages (Organize)	Изтрий избраните страници (Организиране)
 	Select all pages (Organize)	Избери всички страници (Организиране)
 	Version {v}	Версия {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Независимо разработено PDF приложение с отворен код, написано на Rust. MIT OR Apache-2.0.
 	Part of	Част от
 	Summarize Options	Опции за обобщение
 	Choose a layout:	Изберете оформление:
@@ -1778,7 +1755,6 @@
 	Convert	Конвертиране
 	E-Sign	Е-подпис
 	Welcome to NexoPDF	Добре дошли в NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	PDF работна среда с отворен код — локална, поверителна и програмируема.
 	Recommended tools	Препоръчани инструменти
 	Use now	Използвай сега
 	Recent	Последни
@@ -1812,10 +1788,6 @@
 	Split document…	Раздели документа…
 	Number pages…	Номерирай страниците…
 	Keyboard shortcuts	Клавишни комбинации
-	Join the NexoHub Discord	Присъедини се към NexoHub в Discord
-	Join the NexoHub community	Присъедини се към общността на NexoHub
-	Get help, share feedback and follow development on Discord.	Получете помощ, споделете мнение и следете разработката в Discord.
-	Join our Discord	Присъедини се към нашия Discord
 	NexoPDF web page	Уебстраница на NexoPDF
 	NexoPDF on GitHub	NexoPDF в GitHub
 	NexoHub website	Уебсайт на NexoHub
@@ -2302,7 +2274,6 @@ animation effects	Off	Изключени
 	The linked PDF opened, but its page destination was out of range.	Свързаният PDF се отвори, но целевата му страница е извън обхвата.
 	Local cross-PDF links require the desktop app	Локалните връзки между PDF файлове изискват настолното приложение
 
-	An open-source PDF workbench — local, private, and fast.	PDF работна среда с отворен код — локална, поверителна и бърза.
 	NexoHub Ecosystem	Екосистема NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% нативен Rust  ·  Без телеметрия  ·  Пълна поверителност
 	High-performance document engineering — local, private and ultrafast.	Високопроизводителна обработка на документи — локална, поверителна и ултрабърза.

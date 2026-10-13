@@ -3335,7 +3335,7 @@ trailer << /Root 1 0 R >>
         assert_eq!(&page.rgba[((38 * 40 + 1) * 4)..][..4], &[255, 0, 0, 255]);
     }
 
-    /// Contributor-original JPEG 2000: one unsigned 8-bit pixel per component, one tile,
+    /// Project-original JPEG 2000: one unsigned 8-bit pixel per component, one tile,
     /// no decomposition, reversible wavelet, and one empty packet per component. Empty
     /// coefficients decode to the midpoint (128) after the unsigned DC level shift.
     fn jpx_midpoint_pdf(bpc: u8, components: u16) -> Vec<u8> {

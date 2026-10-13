@@ -66,7 +66,6 @@
 	Flatten Fill & Sign when saving	Aplatir Remplir et signer à l'enregistrement
 	Text, marks and signatures become part of the page. Other comments stay editable.	Le texte, les marques et les signatures deviennent partie de la page. Les autres commentaires restent modifiables.
 	OK	OK
-	Join our Discord	Rejoindre notre Discord
 	Close	Fermer
 	Next / previous match	Correspondance suivante / précédente
 	Copy selected text	Copier le texte sélectionné
@@ -133,9 +132,6 @@
 	Previous page	Page précédente
 	Current page — type a page number or label (such as iv) and press Enter	Page actuelle — saisissez un numéro ou une étiquette de page (comme iv) et appuyez sur Entrée
 	Welcome to NexoPDF	Bienvenue dans NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Un atelier PDF open source — local, privé et automatisable.
-	Join the NexoHub community	Rejoindre la communauté NexoHub
-	Get help, share feedback and follow development on Discord.	Obtenez de l'aide, partagez vos retours et suivez le développement sur Discord.
 	Recommended tools	Outils recommandés
 	Use now	Utiliser
 	Open file	Ouvrir un fichier
@@ -280,7 +276,6 @@
 	Split document…	Fractionner le document…
 	Number pages…	Numéroter les pages…
 	Keyboard shortcuts	Raccourcis clavier
-	Join the NexoHub Discord	Rejoindre le Discord NexoHub
 	NexoPDF web page	Page web de NexoPDF
 	NexoPDF on GitHub	NexoPDF sur GitHub
 	NexoHub website	Site web d'NexoHub
@@ -1376,7 +1371,6 @@
 	Recover	Récupérer
 	Discard	Abandonner
 	Version {v}	Version {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Une application PDF open source, en salle blanche, écrite en Rust. MIT OR Apache-2.0.
 	Part of	Partie de
 	Summarize Options	Options du résumé
 	Choose a layout:	Choisissez une disposition :
@@ -1988,37 +1982,16 @@
 	Show	Afficher
 	Sort	Trier
 	Reverse the order	Inverser l'ordre
-	Grab bag	En vrac
 	Table	Tableau
 	Username	Nom d'utilisateur
 	Display name	Nom affiché
 	Real name	Nom réel
 	Name (A–Z)	Nom (A–Z)
-	Merged PRs	PR fusionnées
-	PRs	PR
-	Commits	Commits
-	Lines added	Lignes ajoutées
-	+LOC	+LOC
-	Lines deleted	Lignes supprimées
-	−LOC	−LOC
-	Line delta	Écart de lignes
-	ΔLOC	ΔLOC
-	Binary assets added	Fichiers binaires ajoutés
-	+Bin	+Bin
-	Binary assets removed	Fichiers binaires retirés
-	−Bin	−Bin
-	First commit	Premier commit
 	First	Premier
-	Last commit	Dernier commit
 	Last	Dernier
-	No contributor data was built into this copy.	Cette copie ne contient aucune donnée sur les contributeurs.
-	No model credits were built into this copy.	Cette copie ne contient aucun crédit de modèle.
-	{n} contributors · {c} commits	{n} contributeurs · {c} commits
 	Company	Société
 	Model	Modèle
-	% of all commits	% de tous les commits
 	Lines +/−	Lignes +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login} : {prs} PR, {commits} commits, +{added} / −{deleted} lignes (Δ {delta}), +{bin_added} / −{bin_deleted} fichiers binaires, {first} – {last}
 	Set layer visibility	Définir la visibilité des calques
 	Created a PDF from {n} files	PDF créé à partir de {n} fichiers
 	PDF, images and text	PDF, images et texte
@@ -2147,7 +2120,6 @@
 	Another file dialog is still open. Finish with it first.	Une autre boîte de dialogue de fichier est encore ouverte. Terminez d'abord avec celle-ci.
 	Basic constraints	Contraintes de base
 	Change document properties	Modifier les propriétés du document
-	Contributors	Contributeurs
 	Couldn't show the file picker. Please try again.	Impossible d'afficher le sélecteur de fichiers. Veuillez réessayer.
 	Distribute fields	Répartir les champs
 	H / Space (hold)	H / Espace (maintenir)
@@ -2339,7 +2311,6 @@ animation effects	Off	Désactivés
 	The linked PDF opened, but its page destination was out of range.	Le PDF lié s'est ouvert, mais sa page de destination est hors limites.
 	Local cross-PDF links require the desktop app	Les liens locaux entre PDF nécessitent l'application de bureau
 
-	An open-source PDF workbench — local, private, and fast.	Un atelier PDF open source : local, privé et rapide.
 	NexoHub Ecosystem	Écosystème NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100 % Rust natif  ·  Aucune télémétrie  ·  Confidentialité absolue
 	High-performance document engineering — local, private and ultrafast.	Ingénierie documentaire haute performance : locale, privée et ultrarapide.

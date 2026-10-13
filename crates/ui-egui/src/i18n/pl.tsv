@@ -89,7 +89,6 @@
 	Side panels	Panele boczne
 	Enable Acrobat JavaScript	Włącz Acrobat JavaScript
 	OK	OK
-	Join our Discord	Dołącz do naszego Discorda
 	Close	Zamknij
 	Next / previous match	Następne / poprzednie dopasowanie
 	Copy selected text	Kopiuj zaznaczony tekst
@@ -156,9 +155,6 @@
 	Previous page	Poprzednia strona
 	Current page — type a page number or label (such as iv) and press Enter	Bieżąca strona — wpisz numer lub etykietę strony (np. iv) i naciśnij Enter
 	Welcome to NexoPDF	Witamy w NexoPDF
-	An open-source PDF workbench — local, private, and scriptable.	Otwarty zestaw narzędzi do PDF — lokalny, prywatny i obsługujący skrypty.
-	Join the NexoHub community	Dołącz do społeczności NexoHub
-	Get help, share feedback and follow development on Discord.	Uzyskaj pomoc, podziel się opinią i śledź rozwój na Discordzie.
 	Recommended tools	Polecane narzędzia
 	Use now	Użyj teraz
 	Open file	Otwórz plik
@@ -302,7 +298,6 @@
 	Split document…	Podziel dokument…
 	Number pages…	Ponumeruj strony…
 	Keyboard shortcuts	Skróty klawiaturowe
-	Join the NexoHub Discord	Dołącz do Discorda NexoHub
 	NexoPDF web page	Strona internetowa NexoPDF
 	NexoPDF on GitHub	NexoPDF na GitHubie
 	NexoHub website	Strona internetowa NexoHub
@@ -1380,7 +1375,6 @@
 	Recover	Odzyskaj
 	Discard	Odrzuć
 	Version {v}	Wersja {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Otwarta aplikacja PDF napisana w Rust na podstawie niezależnej implementacji. MIT OR Apache-2.0.
 	Part of	Część
 	Summarize Options	Opcje podsumowania
 	Choose a layout:	Wybierz układ:
@@ -2049,10 +2043,6 @@
 	Printer properties	Właściwości drukarki
 	Reset to printer defaults	Przywróć domyślne ustawienia drukarki
 	This printer offers no settings of its own.	Ta drukarka nie udostępnia własnych ustawień.
-	% of all commits	% wszystkich commitów
-	+Bin	+Bin
-	+LOC	+LOC
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: PR: {prs}, commitów: {commits}, +{added} / −{deleted} wierszy (Δ {delta}), +{bin_added} / −{bin_deleted} zasobów binarnych, {first} – {last}
 	A button	Przycisk
 	A link	Łącze
 	A script	Skrypt
@@ -2061,13 +2051,9 @@
 	Align fields	Wyrównaj pola
 	Another file dialog is still open. Finish with it first.	Inne okno wyboru pliku jest nadal otwarte. Najpierw je zamknij.
 	Basic constraints	Podstawowe ograniczenia
-	Binary assets added	Dodane zasoby binarne
-	Binary assets removed	Usunięte zasoby binarne
 	Change document properties	Zmień właściwości dokumentu
 	Change {what}	Zmień {what}
-	Commits	Commity
 	Company	Firma
-	Contributors	Współtwórcy
 	Couldn't show the file picker. Please try again.	Nie można wyświetlić okna wyboru pliku. Spróbuj ponownie.
 	Create	Utwórz
 	Create PDF from images	Utwórz PDF z obrazów
@@ -2082,32 +2068,22 @@
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Dynamiczny formularz XFA z układem według szablonu: {pages}, {fields}.
 	Files are combined in this order. Leave Pages empty to take every page.	Pliki są łączone w tej kolejności. Pozostaw pole Strony puste, aby uwzględnić wszystkie strony.
 	First	Pierwszy
-	First commit	Pierwszy commit
-	Grab bag	Różne
 	H / Space (hold)	H / Spacja (przytrzymaj)
 	Home / End	Home / End
 	Last	Ostatni
-	Last commit	Ostatni commit
-	Line delta	Zmiana liczby wierszy
 	Line ending	Zakończenie linii
 	Lines +/−	Wiersze +/−
-	Lines added	Dodane wiersze
-	Lines deleted	Usunięte wiersze
 	Mark differences	Oznacz różnice
 	Mark for redaction	Oznacz do utajnienia
 	Mark pages for redaction	Oznacz strony do utajnienia
 	Match field sizes	Dopasuj rozmiary pól
-	Merged PRs	Scalone PR
 	Model	Model
 	Models	Modele
 	Name (A–Z)	Nazwa (A–Z)
-	No contributor data was built into this copy.	Ta kopia nie zawiera danych o współtwórcach.
-	No model credits were built into this copy.	Ta kopia nie zawiera informacji o modelach.
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Kontynuuj tylko wtedy, gdy ufasz temu dokumentowi. Adres może zawierać informacje z dokumentu, np. dane wpisane w formularzu.
 	Open email app	Otwórz aplikację pocztową
 	Open link	Otwórz łącze
 	Open this web page?	Otworzyć tę stronę internetową?
-	PRs	PR
 	Place saved {what}	Umieść zapisane: {what}
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Drukuj jednostronnie. Zachowaj kolejność arkuszy, przetnij w miejscach oznaczeń, a następnie ułóż stosy od lewej do prawej i od góry do dołu.
 	Real name	Imię i nazwisko
@@ -2143,14 +2119,10 @@
 	Username	Nazwa użytkownika
 	Write this email?	Napisać tę wiadomość e-mail?
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Formularz XFA: pola i dane XFA są synchronizowane, aby inne przeglądarki wyświetlały wpisane wartości.
-	{n} contributors · {c} commits	Współtwórców: {n} · Commitów: {c}
 	{who} in this document tried to open an address NexoPDF won't open: {e}.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego NexoPDF nie otworzy: {e}.
 	{who} in this document tried to open an address NexoPDF won't open: {e}. Only web (http, https) and email (mailto) links open from documents.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego NexoPDF nie otworzy: {e}. Z dokumentów otwierane są tylko łącza internetowe (http, https) i pocztowe (mailto).
 	{who} in this document wants to open this address in your browser:	Element „{who}” w tym dokumencie chce otworzyć ten adres w przeglądarce:
 	{who} in this document wants to open your email app with this address:	Element „{who}” w tym dokumencie chce otworzyć aplikację pocztową z tym adresem:
-	ΔLOC	ΔLOC
-	−Bin	−Bin
-	−LOC	−LOC
 @plural	{n} field|{n} fields	{n} pole|{n} pola|{n} pól
 @plural	{n} field name collides with earlier files and will be renamed: {list}|{n} field names collide with earlier files and will be renamed: {list}	Nazwa {n} pola koliduje z wcześniejszymi plikami i zostanie zmieniona: {list}|Nazwy {n} pól kolidują z wcześniejszymi plikami i zostaną zmienione: {list}|{n} nazw pól koliduje z wcześniejszymi plikami i zostanie zmienionych: {list}
 @plural	{n} page|{n} pages	{n} strona|{n} strony|{n} stron
@@ -2319,7 +2291,6 @@ animation effects	Off	Wyłączone
 	The existing action will be preserved.	Istniejąca akcja zostanie zachowana.
 	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Skrypty tego formularza są wyłączone, ponieważ jeden z nich działał zbyt długo. Otwórz dokument ponownie, aby znów je uruchomić.
 
-	An open-source PDF workbench — local, private, and fast.	Otwarte środowisko pracy z PDF — lokalne, prywatne i szybkie.
 	NexoHub Ecosystem	Ekosystem NexoHub
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% natywny Rust  ·  Bez telemetrii  ·  Pełna prywatność
 	High-performance document engineering — local, private and ultrafast.	Wydajne przetwarzanie dokumentów — lokalne, prywatne i niezwykle szybkie.

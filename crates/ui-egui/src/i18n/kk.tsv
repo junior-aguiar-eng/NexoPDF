@@ -67,7 +67,6 @@
 	Side panels	Бүйірлік панельдер
 	Enable Acrobat JavaScript	Acrobat JavaScript-ті қосу
 	OK	ОК
-	Join our Discord	Discord-қа қосылыңыз
 	Close	Жабу
 	Next / previous match	Келесі / алдыңғы сәйкестік
 	Copy selected text	Таңдалған мәтінді көшіру
@@ -121,9 +120,6 @@
 	Previous page	Алдыңғы бет
 	Current page — type a page number or label (such as iv) and press Enter	Ағымдағы бет — бет нөмірін немесе белгісін (мысалы, iv) теріңіз де, Enter пернесін басыңыз
 	Welcome to NexoPDF	NexoPDF-ге қош келдіңіз
-	An open-source PDF workbench — local, private, and scriptable.	Ашық бастапқы кодты PDF жұмыс орны — жергілікті, жеке әрі скрипттерді қолдайтын.
-	Join the NexoHub community	NexoHub қауымдастығына қосылыңыз
-	Get help, share feedback and follow development on Discord.	Көмек алыңыз, пікір бөлісіңіз және Discord-тағы әзірлеуді қадағалаңыз.
 	Recommended tools	Ұсынылған құралдар
 	Use now	Дәл қазір пайдалану
 	Open file	Файлды ашу
@@ -267,7 +263,6 @@
 	Split document…	Құжатты бөлу…
 	Number pages…	Беттерді нөмірлеу…
 	Keyboard shortcuts	Пернетақта тіркесімдері
-	Join the NexoHub Discord	NexoHub Discord-ына қосылыңыз
 	NexoPDF web page	NexoPDF веб-сайты
 	NexoPDF on GitHub	GitHub-тағы NexoPDF
 	NexoHub website	NexoHub веб-сайты
@@ -1337,7 +1332,6 @@
 	Recover	Қалпына келтіру
 	Discard	Елемеу
 	Version {v}	Нұсқа {v}
-	A clean-room, open-source PDF application written in Rust. MIT OR Apache-2.0.	Rust тілінде жазылған, clean-room әдісімен әзірленген ашық бастапқы кодты PDF қосымшасы. MIT OR Apache-2.0.
 	Part of	Бөлігі
 	Summarize Options	Қорытындылау параметрлері
 	Choose a layout:	Макетті таңдаңыз:
@@ -2002,40 +1996,18 @@
 	Show	Көрсету
 	Sort	Сұрыптау
 	Reverse the order	Ретін кері өзгерту
-	Grab bag	Әр түрлі
 	Table	Кесте
 	Username	Пайдаланушы аты
 	Display name	Көрсетілетін аты
 	Real name	Шын аты
 	Name (A–Z)	Аты (А–Я)
-	Merged PRs	Біріктірілген PR-лер
-	PRs	PR-лер
-	Commits	Коммиттер
-	Lines added	Қосылған жолдар
-	+LOC	+LOC
-	Lines deleted	Жойылған жолдар
-	−LOC	−LOC
-	Line delta	Жолдар айырмасы
-	ΔLOC	ΔLOC
-	Binary assets added	Қосылған бинарлы ресурстар
-	+Bin	+Bin
-	Binary assets removed	Жойылған бинарлы ресурстар
-	−Bin	−Bin
-	First commit	Алғашқы коммит
 	First	Алғашқы
-	Last commit	Соңғы коммит
 	Last	Соңғы
-	No contributor data was built into this copy.	Бұл көшірмеге үлес қосушылар туралы деректер ендірілмеген.
-	No model credits were built into this copy.	Бұл көшірмеге модельдер туралы деректер ендірілмеген.
-	{n} contributors · {c} commits	{n} үлес қосушы · {c} коммит
 	Company	Компания
 	Model	Модель
-	% of all commits	Барлық коммиттердің пайызы
 	Lines +/−	Жолдар +/−
-	@{login}: {prs} PRs, {commits} commits, +{added} / −{deleted} lines (Δ {delta}), +{bin_added} / −{bin_deleted} binary assets, {first} – {last}	@{login}: {prs} PR, {commits} коммит, +{added} / −{deleted} жол (Δ {delta}), +{bin_added} / −{bin_deleted} бинарлы ресурс, {first} – {last}
 	None of those files can be made into a PDF; use PDFs, images or .txt files	Осы файлдардың ешбірінен PDF жасауға болмайды; PDF, суреттер немесе .txt файлдарын қолданыңыз
 	About	Туралы
-	Contributors	Үлес қосушылар
 	Models	Модельдер
 	Only continue if you trust this document. An address can carry information from the document, such as what you typed into its form.	Тек осы құжатқа сенетін болсаңыз ғана жалғастырыңыз. Адрес құжаттан ақпарат алып жүруі мүмкін, мысалы формаға енгізгендеріңіз.
 	Print single-sided. Keep the sheets in order, cut at the marks, then stack the piles left to right, top to bottom.	Бір жақты басып шығарыңыз. Парақтардың ретін бұзбай, белгілер бойынша кесіңіз, содан кейін топтамаларды солдан оңға, үстінен астына үйіңіз.
@@ -2337,7 +2309,6 @@ animation effects	Off	Өшірулі
 	The linked PDF opened, but its page destination was out of range.	Байланысты PDF ашылды, бірақ оның мақсатты беті ауқымнан тыс.
 	Local cross-PDF links require the desktop app	PDF файлдары арасындағы жергілікті сілтемелер үшін жұмыс үстелі қолданбасы қажет
 
-	An open-source PDF workbench — local, private, and fast.	Ашық кодты PDF жұмыс ортасы — жергілікті, жеке және жылдам.
 	NexoHub Ecosystem	NexoHub экожүйесі
 	100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy	100% төл Rust  ·  Телеметриясыз  ·  Толық құпиялылық
 	High-performance document engineering — local, private and ultrafast.	Жоғары өнімді құжат өңдеу — жергілікті, жеке және өте жылдам.

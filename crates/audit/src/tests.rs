@@ -1,4 +1,4 @@
-//! Tests build their own tiny PDFs in code (contributor-original fixtures): no binary files,
+//! Tests build their own tiny PDFs in code (project-original fixtures): no binary files,
 //! no Adobe material, exact xref offsets computed by the builder below.
 
 use std::sync::Arc;

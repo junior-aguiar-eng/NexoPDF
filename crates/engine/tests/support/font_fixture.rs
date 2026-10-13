@@ -1,4 +1,4 @@
-//! Contributor-original rectangle font, generated entirely in memory: no binary fixture.
+//! Project-original rectangle font, generated entirely in memory: no binary fixture.
 fn be16(out: &mut Vec<u8>, n: u16) {
     out.extend_from_slice(&n.to_be_bytes());
 }

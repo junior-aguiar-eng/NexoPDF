@@ -24,7 +24,9 @@ pub fn show(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
             ui.label(egui::RichText::new(tl!("Welcome to NexoPDF")).font(theme::semibold(24.0)));
             ui.label(
-                egui::RichText::new(tl!("An open-source PDF workbench — local, private, and fast.")).color(t.text_muted).font(theme::regular(14.0)),
+                egui::RichText::new(tl!("High-performance document workbench written in native Rust."))
+                    .color(t.text_muted)
+                    .font(theme::regular(14.0)),
             );
             ui.add_space(14.0);
             egui::Frame::NONE
