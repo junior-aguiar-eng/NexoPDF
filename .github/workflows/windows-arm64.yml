@@ -1,26 +1,68 @@
-# Windows on ARM (#61): package the ARM64 release the way release.yml does (cross-compiled on an
-# x64 runner, unsigned here), then install that MSI on a Windows 11 ARM64 runner and run it, and
-# run the test suite natively on ARM64.
 name: Windows ARM64
-
-on:
+'on':
   push:
-    branches: [main]
+    branches:
+    - main
   schedule:
-    - cron: "41 4 * * 1" # weekly, so drift in the runner images shows up
-  workflow_dispatch:
-
+  - cron: 41 4 * * 1
+  workflow_dispatch: null
+permissions:
+  contents: read
 concurrency:
   group: windows-arm64-${{ github.ref }}
   cancel-in-progress: true
-
-permissions:
-  contents: read
-
 jobs:
-  windows-arm64:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without manual coordination across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/windows-arm64.yml@main
-    with:
-      app-name: nexopdf
-      app-dir: NexoPDF
+  test:
+    runs-on: windows-11-arm
+    env:
+      WGPU_BACKEND: dx12
+      NEXOPDF_REQUIRE_WINRES: '1'
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Install WiX
+      run: dotnet tool install --global wix --version 5.0.2
+      shell: pwsh
+    - name: Tests
+      run: cargo test --locked --workspace -- --test-threads=1
+      shell: pwsh
+    - name: Package ARM64
+      run: ./packaging/windows/package.ps1 -Arch arm64
+      shell: pwsh
+    - name: Install and smoke test MSI
+      run: |-
+        $msi = Get-ChildItem dist/release/*-windows-arm64.msi | Select-Object -First 1
+        $p = Start-Process msiexec.exe -ArgumentList @('/i', $msi.FullName, '/qn', '/norestart') -Wait -PassThru -WindowStyle Hidden
+        if ($p.ExitCode -notin @(0,3010)) { throw "MSI installation failed: $($p.ExitCode)" }
+        try {
+          & "$env:ProgramFiles/NexoPDF/nexopdf-cli.exe" --version
+          if ($LASTEXITCODE) { throw 'Installed CLI smoke test failed' }
+          $control = Join-Path $env:RUNNER_TEMP 'nexopdf-arm64-control.json'
+          $app = Start-Process "$env:ProgramFiles/NexoPDF/nexopdf.exe" -ArgumentList @('--control', $control) -PassThru -WindowStyle Hidden
+          try {
+            for ($attempt = 0; $attempt -lt 40; $attempt++) {
+              if (Test-Path $control) { break }
+              $app.Refresh()
+              if ($app.HasExited) { throw 'Installed application exited before UI initialization' }
+              Start-Sleep -Milliseconds 500
+            }
+            if (-not (Test-Path $control)) { throw 'Installed application did not initialize its UI' }
+            & "$env:ProgramFiles/NexoPDF/nexopdf-cli.exe" ui --control $control inspect
+            if ($LASTEXITCODE) { throw 'Installed GUI inspection failed' }
+          } finally {
+            $app.Refresh()
+            if (-not $app.HasExited) { Stop-Process -Id $app.Id -Force }
+          }
+        } finally {
+          $p = Start-Process msiexec.exe -ArgumentList @('/x', $msi.FullName, '/qn', '/norestart') -Wait -PassThru -WindowStyle Hidden
+          if ($p.ExitCode -notin @(0,3010)) { throw "MSI removal failed: $($p.ExitCode)" }
+        }
+      shell: pwsh
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-windows-arm64
+        path: dist/release/*
+        if-no-files-found: error

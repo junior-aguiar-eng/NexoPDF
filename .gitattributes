@@ -16,3 +16,5 @@
 
 # Shell scripts must remain executable on Unix and pass ShellCheck.
 *.sh text eol=lf
+*.desktop text eol=lf
+.github/workflows/*.yml text eol=lf

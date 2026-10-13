@@ -1,43 +1,293 @@
 name: Release
-
-on:
+'on':
   push:
-    branches: [release]
+    branches:
+    - release
   workflow_dispatch:
     inputs:
       version:
-        description: "Version override for a test run, e.g. 0.2.0-rc.1 (empty: Cargo.toml)"
+        description: Version override (empty uses Cargo.toml)
         type: string
-        default: ""
-
+        default: ''
 permissions:
-  contents: write
-
+  contents: read
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
-  release:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without manual coordination across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/release.yml@main
-    with:
-      app-name: nexopdf
-      app-title: NexoPDF
-      craft-fonts-ref: 3d9ab3a132ed0eff457e424226a435a901da30d3
-      version: ${{ inputs.version }}
-    secrets:
-      APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-      APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      APPLE_ID: ${{ secrets.APPLE_ID }}
-      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
-      WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      AZURE_SIGNING_ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
-      AZURE_SIGNING_ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
-      AZURE_CERT_PROFILE: ${{ secrets.AZURE_CERT_PROFILE }}
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: Resolve version
+      run: python3 packaging/release-version.py
+      id: version
+      env:
+        NEXOPDF_VERSION_INPUT: ${{ inputs.version }}
+  windows:
+    if: github.ref == 'refs/heads/release'
+    needs: version
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - arch: x64
+          target: x86_64-pc-windows-msvc
+        - arch: x86
+          target: i686-pc-windows-msvc
+        - arch: arm64
+          target: aarch64-pc-windows-msvc
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+        targets: ${{ matrix.target }}
+    - name: Set package and binary version
+      shell: bash
+      run: cargo xtask version set "$NEXOPDF_VERSION"
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Install WiX
+      run: dotnet tool install --global wix --version 5.0.2
+      shell: pwsh
+    - name: Package Windows
+      run: ./packaging/windows/package.ps1 -Arch $env:NEXOPDF_ARCH
+      shell: pwsh
+      env:
+        NEXOPDF_ARCH: ${{ matrix.arch }}
+        WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+        WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SIGNING_ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
+        AZURE_SIGNING_ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
+        AZURE_CERT_PROFILE: ${{ secrets.AZURE_CERT_PROFILE }}
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-windows-${{ matrix.arch }}
+        path: dist/release/*
+        if-no-files-found: error
+  macos:
+    if: github.ref == 'refs/heads/release'
+    needs: version
+    runs-on: macos-15
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+        targets: aarch64-apple-darwin,x86_64-apple-darwin
+    - name: Set package and binary version
+      shell: bash
+      run: cargo xtask version set "$NEXOPDF_VERSION"
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Import signing certificate
+      run: bash packaging/macos/import-cert.sh
+      env:
+        APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+    - name: Package macOS
+      run: bash packaging/macos/package.sh --arch universal
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-macos
+        path: dist/release/*
+        if-no-files-found: error
+  linux:
+    needs: version
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - runner: ubuntu-22.04
+          arch: x86_64
+        - runner: ubuntu-22.04-arm
+          arch: aarch64
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: Install GUI libraries
+      run: |-
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libgtk-3-dev
+        sudo apt-get install -y zsync
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+    - name: Set package and binary version
+      shell: bash
+      run: cargo xtask version set "$NEXOPDF_VERSION"
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Install package builder
+      run: |-
+        go install github.com/goreleaser/nfpm/v2/cmd/nfpm@v2.47.0
+        echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+    - name: Package Linux
+      run: bash packaging/linux/package.sh
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-linux-${{ matrix.arch }}
+        path: dist/release/*
+        if-no-files-found: error
+  flatpak:
+    needs:
+    - version
+    - linux
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - runner: ubuntu-22.04
+          arch: x86_64
+        - runner: ubuntu-22.04-arm
+          arch: aarch64
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+      with:
+        name: nexopdf-linux-${{ matrix.arch }}
+        path: dist/release
+    - name: Install Flatpak
+      run: |-
+        sudo apt-get update
+        sudo apt-get install -y flatpak flatpak-builder librsvg2-common
+    - name: Build and test Flatpak
+      run: bash packaging/linux/flatpak-bundle.sh
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-flatpak-${{ matrix.arch }}
+        path: dist/release/*
+        if-no-files-found: error
+  freebsd:
+    needs: version
+    runs-on: ubuntu-latest
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: vmactions/freebsd-vm@c46abacb49f09938ca4e1702d15d836285d694cc
+      with:
+        release: '15.1'
+        usesh: true
+        envs: NEXOPDF_VERSION
+        prepare: pkg install -y bash rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
+        run: |-
+          set -eu
+          export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
+          cargo xtask version set "$NEXOPDF_VERSION"
+          bash packaging/freebsd/package.sh
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-freebsd
+        path: dist/release/*
+        if-no-files-found: error
+  web:
+    needs: version
+    runs-on: ubuntu-latest
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+        targets: wasm32-unknown-unknown
+    - name: Set package and binary version
+      shell: bash
+      run: cargo xtask version set "$NEXOPDF_VERSION"
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Install web builder
+      run: cargo install trunk --version 0.21.14 --locked
+    - name: Package web
+      run: bash packaging/web/package.sh
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-web
+        path: dist/release/*
+        if-no-files-found: error
+  linux-riscv64:
+    needs: version
+    runs-on: ubuntu-24.04
+    env:
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+      CROSS_ARCH: riscv64
+      CROSS_TARGET: riscv64gc-unknown-linux-gnu
+      CROSS_COMPILE: riscv64-linux-gnu-
+      CARGO_TARGET_RISCV64GC_UNKNOWN_LINUX_GNU_LINKER: riscv64-linux-gnu-gcc
+      EMULATOR: qemu-riscv64
+      QEMU_LD_PREFIX: /usr/riscv64-linux-gnu
+      PKG_CONFIG_ALLOW_CROSS: '1'
+      PKG_CONFIG_SYSROOT_DIR: /
+      PKG_CONFIG_LIBDIR: /usr/lib/riscv64-linux-gnu/pkgconfig:/usr/share/pkgconfig
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: Install cross compiler
+      run: |-
+        sudo dpkg --add-architecture riscv64
+        sudo sed -i "s/^Types: deb$/Types: deb\nArchitectures: amd64/" /etc/apt/sources.list.d/ubuntu.sources
+        printf "deb [arch=riscv64] http://ports.ubuntu.com/ubuntu-ports noble main universe\n" | sudo tee /etc/apt/sources.list.d/nexopdf-riscv64.list
+        sudo apt-get update
+        sudo apt-get install -y gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu libc6-dev-riscv64-cross libc6-dev:riscv64 qemu-user pkg-config libxkbcommon-dev:riscv64 libwayland-dev:riscv64 libx11-dev:riscv64 libxrandr-dev:riscv64 libxi-dev:riscv64 libgl1-mesa-dev:riscv64
+    - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+      with:
+        toolchain: stable
+        targets: riscv64gc-unknown-linux-gnu
+    - name: Set package and binary version
+      shell: bash
+      run: cargo xtask version set "$NEXOPDF_VERSION"
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+    - name: Install package builder
+      run: |-
+        go install github.com/goreleaser/nfpm/v2/cmd/nfpm@v2.47.0
+        echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+    - name: Package RISC-V
+      run: bash packaging/linux/package.sh --formats "deb rpm tar"
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      with:
+        name: nexopdf-linux-riscv64
+        path: dist/release/*
+        if-no-files-found: error
+  draft:
+    if: github.ref == 'refs/heads/release'
+    needs:
+    - version
+    - windows
+    - macos
+    - linux
+    - flatpak
+    - freebsd
+    - web
+    - linux-riscv64
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NEXOPDF_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+      with:
+        pattern: nexopdf-*
+        path: dist/release
+        merge-multiple: true
+    - name: Create or update draft release
+      run: python3 packaging/draft-release.py

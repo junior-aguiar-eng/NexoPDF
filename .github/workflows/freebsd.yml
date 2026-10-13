@@ -1,22 +1,26 @@
-# Builds and tests the workspace on FreeBSD, inside a FreeBSD VM on a Linux runner
-# (GitHub has no FreeBSD runners). GPU tests skip themselves when the VM has no adapter.
 name: FreeBSD
-
-on:
+'on':
   push:
-    branches: [main]
-  workflow_dispatch:
-
+    branches:
+    - main
+  workflow_dispatch: null
+permissions:
+  contents: read
 concurrency:
   group: freebsd-${{ github.ref }}
   cancel-in-progress: true
-
-permissions:
-  contents: read
-
 jobs:
-  freebsd:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without manual coordination across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/freebsd.yml@main
-    with:
-      craft-fonts-ref: 3d9ab3a132ed0eff457e424226a435a901da30d3
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - uses: vmactions/freebsd-vm@c46abacb49f09938ca4e1702d15d836285d694cc
+      with:
+        release: '15.1'
+        usesh: true
+        prepare: pkg install -y bash rust curl pkgconf libxkbcommon wayland libX11 libXrandr libXi mesa-libs gtk3
+        run: |-
+          set -eu
+          export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
+          cargo test --locked --workspace -- --test-threads=1
+          cargo build --locked -p nexopdf -p nexopdf-cli

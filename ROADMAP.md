@@ -419,3 +419,5 @@ Newest first: the date, what moved, and the new overall estimate.
 - **2026-10-12 (M8):** Redaction cleans indirect and form structure references, preserving surviving form tags.
 
 - **2026-10-13 (identity):** NexoPDF identity applied to local vendor patch annotations and private test names; obsolete branding and unused historical screenshots removed; the package screenshot now shows the native NexoPDF viewer. Rendering and cryptography algorithms are unchanged.
+
+- **2026-10-13 (builds):** Project-specific workflows moved into NexoPDF; allowed international fonts and OFL notices stored locally. Generic toolchain actions remain pinned external build tools. Release and installer validation remains a separate gate.

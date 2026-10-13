@@ -5,7 +5,7 @@ macOS, Windows, Linux, FreeBSD and the web, signs the ones it has certificates f
 updates a **draft** GitHub Release named `NexoPDF v<version>`. Nobody sees a draft until a
 maintainer publishes it.
 
-The pipeline was ported from PhotoCraft's. User-facing names say **NexoPDF**; files, binaries and
+The workflow jobs and packaging scripts are maintained inside NexoPDF. User-facing names say **NexoPDF**; files, binaries and
 ids stay lowercase (`nexopdf-<version>-<platform>-<arch>.<ext>`, `io.nexohub.nexopdf`).
 
 ## Cutting a release
@@ -18,11 +18,11 @@ ids stay lowercase (`nexopdf-<version>-<platform>-<arch>.<ext>`, `io.nexohub.nex
    cargo xtask version set 0.3.0       # or 0.3.0-rc.1; updates Cargo.toml and Cargo.lock
    ```
 
-   Commit the change through the normal review flow (see the `Release: NexoPDF v0.2.1` PR).
+   The owner reviews and commits the change.
 2. **Merge `main` into `release`** (or fast-forward it) and push. The workflow starts by itself.
 3. **Wait for the draft.** When every job has finished (notarization is the slow part), the
    Releases page has a draft `NexoPDF v0.3.0` targeting the pushed commit, with every artifact
-   and `SHA256SUMS.txt`. The notes describe the published changes; release preparation is reserved to the owner.
+   and `SHA256SUMS.txt`. The notes are generated for owner review; release preparation is reserved to the owner.
 4. **Check it.** Download an installer or two and read the job summaries. A `::warning::` there
    means a signing secret was missing and that artifact is unsigned.
 5. **Publish** the draft in the GitHub UI. Publishing creates the `v0.3.0` tag. Versions with a
@@ -34,10 +34,10 @@ Once the draft is published, the workflow refuses to touch that version again, s
 **Test runs:** *Actions ▸ Release ▸ Run workflow* runs the whole pipeline by hand. The optional
 `version` input (such as `0.3.0-rc.1`) overrides `Cargo.toml` for that run only; each job applies it
 with `cargo xtask version set` before building, so the binaries report it too. The signing jobs
-(macOS, Windows) and the draft-release job use the `release` environment, so pick the `release`
+(macOS, Windows) and the draft-release job require the `release` branch, so pick the `release`
 branch in the dialog for a full run. On any other branch the same dispatch is a **dry run**: the
-Linux, Flatpak, FreeBSD and web jobs build and check everything, the signing jobs are refused by the
-environment's branch rule, and the draft-release job (which needs them) is skipped, so nothing is
+Linux, Flatpak, FreeBSD and web jobs build and check everything, the signing jobs are skipped by the
+workflow's explicit branch condition, and the draft-release job is skipped, so nothing is
 published (`gh workflow run release.yml --ref <branch>`).
 
 ## What gets built
@@ -50,10 +50,10 @@ published (`gh workflow run release.yml --ref <branch>`).
 | Windows 11 on ARM64 | `nexopdf-<v>-windows-arm64.msi`, `nexopdf-<v>-windows-arm64-portable.zip` | `windows-latest` (cross-compiled) |
 | Linux x86_64 | `nexopdf-<v>-linux-x86_64.{AppImage,AppImage.zsync,deb,rpm,tar.gz}`, `nexopdf-cli-<v>-linux-x86_64.tar.gz` | `ubuntu-22.04` |
 | Linux aarch64 | `nexopdf-<v>-linux-aarch64.{AppImage,AppImage.zsync,deb,rpm,tar.gz}`, `nexopdf-cli-<v>-linux-aarch64.tar.gz` | `ubuntu-22.04-arm` |
-| Linux riscv64 | `nexopdf-<v>-linux-riscv64.tar.gz`, `nexopdf-cli-<v>-linux-riscv64.tar.gz` (glibc 2.39+) | `ubuntu-24.04` (cross-compiled; CLI smoke-tested under QEMU) |
-| Flatpak x86_64 | `nexopdf-<v>-linux-x86_64.flatpak` | `ubuntu-24.04` (repackages the Linux tarball) |
-| Flatpak aarch64 | `nexopdf-<v>-linux-aarch64.flatpak` | `ubuntu-24.04-arm` (repackages the Linux tarball) |
-| FreeBSD 14 x86_64 | `nexopdf-<v>-freebsd-x86_64.tar.gz` | FreeBSD VM on `ubuntu-latest` |
+| Linux riscv64 | `nexopdf-<v>-linux-riscv64.{deb,rpm,tar.gz}` (glibc 2.39+) | `ubuntu-24.04` (cross-compiled; CLI smoke-tested under QEMU) |
+| Flatpak x86_64 | `nexopdf-<v>-linux-x86_64.flatpak` | `ubuntu-22.04` (repackages the Linux tarball) |
+| Flatpak aarch64 | `nexopdf-<v>-linux-aarch64.flatpak` | `ubuntu-22.04-arm` (repackages the Linux tarball) |
+| FreeBSD 15.1 x86_64 | `nexopdf-<v>-freebsd-x86_64.tar.gz` | FreeBSD VM on `ubuntu-latest` |
 | Web | `nexopdf-web-<v>.zip` (a static site; see [`packaging/web/README.md`](../packaging/web/README.md)) | `ubuntu-latest` |
 
 The ARM64 Windows build is cross-compiled on the x64 runner, so signing and WiX work as for the
@@ -64,10 +64,10 @@ The workflow sets `NEXOPDF_BUILD_SHA` and `NEXOPDF_BUILD_DATE` (`packaging/env.s
 for local builds): the commit is recorded in the macOS `Info.plist` (`NexoPDFBuildCommit`) and the
 date in the AppStream metadata. The binaries don't embed the commit yet.
 
-**Fonts:** every job checks out [craft-fonts](https://github.com/storytold/craft-fonts) at the commit
-pinned in `release.yml` and builds with `CRAFT_FONTS_DIR` and `CRAFT_FONTS_REQUIRED=1`, so releases
-embed its Japanese fonts and fail rather than ship without them (`AGENTS.md` §1.4). Bump the pin
-deliberately.
+**Fonts:** every build embeds the six allowed faces committed in
+`assets/fonts/international/`. The manifest and `ATTRIBUTION.toml` pin their original
+sources and hashes; package scripts include the OFL notices, including MSI.
+No external font checkout is used.
 
 **OCR models:** every desktop package ships the Scan & OCR models (#103). The packaging scripts call
 `stage_models` (`packaging/env.sh`; `package.ps1` on Windows), which runs `cargo xtask models` to
@@ -134,7 +134,7 @@ neither the MSI nor the portable zip needs the Visual C++ redistributable.
   smoke test checks that both all-users shortcuts point at the installed `nexopdf.exe` and are
   removed on uninstall, and that `INSTALLDESKTOPSHORTCUT=0` skips the desktop one.
 - The portable zip holds both executables, the README, the licences, the OFL licence of each
-  embedded craft-fonts family, and `portable.txt`. That marker beside `nexopdf.exe` keeps the
+  embedded local font family, and `portable.txt`. That marker beside `nexopdf.exe` keeps the
   settings, logs, crash recovery and new digital IDs in `NexoPDFData\` next to the exe instead of
   `%APPDATA%` and `%LOCALAPPDATA%` (`crates/ui-egui/src/portable.rs`).
 - **Signing:** `packaging/windows/sign.ps1` signs both executables and the MSI with `signtool`
@@ -158,7 +158,7 @@ xkbcommon) and the GPU (Vulkan, EGL) are loaded at runtime from the system; the 
 them as dependencies (see `nfpm.yaml`).
 
 Each AppImage embeds update information
-(`gh-releases-zsync|storytold|nexopdf|latest|nexopdf-*-linux-<arch>.AppImage.zsync`), and its
+(`gh-releases-zsync|junior-aguiar-eng|NexoPDF|latest|nexopdf-*-linux-<arch>.AppImage.zsync`), and its
 `.zsync` is published beside it, so AppImageUpdate and AppImageLauncher can update it in place,
 downloading only the changed blocks. `latest` is the newest published, non-pre-release version.
 `package.sh` writes the `.zsync` when `zsyncmake` (the `zsync` package) is installed and warns

@@ -1,21 +1,50 @@
-# Quick static checks for the release pipeline (seconds, no Rust build): workflow syntax,
-# packaging shell/PowerShell scripts, and the Linux desktop/AppStream/Flatpak metadata.
 name: Packaging lint
-
-on:
+'on':
   push:
-    branches: [main, release]
-    paths: [".github/workflows/**", "packaging/**", "assets/app-icon/**"]
-  workflow_dispatch:
-
+    branches:
+    - main
+    - release
+    paths:
+    - .github/**
+    - packaging/**
+    - assets/app-icon/**
+    - assets/fonts/**
+  workflow_dispatch: null
 permissions:
   contents: read
-
 concurrency:
   group: packaging-lint-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   lint:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without manual coordination across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/packaging-lint.yml@main
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: Install validators
+      run: |-
+        sudo apt-get update
+        sudo apt-get install -y shellcheck desktop-file-utils appstream python3-yaml
+        go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+        echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+    - name: Workflow syntax
+      run: actionlint
+    - name: Shell scripts
+      run: find packaging -name "*.sh" -print0 | xargs -0 shellcheck -x
+    - name: Linux metadata
+      run: |-
+        desktop-file-validate packaging/linux/io.nexohub.nexopdf.desktop
+        sed -e "s/@VERSION@/0.0.0/" -e "s/@DATE@/2026-01-01/" packaging/linux/io.nexohub.nexopdf.metainfo.xml.in > "$RUNNER_TEMP/nexopdf.metainfo.xml"
+        appstreamcli validate --no-net --explain "$RUNNER_TEMP/nexopdf.metainfo.xml"
+    - name: Packaging contracts
+      run: |-
+        python3 packaging/validate.py
+        python3 -m unittest discover -s packaging -p test_release_version.py
+    - name: PowerShell syntax
+      run: |-
+        $files = Get-ChildItem packaging/windows/*.ps1
+        foreach ($file in $files) {
+          $tokens = $null; $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count) { throw ($errors | Out-String) }
+        }
+      shell: pwsh
