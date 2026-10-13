@@ -33,7 +33,7 @@
   </keywords>
   <screenshots>
     <screenshot type="default">
-      <caption>A PDF open with its threaded comments</caption>
+      <caption>NexoPDF reading a synthetic document</caption>
       <image>https://raw.githubusercontent.com/junior-aguiar-eng/NexoPDF/main/docs/images/nexopdf-viewer.png</image>
     </screenshot>
   </screenshots>
