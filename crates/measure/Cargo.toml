@@ -1,0 +1,17 @@
+[package]
+name = "nexopdf-measure"
+description = "Calibrated 2D PDF measurements, viewports and snapping"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+nexopdf-cos = { workspace = true }
+nexopdf-model = { workspace = true }
+nexopdf-content = { workspace = true }
+nexopdf-annot = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
