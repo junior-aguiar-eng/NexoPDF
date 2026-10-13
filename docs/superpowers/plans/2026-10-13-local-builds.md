@@ -62,3 +62,5 @@
 - All four runs on aa6212e completed: CI, Packaging lint and Windows ARM64 passed. FreeBSD failed only in the real asset-manifest test because Git was absent inside the VM. The error was `running git ls-files: No such file or directory`.
 - Commit ae909d3 installs Git in both FreeBSD VM preparation commands and checks its version before the full suite. Local validation rejects the missing executable dependency in either workflow; 47 xtask tests and three Python tests passed, as did actionlint, formatting and Clippy. Product code and test assertions are unchanged.
 - Remote tests are rerun after push. The release workflow itself was not dispatched, and no release was published.
+
+- The rerun on 0d6b377 passed CI and Windows ARM64, but FreeBSD still failed on `git ls-files failed`: the executable now exists, but the root VM reads a checkout whose host owner is preserved by rsync. The exact-path Git process configuration is applied to both VMs, with a checkout-read preflight before compilation. A synthetic different-owner Git checkout reproduces rejection and passes with the same scoped configuration. No wildcard or persistent user Git setting is used.

@@ -16,6 +16,9 @@ def validate(root):
     for job in (freebsd["jobs"]["test"], release["jobs"]["freebsd"]):
         vm = next(step for step in job["steps"] if step.get("uses", "").startswith("vmactions/freebsd-vm@"))
         assert "git" in vm["with"]["prepare"].split(), "FreeBSD asset validation requires Git inside the VM"
+        run = vm["with"]["run"]
+        assert 'export GIT_CONFIG_VALUE_0="$(pwd)"' in run and "export GIT_CONFIG_KEY_0=safe.directory" in run, "Trust only the synced FreeBSD checkout"
+        assert run.index("git ls-files --cached") < run.index("cargo "), "Check the VM checkout before compiling"
     for name in ("windows", "macos", "draft"):
         assert release["jobs"][name].get("if") == "github.ref == 'refs/heads/release'", f"Release branch guard missing: {name}"
         assert "environment" not in release["jobs"][name], "Do not implicitly create a GitHub environment"

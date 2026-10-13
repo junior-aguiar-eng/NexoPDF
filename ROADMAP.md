@@ -423,3 +423,5 @@ Newest first: the date, what moved, and the new overall estimate.
 - **2026-10-13 (builds):** Project-specific workflows moved into NexoPDF; allowed international fonts and OFL notices stored locally. Generic toolchain actions remain pinned external build tools. Release and installer validation remains a separate gate.
 
 - **2026-10-13 (M14/CI):** Git is now installed inside both FreeBSD VMs, restoring the asset-manifest check without skipping tests. Local contracts, xtask tests and workflow validation passed; remote rerun is required.
+
+- **2026-10-13 (M14/CI follow-up):** FreeBSD jobs trust only the exact synced checkout through process-scoped Git configuration and check its files before compiling. Synthetic ownership rejection/recovery and local contracts passed; remote rerun follows.

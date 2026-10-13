@@ -192,6 +192,11 @@ jobs:
         run: |-
           set -eu
           export CARGO_TARGET_DIR=/var/tmp/nexopdf-target
+          # The VM runs as root; rsync preserves the host runner's checkout owner.
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=safe.directory
+          export GIT_CONFIG_VALUE_0="$(pwd)"
+          git ls-files --cached > /dev/null
           cargo xtask version set "$NEXOPDF_VERSION"
           bash packaging/freebsd/package.sh
     - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
