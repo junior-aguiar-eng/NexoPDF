@@ -3,8 +3,9 @@
 //!
 //! Outlook attachments, Explorer double-clicks and Open With all start `nexopdf.exe "<file>"`, so
 //! until now every file got its own process and window. The first NexoPDF listens on a Unix
-//! domain socket (Windows 10 1803 and later) in `%LOCALAPPDATA%\NexoPDF`, or in the data folder of
-//! a portable copy. The socket is named after the Windows session (`instance-Console.sock`), so
+//! domain socket (Windows 10 1803 and later) in `%USERPROFILE%\.nexopdf-ipc`.
+//! AppData and temporary folders can reject AF_UNIX connections on Windows even when bind succeeds.
+//! The socket is named after the Windows session (`instance-Console.sock`), so
 //! two sign-ins of the same user never open files in each other's windows, and it lives in the
 //! user's own profile, so other accounts can't create, replace or reach it: nobody else can
 //! intercept a launch or open files in this user's window. The exchange is one line each way, a
@@ -135,17 +136,22 @@ pub fn claim(files: &[String], may_hand_off: bool) -> Claim {
     }
 }
 
-/// The socket in `%LOCALAPPDATA%\NexoPDF` (beside the crash-recovery folder); none when
-/// `%LOCALAPPDATA%` is unset.
+/// Private profile storage for IPC, outside AppData/Temp filesystem redirection.
+#[cfg(windows)]
+fn socket_dir() -> Option<std::path::PathBuf> {
+    std::env::var_os("USERPROFILE").filter(|v| !v.is_empty()).map(|d| std::path::PathBuf::from(d).join(".nexopdf-ipc"))
+}
+
+/// The socket in the private profile IPC folder; none when the profile is unset.
 #[cfg(windows)]
 fn socket_path() -> Option<std::path::PathBuf> {
     let name = socket_name(std::env::var("SESSIONNAME").ok().as_deref());
-    // %LOCALAPPDATA% is private to the user's sign-in, so other accounts can't receive this
+    // The user profile is private to the user's sign-in, so other accounts can't receive this
     // user's file paths or send it files to open. A portable copy uses it too (#889), under its
     // own name so it never hands files to an installed copy (which keeps its settings elsewhere).
     // Never the portable folder itself: it may sit where other accounts can write (`C:\Tools`).
     let name = if nexopdf_ui_egui::portable::data_dir().is_some() { format!("portable-{name}") } else { name };
-    std::env::var_os("LOCALAPPDATA").filter(|v| !v.is_empty()).map(|d| std::path::PathBuf::from(d).join("NexoPDF").join(name))
+    socket_dir().map(|d| d.join(name))
 }
 
 /// The socket's file name for a Windows session (`SESSIONNAME`: `Console`, `RDP-Tcp#3`…). The
@@ -347,7 +353,9 @@ mod tests {
 
     #[cfg(windows)]
     fn socket(test: &str) -> std::path::PathBuf {
-        let dir = std::env::temp_dir().join(format!("nexopdf-instance-{}-{test}", std::process::id()));
+        // Exercise the production storage location: AppData/Temp can create AF_UNIX
+        // reparse points that cannot be connected to on Windows. Never skip the exchange.
+        let dir = socket_dir().expect("Windows user profile").join(format!("test-{}-{test}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         dir.join(socket_name(None))
     }
@@ -363,6 +371,17 @@ mod tests {
         // A launch with options keeps its own window and doesn't take over the socket.
         assert!(matches!(claim_at(&path, &["C:\\b.pdf".into()], false), Claim::Alone));
         assert!(poll().is_empty());
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn a_unicode_socket_hands_over_unicode_file_paths() {
+        let path = socket("unicode").with_file_name("ação.sock");
+        let Claim::Primary(first) = claim_at(&path, &[], true) else { panic!("the first launch listens") };
+        let mut poll = first.connect(&egui::Context::default());
+        let files = vec!["C:\\Documentos\\ação 日本語.pdf".into()];
+        assert!(matches!(claim_at(&path, &files, true), Claim::HandedOff));
+        assert!(matches!(poll().as_slice(), [OsEvent::Open(p)] if p == &files));
     }
 
     #[cfg(windows)]
