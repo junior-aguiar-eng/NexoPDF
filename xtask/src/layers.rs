@@ -79,6 +79,7 @@ pub const TABLE: &[(&str, Class)] = &[
     // L7 platform + frontends
     ("platform", Class::Layer(7)),
     ("ui-common", Class::Layer(7)),
+    ("ui", Class::Layer(7)),
     ("ui-egui", Class::Layer(7)),
     ("automation", Class::Layer(7)),
     // test support
@@ -103,6 +104,7 @@ pub const SIDEWAYS: &[(&str, &str)] = &[
     ("export", "ocr"),
     ("sign", "security"),
     ("ui-egui", "ui-common"),
+    ("ui-egui", "ui"),
     ("ui-egui", "platform"),
     ("automation", "platform"),
 ];
@@ -303,6 +305,12 @@ mod tests {
         assert!(matches!(v[..], [Violation::StandaloneHasWorkspaceDep { .. }]));
         let v = check(&[c("nexopdf-filters", &[("nexopdf-geom", Normal, true)])]);
         assert!(matches!(v[..], [Violation::StandaloneHasWorkspaceDep { .. }]));
+    }
+
+    #[test]
+    fn local_ui_components_are_confined_to_the_frontend() {
+        assert!(check(&[c("nexopdf-ui", &[("egui", Normal, false)]), c("nexopdf-ui-egui", &[("nexopdf-ui", Normal, true)]),]).is_empty());
+        assert!(!check(&[c("nexopdf-engine", &[("nexopdf-ui", Normal, true)])]).is_empty());
     }
 
     #[test]

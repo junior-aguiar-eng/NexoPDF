@@ -10,7 +10,7 @@ rust-version = "1.95"
 workspace = true
 
 [dependencies]
-craft-ui = { workspace = true }
+nexopdf-ui = { workspace = true }
 nexopdf-fonts = { workspace = true }
 nexopdf-engine = { workspace = true }
 nexopdf-cos = { workspace = true }

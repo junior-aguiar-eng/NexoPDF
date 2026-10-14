@@ -1099,15 +1099,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "craft-ui"
-version = "0.1.0"
-source = "git+https://github.com/storytold/craft-libs?rev=5c874d51eeb3de70e735c8ce87a59a7dedd47675#5c874d51eeb3de70e735c8ce87a59a7dedd47675"
-dependencies = [
- "egui",
- "serde",
-]
-
-[[package]]
 name = "crc32fast"
 version = "1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3397,13 +3388,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "nexopdf-ui"
+version = "0.7.1"
+dependencies = [
+ "egui",
+ "egui_extras",
+ "egui_kittest",
+ "image",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "nexopdf-ui-egui"
 version = "0.7.1"
 dependencies = [
  "arboard",
  "base64 0.22.1",
  "bytemuck",
- "craft-ui",
  "eframe",
  "egui",
  "egui_extras",
@@ -3418,6 +3420,7 @@ dependencies = [
  "nexopdf-model",
  "nexopdf-platform",
  "nexopdf-render",
+ "nexopdf-ui",
  "nexopdf-xfa",
  "objc2 0.6.4",
  "objc2-app-kit 0.3.2",
