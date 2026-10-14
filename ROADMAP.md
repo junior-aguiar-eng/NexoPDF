@@ -141,6 +141,8 @@ Ranked; detail and the full milestone table in [docs/roadmap.md](docs/roadmap.md
 
 ## Progress log
 
+- 2026-10-14 — NEXOPDF M3: graphite/mineral palettes and original Home composition, with persisted 70–100% surface opacity and opt-in automation. Tool/command inventory preserved; transparency does not implement blur. See [appearance scope and evidence](docs/nexopdf-appearance.md). The local-components base passed Windows, Linux, WASM, dependency audit and fuzz in CI run 38508246562. No release or physical-printer validation.
+
 - 2026-10-13 — NEXOPDF: UI and print transport incorporated locally with licences and provenance. Windows print preparation now uses CPU-rendered sheets (up to 600 dpi), tested for physical size, rotation, UserUnit and temporary-file cleanup. 44 print tests and 79 UI unit/visual/docking tests passed on Windows. Full workspace validation remains in progress; no release or physical-printer validation. Original graphite UI remains the next stage.
 
 - **2026-10-12 (M1, #1339):** An incremental save of an unchanged classic-table file used to append `xref` and then `trailer` with no subsection, which qpdf reports as a damaged file. The section now has a zero-length subsection, so no object entry changes and a trailer-only edit is still written. Estimates unchanged.

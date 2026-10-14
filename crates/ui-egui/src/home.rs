@@ -20,44 +20,41 @@ fn card_lift(ui: &egui::Ui, t: &Tokens, rect: Rect, press: theme::Press) {
 
 pub fn show(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
+    crate::surface::backdrop(ui, ui.max_rect(), &t);
     egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
-            ui.label(egui::RichText::new(tl!("Welcome to NexoPDF")).font(theme::semibold(24.0)));
-            ui.label(
-                egui::RichText::new(tl!("High-performance document workbench written in native Rust."))
-                    .color(t.text_muted)
-                    .font(theme::regular(14.0)),
-            );
-            ui.add_space(14.0);
             egui::Frame::NONE
-                .fill(if t.dark() { egui::Color32::from_rgb(34, 28, 22) } else { egui::Color32::from_rgb(255, 252, 246) })
-                .stroke(Stroke::new(1.5, t.accent.gamma_multiply(0.5)))
-                .corner_radius(CornerRadius::same(14))
-                .inner_margin(egui::Margin::symmetric(24, 18))
+                .fill(app.glass_opacity.fill(t.card))
+                .stroke(Stroke::new(1.0, t.border))
+                .corner_radius(CornerRadius::same(18))
+                .inner_margin(egui::Margin::same(28))
                 .show(ui, |ui| {
                     ui.set_width(ui.available_width());
-                    ui.vertical_centered(|ui| {
-                        widgets::nexopdf_mark(ui, 36.0);
-                        ui.add_space(6.0);
-                        ui.label(egui::RichText::new(tl!("NexoHub Ecosystem")).font(theme::semibold(16.5)).color(t.accent_text));
-                        ui.add_space(4.0);
-                        ui.label(
-                            egui::RichText::new(tl!("High-performance document engineering — local, private and ultrafast."))
-                                .font(theme::medium(14.0))
-                                .color(t.text),
-                        );
-                        ui.add_space(4.0);
-                        ui.label(
-                            egui::RichText::new(tl!("100% Native Rust  ·  Zero Telemetry  ·  Absolute Privacy"))
-                                .font(theme::medium(11.5))
-                                .color(t.text_muted),
-                        );
+                    ui.horizontal(|ui| {
+                        widgets::nexopdf_mark(ui, 24.0);
+                        ui.label(egui::RichText::new("NEXOPDF").font(theme::semibold(12.0)).color(t.text_muted));
                     });
+                    ui.add_space(18.0);
+                    ui.label(egui::RichText::new(tl!("Welcome to NexoPDF")).font(theme::semibold(30.0)).color(t.text));
+                    ui.add_space(6.0);
+                    ui.label(
+                        egui::RichText::new(tl!("High-performance document engineering — local, private and ultrafast."))
+                            .font(theme::regular(16.0))
+                            .color(t.text_muted),
+                    );
+                    ui.add_space(18.0);
+                    ui.label(
+                        egui::RichText::new(tl!(
+                            "NexoPDF works offline. No telemetry, no account, and no cloud processing unless you add a provider."
+                        ))
+                        .font(theme::medium(11.5))
+                        .color(t.text_faint),
+                    );
                 });
             ui.add_space(22.0);
 
             egui::Frame::NONE
-                .fill(t.card)
+                .fill(app.glass_opacity.fill(t.card))
                 .stroke(Stroke::new(1.0, t.border))
                 .corner_radius(CornerRadius::same(12))
                 .inner_margin(egui::Margin::same(18))
@@ -67,16 +64,17 @@ pub fn show(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
                     ui.add_space(10.0);
                     ui.horizontal_wrapped(|ui| {
                         ui.spacing_mut().item_spacing = vec2(14.0, 14.0);
+                        let card_width = ((ui.available_width() - 28.0) / 3.0).clamp(190.0, 360.0);
                         for id in RECOMMENDED {
                             let Some(g) = catalog::group(id) else { continue };
-                            let (rect, resp) = ui.allocate_exact_size(vec2(190.0, 104.0), Sense::click());
+                            let (rect, resp) = ui.allocate_exact_size(vec2(card_width, 112.0), Sense::click());
                             resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!(g.label)));
                             let press = theme::Press::track(ui, &resp);
                             card_lift(ui, &t, rect, press);
                             let fill = press.fill(t.card, t.hover, t.pressed);
                             ui.painter().rect(rect, CornerRadius::same(10), fill, Stroke::new(1.0, t.divider), egui::StrokeKind::Inside);
                             let body = rect.translate(press.offset());
-                            let color = egui::Color32::from_rgb(g.hue[0], g.hue[1], g.hue[2]);
+                            let color = t.icon;
                             icons::paint(ui, Rect::from_min_size(body.min + vec2(14.0, 14.0), vec2(22.0, 22.0)), g.icon, 21.0, color);
                             let mut title_job = egui::text::LayoutJob::simple_singleline(tl!(g.label).to_owned(), theme::semibold(13.5), t.text);
                             title_job.wrap =
@@ -107,7 +105,7 @@ pub fn show(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
                                 app.select_tool(g.id);
                             }
                         }
-                        let (rect, resp) = ui.allocate_exact_size(vec2(170.0, 104.0), Sense::click());
+                        let (rect, resp) = ui.allocate_exact_size(vec2(card_width, 112.0), Sense::click());
                         resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!("Open file")));
                         let press = theme::Press::track(ui, &resp);
                         card_lift(ui, &t, rect, press);

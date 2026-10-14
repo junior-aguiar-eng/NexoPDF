@@ -1,5 +1,5 @@
-//! Design tokens and egui style (plan/acrobat/02-ui-ux.md §1: neutral chrome, white panels,
-//! one blue accent; Dark Gray keeps pages white). Every custom widget reads `Tokens::get`.
+//! Original NEXOPDF graphite and mineral design tokens.
+//! Every custom widget reads `Tokens::get`; document pages keep their own colours.
 
 use std::sync::Arc;
 
@@ -72,49 +72,49 @@ impl Tokens {
         match kind {
             ThemeKind::Light => Self {
                 kind,
-                titlebar: Color32::from_rgb(0xF8, 0xF6, 0xF2),
-                chrome: Color32::from_rgb(0xFF, 0xFF, 0xFF),
-                panel: Color32::from_rgb(0xFF, 0xFF, 0xFF),
-                pasteboard: Color32::from_rgb(0xF4, 0xF1, 0xEB),
+                titlebar: Color32::from_rgb(0xF5, 0xF6, 0xF8),
+                chrome: Color32::from_rgb(0xFA, 0xFB, 0xFC),
+                panel: Color32::from_rgb(0xFA, 0xFB, 0xFC),
+                pasteboard: Color32::from_rgb(0xED, 0xEF, 0xF2),
                 card: Color32::from_rgb(0xFF, 0xFF, 0xFF),
-                border: Color32::from_rgb(0xE5, 0xDF, 0xD5),
-                divider: Color32::from_rgb(0xEE, 0xE9, 0xE0),
-                text: Color32::from_rgb(0x1C, 0x19, 0x17),
-                text_muted: Color32::from_rgb(0x57, 0x53, 0x4E),
-                text_faint: Color32::from_rgb(0x73, 0x6C, 0x67),
-                icon: Color32::from_rgb(0x44, 0x40, 0x3C),
-                hover: Color32::from_rgb(0xFA, 0xF7, 0xF2),
-                pressed: Color32::from_rgb(0xF0, 0xEA, 0xDF),
-                selected: Color32::from_rgb(0xFE, 0xF3, 0xC7),
-                accent: Color32::from_rgb(0xD9, 0x77, 0x06),
-                accent_text: Color32::from_rgb(0xB4, 0x53, 0x09),
-                accent_soft: Color32::from_rgb(0xFE, 0xF3, 0xC7),
+                border: Color32::from_rgb(0xD1, 0xD6, 0xDE),
+                divider: Color32::from_rgb(0xE0, 0xE4, 0xEA),
+                text: Color32::from_rgb(0x1D, 0x23, 0x2C),
+                text_muted: Color32::from_rgb(0x4F, 0x5B, 0x6A),
+                text_faint: Color32::from_rgb(0x5D, 0x68, 0x78),
+                icon: Color32::from_rgb(0x45, 0x53, 0x65),
+                hover: Color32::from_rgb(0xE7, 0xEB, 0xF1),
+                pressed: Color32::from_rgb(0xD8, 0xDF, 0xE8),
+                selected: Color32::from_rgb(0xDF, 0xE8, 0xF3),
+                accent: Color32::from_rgb(0x49, 0x6B, 0x96),
+                accent_text: Color32::from_rgb(0x36, 0x5B, 0x87),
+                accent_soft: Color32::from_rgb(0xE4, 0xEC, 0xF6),
                 field: Color32::from_rgb(0xFF, 0xFF, 0xFF),
-                badge_new: Color32::from_rgb(0xD9, 0x77, 0x06),
+                badge_new: Color32::from_rgb(0x49, 0x6B, 0x96),
                 page_shadow: Color32::from_black_alpha(32),
                 radius: 6,
             },
             ThemeKind::Dark => Self {
                 kind,
-                titlebar: Color32::from_rgb(0x17, 0x15, 0x13),
-                chrome: Color32::from_rgb(0x21, 0x1E, 0x1B),
-                panel: Color32::from_rgb(0x21, 0x1E, 0x1B),
-                pasteboard: Color32::from_rgb(0x12, 0x10, 0x0E),
-                card: Color32::from_rgb(0x2B, 0x27, 0x24),
-                border: Color32::from_rgb(0x3D, 0x38, 0x33),
-                divider: Color32::from_rgb(0x33, 0x2E, 0x2A),
-                text: Color32::from_rgb(0xFA, 0xF7, 0xF2),
-                text_muted: Color32::from_rgb(0xB5, 0xAE, 0xA6),
-                text_faint: Color32::from_rgb(0x9A, 0x93, 0x8A),
-                icon: Color32::from_rgb(0xDE, 0xD7, 0xCE),
-                hover: Color32::from_rgb(0x2D, 0x29, 0x25),
-                pressed: Color32::from_rgb(0x38, 0x33, 0x2E),
-                selected: Color32::from_rgb(0x45, 0x24, 0x05),
-                accent: Color32::from_rgb(0xF5, 0x9E, 0x0B),
-                accent_text: Color32::from_rgb(0xFC, 0xD3, 0x4D),
-                accent_soft: Color32::from_rgb(0x3D, 0x22, 0x06),
-                field: Color32::from_rgb(0x1A, 0x18, 0x16),
-                badge_new: Color32::from_rgb(0xF5, 0x9E, 0x0B),
+                titlebar: Color32::from_rgb(0x14, 0x17, 0x1C),
+                chrome: Color32::from_rgb(0x1C, 0x20, 0x27),
+                panel: Color32::from_rgb(0x1C, 0x20, 0x27),
+                pasteboard: Color32::from_rgb(0x12, 0x15, 0x1A),
+                card: Color32::from_rgb(0x25, 0x2B, 0x34),
+                border: Color32::from_rgb(0x42, 0x4C, 0x5A),
+                divider: Color32::from_rgb(0x34, 0x3D, 0x49),
+                text: Color32::from_rgb(0xF1, 0xF3, 0xF6),
+                text_muted: Color32::from_rgb(0xB6, 0xBF, 0xCC),
+                text_faint: Color32::from_rgb(0xA0, 0xAD, 0xBE),
+                icon: Color32::from_rgb(0xC0, 0xCB, 0xD9),
+                hover: Color32::from_rgb(0x30, 0x3A, 0x48),
+                pressed: Color32::from_rgb(0x3B, 0x48, 0x5B),
+                selected: Color32::from_rgb(0x2D, 0x40, 0x5A),
+                accent: Color32::from_rgb(0x9B, 0xB7, 0xD9),
+                accent_text: Color32::from_rgb(0xBD, 0xD1, 0xEC),
+                accent_soft: Color32::from_rgb(0x2A, 0x39, 0x4D),
+                field: Color32::from_rgb(0x17, 0x1C, 0x23),
+                badge_new: Color32::from_rgb(0x9B, 0xB7, 0xD9),
                 page_shadow: Color32::from_black_alpha(120),
                 radius: 6,
             },
@@ -123,6 +123,11 @@ impl Tokens {
 
     pub fn get(ctx: &egui::Context) -> Self {
         ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("nexopdf-theme"))).unwrap_or_else(|| Self::for_kind(ThemeKind::Light))
+    }
+
+    /// Opaque ink for accent-filled actions, including hover and pressed states.
+    pub fn accent_ink(&self) -> Color32 {
+        if self.dark() { self.titlebar } else { Color32::WHITE }
     }
 
     pub fn dark(&self) -> bool {
@@ -665,6 +670,15 @@ mod tests {
         assert_eq!(held.offset(), Vec2::new(0.0, 1.0));
     }
 
+    #[test]
+    fn primary_action_ink_is_readable_in_every_state() {
+        for kind in [ThemeKind::Light, ThemeKind::Dark] {
+            let t = Tokens::for_kind(kind);
+            for fill in [t.accent, t.accent_text, t.accent.lerp_to_gamma(Color32::BLACK, 0.22)] {
+                assert!(contrast(t.accent_ink(), fill) >= 4.5, "{kind:?} {fill:?}");
+            }
+        }
+    }
     #[test]
     fn text_is_readable_on_every_surface() {
         // #76: the faintest text (hints, zoom level, captions) was 3.3:1 in the light theme.

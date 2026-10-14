@@ -1536,3 +1536,16 @@ fn initial_zoom_option_is_applied_before_the_first_viewport_layout() {
         assert_eq!(h.state().views[0].zoom, percent as f32 / 100.0);
     }
 }
+
+#[test]
+fn control_glass_opacity_is_bounded_and_keeps_document_state() {
+    let (mut h, c) = harness();
+    let before = ok(&mut h, &c, "ui.state", json!({}));
+    ok(&mut h, &c, "ui.set", json!({"key":"glass_opacity", "value":"70"}));
+    let after = ok(&mut h, &c, "ui.state", json!({}));
+    assert_eq!(after["glass_opacity"], 70);
+    assert!(before["documents"].as_array().is_some_and(|docs| !docs.is_empty()));
+    assert_eq!(after["documents"], before["documents"]);
+    assert!(call(&mut h, &c, "ui.set", json!({"key":"glass_opacity", "value":"69"})).is_err());
+    assert_eq!(ok(&mut h, &c, "ui.state", json!({}))["glass_opacity"], 70);
+}

@@ -124,6 +124,22 @@ pub fn preferences_section(ui: &mut egui::Ui, app: &mut NexoPDFApp, t: &Tokens) 
         });
     });
     ui.add_space(4.0);
+    ui.add_space(12.0);
+    ui.horizontal(|ui| {
+        ui.label(tl!("Home"));
+        let mut percent = app.glass_opacity.percent();
+        if ui.add(egui::Slider::new(&mut percent, 70..=100).text(tl!("Opacity")).suffix("%")).changed()
+            && let Ok(value) = crate::surface::GlassOpacity::try_from(percent)
+        {
+            app.glass_opacity = value;
+        }
+        if ui.button(tl!("Solid")).clicked() {
+            // The constant is within the same range used by settings and automation.
+            if let Ok(value) = crate::surface::GlassOpacity::try_from(100) {
+                app.glass_opacity = value;
+            }
+        }
+    });
     let light_active = app.theme == ThemeKind::Light;
     ui.columns(2, |cols| {
         let [light, dark] = cols else { return };
@@ -166,6 +182,10 @@ mod tests {
         if let Ok(path) = std::env::var("NEXOPDF_APPEARANCE_SHOT") {
             h.render().unwrap().save(path).unwrap();
         }
+
+        h.get_by_label("Solid").click();
+        h.run();
+        assert_eq!(h.state().glass_opacity.percent(), 100);
 
         let combo = egui::accesskit::Role::ComboBox;
         h.get_by_role(combo).click();

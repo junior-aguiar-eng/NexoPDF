@@ -1108,3 +1108,23 @@ fn combine_tab_uses_tab_interaction_without_changing_close_or_document_state() {
     assert!(h.query_by_role_and_label(Role::Tab, "Combine files").is_none());
     assert_eq!(h.state().views.iter().map(|v| v.id).collect::<Vec<_>>(), document_ids);
 }
+
+#[test]
+fn glass_opacity_round_trips_and_rejects_invalid_settings() {
+    let mut app = NexoPDFApp::new();
+    app.set_option("glass_opacity", "78").unwrap();
+    let saved: serde_json::Value = serde_json::from_str(&app.persist()).unwrap();
+    assert_eq!(saved["glass_opacity"], 78);
+    let mut restored = NexoPDFApp::new();
+    restored.restore(&app.persist());
+    for invalid in ["0", "69", "101", "256", "-1", "NaN", "inf", "80.5", ""] {
+        assert!(restored.set_option("glass_opacity", invalid).is_err(), "{invalid}");
+    }
+    for bad in [r#"{"glass_opacity":500}"#, r#"{"glass_opacity":null}"#, r#"{"glass_opacity":"bad"}"#] {
+        restored.restore(bad);
+    }
+    let state: serde_json::Value = serde_json::from_str(&restored.persist()).unwrap();
+    assert_eq!(state["glass_opacity"], 78);
+    restored.set_option("glass_opacity", "100").unwrap();
+    assert_eq!(serde_json::from_str::<serde_json::Value>(&restored.persist()).unwrap()["glass_opacity"], 100);
+}

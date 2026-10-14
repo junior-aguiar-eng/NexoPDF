@@ -28,6 +28,12 @@ Building NexoPDF requires Rust 1.95 or later: the UI crate and its `egui` and lo
 dependencies need it, and the workspace `rust-version` states the same minimum.
 
 ## Interface appearance
+The local palettes are NEXOPDF graphite (Dark) and mineral (Light). Home uses bounded alpha
+composition over an internal static backdrop; it does not blur the desktop or document.
+Preferences > Appearance exposes Home opacity (70–100%, default 90%) and Solid (100%).
+The same persisted value is available through `ui.set` with `glass_opacity`, and reported by
+`ui.state`. Invalid values return an error without changing the preference. See
+[nexopdf-appearance.md](nexopdf-appearance.md) for the implementation boundary.
 
 Display theme saves System, Light or Dark separately from the palette currently drawn. New
 installations still default to Light. System follows native appearance events on macOS and

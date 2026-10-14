@@ -120,6 +120,7 @@ pub mod portable;
 mod protect;
 mod recovery;
 pub mod scroll_speed;
+pub mod surface;
 #[cfg(not(target_arch = "wasm32"))]
 mod system_fonts;
 mod tab_context;
@@ -470,6 +471,7 @@ pub struct NexoPDFApp {
     /// Resolved colours, including the current OS theme when following the system.
     pub theme: ThemeKind,
     pub theme_preference: ThemePreference,
+    pub glass_opacity: surface::GlassOpacity,
     /// The reading-colours preference (Preferences ▸ Reading colours): applied to every open
     /// document, and documents open with it (Acrobat's Replace Document Colors).
     pub reading_colors: nexopdf_render::ReadingColors,
@@ -814,6 +816,7 @@ impl NexoPDFApp {
             comment_prefs: Default::default(),
             theme: ThemeKind::Light,
             theme_preference: ThemePreference::Light,
+            glass_opacity: Default::default(),
             reading_colors: Default::default(),
             #[cfg(target_os = "linux")]
             desktop_theme: None,
@@ -1755,6 +1758,7 @@ impl NexoPDFApp {
             "reload_changed_files": self.reload_changed_files,
             "pinned_folders": self.pinned.folders,
             "theme": self.theme_preference,
+            "glass_opacity": self.glass_opacity,
             "scroll_speed": self.scroll_speed,
             "animation_effects": self.animation_effects,
             "default_mode": self.default_mode,
@@ -1840,6 +1844,9 @@ impl NexoPDFApp {
         self.pinned.restore(&v["pinned_folders"]);
         if let Ok(preference) = serde_json::from_value::<ThemePreference>(v["theme"].clone()) {
             self.set_theme_preference(preference);
+        }
+        if let Ok(opacity) = serde_json::from_value::<surface::GlassOpacity>(v["glass_opacity"].clone()) {
+            self.glass_opacity = opacity;
         }
         if let Ok(speed) = serde_json::from_value::<scroll_speed::ScrollSpeed>(v["scroll_speed"].clone()) {
             self.scroll_speed = speed;
@@ -1977,6 +1984,10 @@ impl NexoPDFApp {
                     _ => return Err("theme must be light, dark, or system".into()),
                 };
                 self.set_theme_preference(preference);
+            }
+            ("glass_opacity", _) => {
+                let percent = value.parse::<u8>().map_err(|_| "glass_opacity must be an integer from 70 to 100")?;
+                self.glass_opacity = surface::GlassOpacity::try_from(percent)?;
             }
             ("scroll_speed", _) => {
                 self.scroll_speed = scroll_speed::ScrollSpeed::parse(value).ok_or("scroll_speed must be slow, normal, or fast")?;

@@ -74,13 +74,13 @@ pub fn strength(pw: &str) -> (&'static str, Color32) {
     }
 }
 
-/// A radio button drawn like Acrobat's: an outlined circle, filled blue with a white dot when on.
+/// A radio button with an accent fill and contrasting selection dot.
 fn radio(ui: &mut egui::Ui, t: &Tokens, on: bool, label: &str) -> egui::Response {
     let (rect, resp) = ui.allocate_exact_size(egui::vec2(220.0, 26.0), egui::Sense::click());
     let c = egui::pos2(rect.left() + 9.0, rect.center().y);
     if on {
         ui.painter().circle_filled(c, 8.0, t.accent);
-        ui.painter().circle_filled(c, 3.0, Color32::WHITE);
+        ui.painter().circle_filled(c, 3.0, t.accent_ink());
     } else {
         ui.painter().circle_stroke(c, 7.5, egui::Stroke::new(1.5, t.text_muted));
     }
