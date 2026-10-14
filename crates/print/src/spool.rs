@@ -1,7 +1,9 @@
-//! System print spooler supplied by craft-print. PDF composition and permission checks
+//! Local system print spooler maintained in NEXOPDF. PDF composition and permission checks
 //! stay in NexoPDF; these adapters retain the application's print-error surface.
 
-pub use craft_print::{
+mod backend;
+
+pub use backend::{
     Duplex, HANDLED_OPTIONS, HAS_PRINTER_PREFERENCES, Job, Printer, PrinterOption, Scaling, lp_args, lpstat_command, parse_lpoptions, parse_lpstat,
     parse_lpstat_e, parse_ppd, parse_windows_printers, ppd_text, printers, printers_parsed,
 };
@@ -16,7 +18,10 @@ pub fn printer_options(printer: &str) -> Vec<PrinterOption> {
     }
     #[cfg(not(all(unix, not(target_arch = "wasm32"))))]
     {
-        craft_print::printer_options(printer)
+        {
+            let _ = printer;
+            Vec::new()
+        }
     }
 }
 
@@ -56,9 +61,9 @@ pub(crate) fn printer_options_via(printer: &str, ppd_dir: &std::path::Path, mut 
 }
 
 pub fn submit(pdf: &[u8], job: &Job) -> Result<String, crate::PrintError> {
-    craft_print::submit(pdf, job).map_err(|e| crate::PrintError::Spool(e.to_string()))
+    backend::submit(pdf, job).map_err(|e| crate::PrintError::Spool(e.to_string()))
 }
 
 pub fn open_printer_preferences(printer: &str) -> Result<(), crate::PrintError> {
-    craft_print::open_printer_preferences(printer).map_err(|e| crate::PrintError::Spool(e.to_string()))
+    backend::open_printer_preferences(printer).map_err(|e| crate::PrintError::Spool(e.to_string()))
 }

@@ -269,6 +269,11 @@ fn spooler_arguments_and_printer_list() {
 }
 
 #[test]
+fn default_print_job_identifies_nexopdf() {
+    assert_eq!(Job::default().title, "NEXOPDF");
+}
+
+#[test]
 fn lpstat_output_is_untranslated() {
     // A localized lpstat (here Polish) is unreadable to parse_lpstat...
     assert!(parse_lpstat("drukarka Office_Laser jest bezczynna.\ndomyślny cel systemowy: Office_Laser\n").is_empty());

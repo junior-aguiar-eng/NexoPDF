@@ -32,17 +32,23 @@ Each source page becomes a Form XObject (its content wrapped in q/Q, plus the pr
 annotations); sheets place them with a clip. The result is a fresh, unencrypted,
 garbage-collected file (callers check the print permission).
 
-`spool` delegates discovery, driver options, preferences and submission to
-[`craft-print`](https://github.com/storytold/craft-libs/tree/main/crates/print).
+`spool` uses the local transport in `src/spool/backend`. Its baseline and
+subsequent NEXOPDF changes are recorded in `PROVENANCE.md`; compilation does
+not fetch another project's Git repository.
 NexoPDF retains page selection, imposition, annotations and print-permission checks.
-CUPS jobs stream through stdin with `fit-to-page=false`. Windows renders sheets through
-`Windows.Data.Pdf` and spools them at their physical PDF size with per-page paper and
+CUPS jobs stream through stdin with `fit-to-page=false`. Windows prepares sheets through
+`nexopdf-render` on the CPU and spools them at their physical PDF size with per-page paper and
 orientation, zero added margins and hardware-edge clipping. Long-edge and short-edge duplex
-use the corresponding Windows binding edges. Random, exclusively created Windows job files
-are removed on success and failure. Other targets offer the print-ready PDF instead.
+use the corresponding Windows binding edges. A private temporary directory holds the
+sheet images and manifest, removed on success and failure. The Windows preparation
+uses up to 600 dpi, capped at 64 million pixels and 32768 pixels per side; physical sheet
+dimensions are independent of raster resolution and desktop DPI. Jobs are capped
+at 1000 sheets and 1 GiB of encoded images; larger jobs return an actionable error.
+Other targets offer the print-ready PDF instead.
 
-The shared dependency requires Rust 1.95. Transport and native Windows regression tests
-live in craft-libs; local tests retain composition, facade, engine, automation and UI coverage.
+Rust 1.95 remains the minimum. Transport and native Windows regression tests now
+live in this crate alongside composition and facade tests; engine, automation and UI
+retain their integration coverage.
 The desktop UI discovers printers and submits jobs on workers, so neither operation blocks
 the dialog; the Windows backend starts without a console window. Physical printer output
 still needs hardware validation.

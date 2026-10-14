@@ -1091,14 +1091,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "craft-print"
-version = "0.1.0"
-source = "git+https://github.com/storytold/craft-libs?rev=d991bf6792f8ade99c51358bf3c1d902c8cd96b5#d991bf6792f8ade99c51358bf3c1d902c8cd96b5"
-dependencies = [
- "tempfile",
-]
-
-[[package]]
 name = "crc32fast"
 version = "1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3313,10 +3305,13 @@ dependencies = [
 name = "nexopdf-print"
 version = "0.7.1"
 dependencies = [
- "craft-print",
+ "image",
  "nexopdf-content",
  "nexopdf-cos",
  "nexopdf-model",
+ "nexopdf-render",
+ "serde_json",
+ "tempfile",
  "thiserror 2.0.21",
 ]
 

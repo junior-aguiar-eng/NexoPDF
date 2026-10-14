@@ -1,5 +1,7 @@
 # Hardware and platform parity
 
+> **Last reviewed: 2026-10-13** · Local print transport integrated; 44 Windows print tests pass, including CPU raster pixels, rotation and UserUnit. Physical-printer validation remains pending. Windows jobs are limited to 1,000 sheets and 1 GiB, up to 600 dpi / 64 MP per sheet.
+
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-11 · **Change:** minor (web printing through the browser's print dialog; earlier: shared craft-print spooler with passing Windows CI; Windows printers row and 1:1 touchpad scrolling, #756, #759) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 
 Each hardware feature Acrobat Pro uses, per platform, ours against Acrobat's. Acrobat runs on macOS
@@ -17,7 +19,7 @@ printing are counted in their feature areas). **Platforms ≈ 70% ready, 15–30
 | Multi-threaded rendering | yes | yes (render pool, tiles, watchdog) | yes | yes | single thread | `view.render-priority` |
 | HiDPI / Retina | yes | yes | yes, per-monitor DPI v2 (#324, #725) | yes | yes | text blurry at 1080p/1440p (#730) |
 | Multiple monitors | yes, multiple windows | one window | one window; surfaces fit the GPU limit (#577) | one window | n/a | `view.multiple-windows` planned |
-| Printers | all, PostScript, printer properties | CUPS via craft-print | Windows PDF raster spooler via craft-print (#756, PR #847) | CUPS via craft-print | the browser's print dialog (every printer the system knows): sheets drawn by NexoPDF at 150–300 dpi; copies, two-sided and colour set there | `crates/print/README.md`, `crates/ui-egui/src/web_print.rs` |
+| Printers | all, PostScript, printer properties | CUPS via local nexopdf-print | Local nexopdf-print: CPU raster preparation and GDI spooler; physical output validation pending | CUPS via local nexopdf-print | the browser's print dialog (every printer the system knows): sheets drawn by NexoPDF at 150–300 dpi; copies, two-sided and colour set there | `crates/print/README.md`, `crates/ui-egui/src/web_print.rs` |
 | Scanners (TWAIN, WIA, ICA) | yes | none | none | none (SANE) | n/a | `ocr.scanner-acquire` planned |
 | Smart cards and USB tokens | yes (PKCS #11, CryptoTokenKit, CNG) | Keychain identities (software keys) | CNG store keys, with PIN prompts for cards (#742) | none (PKCS #11 planned) | none | `sign.pkcs11` planned |
 | Pen and touch | Touch mode, pen ink, Windows Ink | trackpad pinch zoom; ink from pointer, no pressure | ink from pointer, no pressure or touch mode | as macOS | pointer | touchpad scrolling 1:1 (#759, PR #868) |
