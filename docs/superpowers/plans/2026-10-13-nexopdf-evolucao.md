@@ -135,7 +135,7 @@ Cada alteração funcional começa por reprodução/teste pertinente, recebe imp
 
 Não repetir toda a matriz para cada edição documental nem iniciar publicação antecipadamente. Separar, por exemplo, independência da UI, impressão Windows, impressão CUPS, componentes visuais, aparência ajustável, cada correção de edição/conversão e cada capacidade avançada. Um commit não mistura essas frentes; a validação remota acompanha pushes autorizados.
 
-**Estado deste plano:** implementação autorizada pelo proprietário. Etapa 1 em andamento
+**Estado deste plano:** implementação autorizada pelo proprietário. Dependências Git retiradas; reconstrução multiplataforma da impressão e etapa 2 ainda parciais
 na branch `codex/nexopdf-evolucao`, a partir de `443b050`. Sem publicação.
 
 ### Evidências de execução (2026-10-13)
@@ -161,3 +161,17 @@ na branch `codex/nexopdf-evolucao`, a partir de `443b050`. Sem publicação.
 - Auditoria com cargo-deny 0.20.2 instalado apenas em target/evolucao/tools: advisories, bans, licenses e sources aprovados. O primeiro ensaio detectou a versão ausente da dependência local de UI; a versão 0.7.1 foi declarada, sem flexibilizar a política.
 - Primeiro ensaio geral WASM falhou por reutilização parcial de cache entre diretórios (E0463 em num_enum). A ligação temporária foi removida. nexopdf-js passou tanto em um diretório novo quanto no diretório original do cache, sem alteração de código. Passagem completa WASM isolada aprovada: 32 crates. Há três avisos em código não alterado da interface; nenhum erro.
 - Tela principal real renderizada e inspecionada em 1440×900, com DirectX 12 e fontes de sistema desativadas. Essa captura registra a UI anterior; o novo visual grafite ainda não foi aplicado.
+
+### CI remoto da base local (2026-10-14)
+
+- Branch codex/nexopdf-evolucao, commit 4d65beb: Windows, Linux, WASM, auditoria de dependências e fuzz passaram no run 38508246562.
+- Commits separados: 3caba93 (UI local), 7c8ef54 (impressão) e 4d65beb (plano/validação). Nenhuma release foi publicada.
+- Primeira implementação visual em andamento: paleta grafite/mineral e home com opacidade persistida. Testes dirigidos: 429 aprovados, um ignorado; resultados finais e limites registrados abaixo. Transparência não representa blur implementado nem reconstrução completa dos componentes derivados.
+
+### Aparência e barra estreita — 2026-10-14
+
+- Paleta grafite/mineral, Home própria e opacidade 70–100% persistida e acessível pelo controle. Componentes derivados continuam atribuídos; blur e reconstrução integral permanecem pendentes.
+- Inventário estático preservado: 23 grupos, 188 comandos, cinco modos, 11 painéis direitos, 18 famílias de ferramentas rápidas e 43 variantes de diálogo. Não equivale a validar todas as operações em documentos reais.
+- Captura final real em 820×720 confirma busca em ícone sem sobrepor os modos em português; o teste narrow_mode_bar_keeps_search_clear_of_translated_modes passou, incluindo abrir a paleta.
+- Validação final: 2.941 testes funcionais passaram, 14 ignorados; dois benchmarks passaram separadamente, após duas rodadas acima do limite sob carga concorrente. Limite de 40 ms preservado; comentários 36,99 ms e rolagem 28,83 ms na rodada final. Nenhuma alteração de código para obter essa aprovação.
+- Clippy de todos os alvos, fmt, WASM da UI, layers, assets e parity aprovados. Falha LNK1120 de cache resolvida com limpeza da crate; sem alteração de código.
