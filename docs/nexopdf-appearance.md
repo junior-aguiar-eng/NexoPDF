@@ -51,3 +51,7 @@ separada.
 - As rodadas anteriores de desempenho falharam (comentários 52–55 ms, rolagem 42–44 ms); houve carga concorrente observada. O resultado final não elimina a variabilidade nem substitui comparação controlada com a base.
 - Uma falha de linkagem LNK1120 em bookmarks desapareceu após cargo clean limitado a nexopdf-ui-egui, sem contorno no código.
 - A CI da alteração visual ainda precisa executar; a aprovação do run 38508246562 pertence à base de componentes locais.
+
+A correção separada da barra reduz a busca a ícone quando falta espaço. Captura real em
+820×720 e regressão em português confirmam ausência de sobreposição e abertura da paleta.
+O rótulo acessível e o atalho permanecem disponíveis.

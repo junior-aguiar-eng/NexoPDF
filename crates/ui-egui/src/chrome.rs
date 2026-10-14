@@ -412,7 +412,15 @@ pub fn mode_bar(app: &mut NexoPDFApp, ui: &mut egui::Ui) {
                         }
                     });
                     ui.add_space(8.0);
-                    if widgets::search_box(ui, tl!("Find tools and commands"), 260.0).clicked() {
+                    // Shrink the search affordance before it overlaps translated mode tabs.
+                    // The icon keeps the same accessibility label and palette action.
+                    let width = ui.available_width().min(260.0);
+                    let search = if width >= 140.0 {
+                        widgets::search_box(ui, tl!("Find tools and commands"), width)
+                    } else {
+                        icons::button(ui, "search", 32.0, false, tl!("Find tools and commands"))
+                    };
+                    if search.clicked() {
                         app.palette_open = true;
                     }
                 });

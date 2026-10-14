@@ -1128,3 +1128,19 @@ fn glass_opacity_round_trips_and_rejects_invalid_settings() {
     restored.set_option("glass_opacity", "100").unwrap();
     assert_eq!(serde_json::from_str::<serde_json::Value>(&restored.persist()).unwrap()["glass_opacity"], 100);
 }
+
+#[test]
+fn narrow_mode_bar_keeps_search_clear_of_translated_modes() {
+    let mut h = Harness::builder().with_size(egui::vec2(820.0, 720.0)).build_eframe(|_| {
+        let mut app = NexoPDFApp::new();
+        app.set_option("language", "pt-br").unwrap();
+        app
+    });
+    h.run_steps(4);
+    let mode = h.get_by_label("Assinatura eletrônica").rect();
+    let search = h.get_by_label("Localizar ferramentas e comandos").rect();
+    assert!(search.left() >= mode.right(), "search overlaps the last mode: {search:?}, {mode:?}");
+    h.get_by_label("Localizar ferramentas e comandos").click();
+    h.run_steps(2);
+    assert!(h.state().palette_open);
+}
